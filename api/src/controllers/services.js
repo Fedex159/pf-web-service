@@ -4,7 +4,6 @@ const { Service, Users } = require('../db.js');
 function getServices(req, res) {
   res.send('hola');
 }
-
 async function postServices(req, res, next) {
   try {
     //userName eventualmente debería ser enviada por cookie
@@ -17,17 +16,20 @@ async function postServices(req, res, next) {
       },
     });
 
-    //creo el servicio
-    const serviceCreated = await Service.create({
-      title,
-      img,
-      description,
-      price,
-      userId: userFound.id,
-    });
+    if (userFound) {
+      //creo el servicio y asocio el servicio creado al user que lo creó
+      const serviceCreated = await Service.create({
+        title,
+        img,
+        description,
+        price,
+        userId: userFound.id,
+      });
 
-    //asocio el servicio creado al user que lo creó
-    return res.status(200).send(serviceCreated);
+      return res.status(200).send(serviceCreated);
+    }
+
+    return res.status(200).send({ message: 'User Not Found' });
   } catch (e) {
     next(e);
   }
