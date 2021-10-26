@@ -3,6 +3,7 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
+const bcrypt = require('bcrypt');
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -37,7 +38,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Service, Users, Category } = sequelize.models;
+const { Service, Users, Qualification, Category } = sequelize.models;
 
 // Aca vendrian las relaciones
 Service.belongsToMany(Users, { through: 'services_users_bought' });
@@ -52,7 +53,25 @@ Service.belongsTo(Users);
 Category.hasMany(Service);
 Service.belongsTo(Category);
 
+Service.hasMany(Qualification);
+Qualification.belongsTo(Service);
+
+Users.hasMany(Qualification);
+Qualification.belongsTo(Users);
+
 // Product.hasMany(Reviews);
+
+// hooks users
+// Encripta la contraseña antes de crear el usuario
+Users.beforeCreate(async function (user) {
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
+});
+
+// Funcion que se va a usar en el logeo, para verificar que sea la contraseña
+Users.prototype.validPassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
