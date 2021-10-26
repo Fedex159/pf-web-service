@@ -86,7 +86,27 @@ async function userBanned(req, res, next) {
   }
 }
 
-function postPurchase(req, res, next) {}
+async function postPurchase(req, res, next) {
+  const { userId, serviceId, logged } = req.body;
+
+  try {
+    if (logged === true) {
+      const userFound = await Users.findOne({
+        // busco el usuario
+        where: { id: userId },
+      });
+
+      const serviceFound = await Service.findOne({
+        // busco el servicio
+        where: { id: serviceId },
+      });
+
+      return res.status(200).send(serviceFound);
+    }
+  } catch (e) {
+    next(e);
+  }
+}
 
 module.exports = {
   userCreated,
