@@ -5,10 +5,8 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('users', {
     id: {
-      // type: DataTypes.UUID,
-      // defaultValue: DataTypes.UUIDV4,
-      //por si me olvido lo comentado es lo que va, tenía que probar algo y el UUID me está volviendo loco J0n
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     userImg: {
