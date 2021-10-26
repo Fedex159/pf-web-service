@@ -87,6 +87,7 @@ async function userBanned(req, res, next) {
 }
 
 async function postPurchase(req, res, next) {
+  //necesitamos estos datos para asociar el servicio comprado a la categoría
   const { userId, serviceId, logged } = req.body;
 
   try {
@@ -101,7 +102,19 @@ async function postPurchase(req, res, next) {
         where: { id: serviceId },
       });
 
-      return res.status(200).send(serviceFound);
+      //si usuario y servicio existe los asocio
+      if (userFound && serviceFound) {
+        await userFound.addService(serviceFound);
+
+        return res
+          .status(200)
+          .send({ message: 'User associated to Service successful' });
+      } else {
+        //sino existe el usuario no está logueado
+        return res
+          .status(200)
+          .send({ message: 'You need to be logged to purchase a service' });
+      }
     }
   } catch (e) {
     next(e);
