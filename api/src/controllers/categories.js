@@ -1,8 +1,9 @@
-const { services } = require('../utils/services');
+const { Category } = require('../db.js');
 
-function getCategories(req, res, next) {
+async function getCategories(req, res, next) {
   try {
-    res.status(200).send(services);
+    const categoriesInDb = await Category.findAll();
+    res.status(200).send(categoriesInDb);
   } catch (e) {
     next(e);
   }
