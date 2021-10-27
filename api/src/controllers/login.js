@@ -7,7 +7,7 @@ async function postLogin(req, res, next) {
         where: {
           username: username,
         }})
-       console.log(userFinded)
+    
        if(!userFinded){
            return res.send("user incorrect")
        }
