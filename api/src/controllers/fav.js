@@ -17,10 +17,10 @@ async function addFavs(req, res, next) {
 
 async function getFavs(req, res, next) {
     try {
-        const { idUser } = req.params;
+        const { userId } = req.params;
         const userFavs = await Services_users_favourites.findAll({ 
             where: {
-                userId: idUser,
+                userId: userId,
             }
         })
         return res.status(200).json(userFavs);
@@ -29,7 +29,24 @@ async function getFavs(req, res, next) {
     };
 };
 
+async function deleteFav(req, res, next) {
+    try {
+        const { userId, serviceId} = req.body;
+        const deletedFav = await Services_users_favourites.destroy({
+            where: {
+                userId: userId,
+                serviceId: serviceId,
+            }
+        })
+        deletedFav ? res.status(200).json({message: 'deleted successfully: ', deletedFav}) : res.status(500).json({message: 'sorry, try again'});
+    } catch (e) {
+        next (e)
+    };
+};
+
+
 module.exports = {
     addFavs,
     getFavs,
+    deleteFav,
 };
