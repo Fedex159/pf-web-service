@@ -7,8 +7,8 @@ async function addFavs(req, res, next) {
         const { serviceId , userId } = req.body;
         await Service.findByPk(serviceId);
         await Users.findByPk(userId);
-        await Services_users_favourites.create({ serviceId: serviceId, userId: userId  });
-        return res.status(200).json("add fav")
+        const relation = await Services_users_favourites.create({ serviceId: serviceId, userId: userId  });
+        relation._options.isNewRecord ? res.status(200).json("add fav") : res.status(500).json({message: 'cannot add'});
     } catch (e) {
         next (e);
     };
@@ -23,7 +23,7 @@ async function getFavs(req, res, next) {
                 userId: userId,
             }
         })
-        return res.status(200).json(userFavs);
+        userFavs ? res.status(200).json(userFavs) : res.status(500).json({message: 'cannot get'});
     } catch (e) {
         next (e);
     };
