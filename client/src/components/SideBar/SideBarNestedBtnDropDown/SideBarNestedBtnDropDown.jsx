@@ -1,5 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
+
+import SideBarNestedBtnDropDownInner from '../SideBarNestedBtnDropDownInner/SideBarNestedBtnDropDownInner';
+
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -9,8 +12,15 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
 
-export default function SideBarBtnDropDown({ index, text, openFromFather }) {
+export default function SideBarNestedBtnDropDown({
+  index,
+  text,
+  openFromFather,
+  allGroups,
+}) {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -32,18 +42,33 @@ export default function SideBarBtnDropDown({ index, text, openFromFather }) {
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItemButton sx={{ pl: 4 }}>
-              <ListItemText primary="INTERNO" />
+              <Box sx={{ display: 'flex' }}>
+                <FormControl
+                  sx={{ m: 3 }}
+                  component="fieldset"
+                  variant="standard"
+                >
+                  <FormGroup>
+                    {/* {allGroups.map((text,index)=>
+                    {return <SideBarNestedBtnDropDownInner allGroups={allGroups} text={}/>})
+                    } */}
+                    {allGroups.map((group, index) => {
+                      return (
+                        <SideBarNestedBtnDropDownInner
+                          text={group.name}
+                          key={index}
+                          allGroups={allGroups}
+                        />
+                      );
+                    })}
+                  </FormGroup>
+                </FormControl>
+              </Box>
             </ListItemButton>
           </List>
         </Collapse>
       ) : (
-        <Collapse in={false} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemText primary="INTERNO" />
-            </ListItemButton>
-          </List>
-        </Collapse>
+        <Collapse in={false} timeout="auto" unmountOnExit></Collapse>
       )}
     </Box>
   );

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import SideBarBtnDropDown from '../SideBarBtnDropDown/SideBarBtnDropDown';
+import SideBarBtnDropDown from '../SideBarNestedBtnDropDown/SideBarNestedBtnDropDown';
 import { getGroups } from '../../../redux/actions';
 
 import List from '@mui/material/List';
@@ -28,6 +28,7 @@ export default function SideBarNested({ openFromFather }) {
             text={group.name}
             key={index}
             openFromFather={openFromFather}
+            allGroups={allGroups}
           />
         );
       })}
