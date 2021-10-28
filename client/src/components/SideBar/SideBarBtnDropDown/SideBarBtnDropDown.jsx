@@ -10,7 +10,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 
-export default function SideBarBtnDropDown({ text }) {
+export default function SideBarBtnDropDown({ index, text }) {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -18,7 +18,7 @@ export default function SideBarBtnDropDown({ text }) {
   };
 
   return (
-    <Box>
+    <Box key={index}>
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <HomeRepairServiceRoundedIcon />

@@ -18,6 +18,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
+import Nav from '../Nav/Nav';
 
 //maneja el anocho de la expansión al tocar el hamburguer button
 const drawerWidth = 300;
@@ -115,9 +116,8 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Web Services App
-          </Typography>
+
+          <Nav />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -131,13 +131,11 @@ export default function MiniDrawer() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
-          <SideBarNested />
-        </List>
+        <SideBarNested />
         <Divider />
         <List>
           {['Info', 'About', 'Something'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={index}>
               <ListItemIcon>
                 <MailIcon />
               </ListItemIcon>
