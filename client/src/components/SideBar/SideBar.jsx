@@ -1,5 +1,8 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import Nav from '../Nav/Nav';
+
 import SideBarNested from './SideBarNested/SideBarNested';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -8,7 +11,6 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -18,10 +20,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
-import Nav from '../Nav/Nav';
 
 //maneja el anocho de la expansión al tocar el hamburguer button
-const drawerWidth = 300;
+const drawerWidth = 350;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -89,6 +90,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer() {
   const theme = useTheme();
+
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
