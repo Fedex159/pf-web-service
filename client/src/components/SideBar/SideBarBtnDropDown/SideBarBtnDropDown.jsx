@@ -10,11 +10,13 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 
-export default function SideBarBtnDropDown({ index, text }) {
+export default function SideBarBtnDropDown({ index, text, openFromFather }) {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
-    setOpen(!open);
+    if (openFromFather) {
+      setOpen(!open);
+    }
   };
 
   return (
@@ -26,13 +28,23 @@ export default function SideBarBtnDropDown({ index, text }) {
         <ListItemText primary={text} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemText primary="INTERNO" />
-          </ListItemButton>
-        </List>
-      </Collapse>
+      {openFromFather ? (
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemText primary="INTERNO" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+      ) : (
+        <Collapse in={false} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemText primary="INTERNO" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+      )}
     </Box>
   );
 }

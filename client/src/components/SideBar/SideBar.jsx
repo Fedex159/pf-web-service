@@ -131,7 +131,7 @@ export default function MiniDrawer() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <SideBarNested />
+        <SideBarNested openFromFather={open} />
         <Divider />
         <List>
           {['Info', 'About', 'Something'].map((text, index) => (
