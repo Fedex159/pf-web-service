@@ -11,7 +11,6 @@ export default function SideBarNested({ openFromFather }) {
   const dispatch = useDispatch();
 
   const allGroups = useSelector((state) => state.groups);
-  console.log('HERE', allGroups[0].name);
 
   useEffect(() => {
     dispatch(getGroups());
