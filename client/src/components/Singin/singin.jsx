@@ -9,7 +9,7 @@ import {useHistory} from "react-router-dom";
 
 
 
-function Singin() {
+export default function Singin() {
     const dispatch = useDispatch()
     const history = useHistory()
     const [start, setStart] = useState(true);
@@ -93,5 +93,5 @@ function Singin() {
     );
   }
   
-  export default Singin;
+
   

@@ -23,28 +23,6 @@ async function getProvinces(req, res, next) {
   }
 }
 
-async function filterByProvince (req, res, next){
-  const {province} = req.query
-  try{
-    if (!province){
-    const allProvinces = await Province.findAll({
-      include: {
-        model: City,
-      }})
-   res.send(allProvinces)
-    }else {
-      const reqProvinces = await Province.findAll({
-       where: {
-          name: province,
-        }})
-     res.send(reqProvinces)
-    }
-    
- 
-  }catch(err){
-    next(err)
-  }
-}
 
 
 
