@@ -1,11 +1,10 @@
 const { Service, Users, Qualification, Category, Group } = require("../db.js");
-const { orderByPrice } = require("../utils/servicesFilter.js");
+const { orderByPrice, orderByScore } = require("../utils/servicesFilter.js");
 const { validateServices } = require("../utils/validServices");
 
 //por cada ruta un controler
 async function getServices(req, res, next) {
-  const { title, order } = req.query;
-
+  const { title, order, score } = req.query;
   try {
     let dbServices = await Service.findAll({
       //Traigo todo de la db
@@ -25,6 +24,9 @@ async function getServices(req, res, next) {
     });
     if (order) {
       orderByPrice(order, dbServices);
+    }
+    if (score) {
+      orderByScore(score, dbServices);
     }
     if (!title) return res.send(dbServices);
     //Devuelvo todos los servicios

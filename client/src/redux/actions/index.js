@@ -3,10 +3,12 @@ import axios from "axios";
 //_____________________________________________________________________________________actions service
 // usar axios("/route"), no es necesario http://localhost:3001, ya
 // esta configurado en el archivo index.js
-export function getServices(title, order) {
+export function getServices(title, order, score) {
   return async function (dispatch) {
     try {
-      var json = await axios(`/services?title=${title}&order=${order}`);
+      var json = await axios(
+        `/services?title=${title}&order=${order}&score=${score}`
+      );
       return dispatch({
         type: type.GET_SERVICES,
         payload: json.data,
