@@ -48,7 +48,7 @@ export default function Nav() {
   if (document.cookie) {
     reDirect = '/account';
   } else {
-    reDirect = '/singin';
+    reDirect = '/login';
   }
 
   //-- count tiene que ser igual a las cosas que hayan en el carrito
