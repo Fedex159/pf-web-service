@@ -1,4 +1,5 @@
 const { Service, Users, Qualification, Category, Group } = require("../db.js");
+const { orderByPrice } = require("../utils/servicesFilter.js");
 const { validateServices } = require("../utils/validServices");
 
 //por cada ruta un controler
@@ -22,25 +23,9 @@ async function getServices(req, res, next) {
         },
       ],
     });
-    order && order === "ASC"
-      ? (dbServices = dbServices.sort(function (a, b) {
-          if (a.price > b.price) {
-            return -1;
-          }
-          if (b.price > a.price) {
-            return 1;
-          }
-          return 0;
-        }))
-      : (dbServices = dbServices.sort(function (a, b) {
-          if (b.price > a.price) {
-            return -1;
-          }
-          if (a.price > b.price) {
-            return 1;
-          }
-          return 0;
-        }));
+    if (order) {
+      orderByPrice(order, dbServices);
+    }
     if (!title) return res.send(dbServices);
     //Devuelvo todos los servicios
     else {
@@ -133,16 +118,25 @@ async function deleteServices(req, res, next) {
 
 //____________________________________________________________________________
 function putServiceById(req, res, next) {
-  var { title, description, img, price, id } = req.body;
+  var { title, description, img, price, id, categoryId } = req.body;
 
-  Service.findByPk(id)
-    .then((service) => {
-      return service.update({ title, description, img, price });
-    })
-    .then((res) => {
-      res.status(200).send(res.dataValues);
-    })
-    .catch((error) => next(error));
+  if (title && description && img && price && categoryId && id) {
+    var errors = validateServices(req.body);
+    if (!Object.values(errors).length) {
+      Service.findByPk(id)
+        .then((service) => {
+          return service.update({ title, description, img, price, categoryId });
+        })
+        .then((result) => {
+          res.status(200).send(result.dataValues);
+        })
+        .catch((error) => next(error));
+    } else {
+      res.status(500).send(errors);
+    }
+  } else {
+    res.status(500).send("All parameters are required");
+  }
 }
 
 //________________________________________________________________________
@@ -152,4 +146,5 @@ module.exports = {
   postServices,
   getServicesById,
   deleteServices,
+  putServiceById,
 };
