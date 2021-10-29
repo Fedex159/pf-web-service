@@ -16,6 +16,14 @@ import { FormDialog } from "./FormDialog/FormDialog";
 import { getUsers, putUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
+
+const useStyles = makeStyles({
+  button: {
+    marginRight: 5,
+    marginLeft: 5,
+  },
+});
+
 export default function YourAccount() {
   const dispatch = useDispatch();
 
@@ -39,6 +47,7 @@ export default function YourAccount() {
 
   const fileInput = useRef();
 
+
   const handleImageUpload = () => {
     const { files } = document.querySelector('input[type="file"]');
     const formData = new FormData();
@@ -58,6 +67,7 @@ export default function YourAccount() {
       .then((res) => dispatch(putUser(res.secure_url)))
       .catch((err) => console.log(err));
   };
+
 
   return (
     <div>
@@ -153,6 +163,7 @@ export default function YourAccount() {
             marginLeft: 1,
             marginBottom: 1,
           }}
+
         >
           Your Favs
         </Button>

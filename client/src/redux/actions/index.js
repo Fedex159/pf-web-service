@@ -1,12 +1,14 @@
 import { type } from "./variables";
+import serviceURL from "./url";
 import axios from "axios";
+
 //_____________________________________________________________________________________actions service
 // usar axios("/route"), no es necesario http://localhost:3001, ya
 // esta configurado en el archivo index.js
-export function getServices(title, order) {
+export function getServices(obj) {
   return async function (dispatch) {
     try {
-      var json = await axios(`/services?title=${title}&order=${order}`);
+      var json = await axios(serviceURL(obj));
       return dispatch({
         type: type.GET_SERVICES,
         payload: json.data,
@@ -115,22 +117,39 @@ export function banUser(id) {
   };
 }
 
-export function singin(body) {
+//_____________________________________________________________________________________actions provinces
+
+export function getProvinces() {
   return async function (dispatch) {
-    var json = await axios.post(`http://localhost:3001/login`, body);
+    try {
+      var json = await axios(`/provinces`);
+      return dispatch({
+        type: type.GET_PROVINCES,
+        payload: json.data,
+      });
+    } catch (err) {
+      return new Error(err);
+    }
+  };
+}
+
+export function postLogin(body) {
+  return async function (dispatch) {
+    var json = await axios.post(`/login`, body);
     console.log("json", json.data);
     return dispatch({
-      type: "SINGIN_USER",
+      type: type.SINGIN_USER,
       payload: json.data,
     });
   };
 }
 
-export function logout() {
+export function postLogout() {
   return async function (dispatch) {
-    var json = await axios.post(`http://localhost:3001/logout`);
+    var json = await axios.post(`/logout`);
     return dispatch({
-      type: "LOGOUT_USER",
+      type: type.LOGOUT_USER,
+      payload: json,
     });
   };
 }
