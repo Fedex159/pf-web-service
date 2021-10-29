@@ -13,13 +13,11 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
-import FormGroup from '@mui/material/FormGroup';
 
 export default function SideBarNestedBtnDropDown({
   index,
-  text,
   openFromFather,
-  allGroups,
+  group,
 }) {
   const [open, setOpen] = useState(false);
 
@@ -28,37 +26,37 @@ export default function SideBarNestedBtnDropDown({
       setOpen(!open);
     }
   };
+
+  return (
+    <Box key={index}>
+      <ListItemButton onClick={handleClick}>
+        <ListItemIcon>
+          <HomeRepairServiceRoundedIcon />
+        </ListItemIcon>
+        <ListItemText primary={group.name} />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      {openFromFather ? (
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }}>
+              <Box sx={{ display: 'flex' }}>
+                <FormControl
+                  sx={{ m: 3 }}
+                  component="fieldset"
+                  variant="standard"
+                >
+                  {group.categories.map((c) => {
+                    return <SideBarNestedBtnDropDownInner name={c.name} />;
+                  })}
+                </FormControl>
+              </Box>
+            </ListItemButton>
+          </List>
+        </Collapse>
+      ) : (
+        <Collapse in={false} timeout="auto" unmountOnExit></Collapse>
+      )}
+    </Box>
+  );
 }
-
-// const categoriesFromGroups = [];
-// allGroups.map((g) => categoriesFromGroups.push(g.categories));
-
-// <Box key={index}>
-//   <ListItemButton onClick={handleClick}>
-//     <ListItemIcon>
-//       <HomeRepairServiceRoundedIcon />
-//     </ListItemIcon>
-//     <ListItemText primary={text} />
-//     {open ? <ExpandLess /> : <ExpandMore />}
-//   </ListItemButton>
-//   {openFromFather ? (
-//     <Collapse in={open} timeout="auto" unmountOnExit>
-//       <List component="div" disablePadding>
-//         <ListItemButton sx={{ pl: 4 }}>
-//           <Box sx={{ display: 'flex' }}>
-//             <FormControl
-//               sx={{ m: 3 }}
-//               component="fieldset"
-//               variant="standard"
-//             >
-//               {/* {<SideBarNestedBtnDropDownInner />} */}
-//             </FormControl>
-//           </Box>
-//         </ListItemButton>
-//       </List>
-//     </Collapse>
-//   ) : (
-//     <Collapse in={false} timeout="auto" unmountOnExit></Collapse>
-//   )}
-// </Box>
-// );
