@@ -1,5 +1,5 @@
 const { Service, Users, Qualification, Category, Group } = require("../db.js");
-const { orderByPrice, orderByScore } = require("../utils/servicesFilter.js");
+const { orderByPrice } = require("../utils/servicesFilter.js");
 const { validateServices } = require("../utils/validServices");
 
 //por cada ruta un controler
@@ -24,9 +24,7 @@ async function getServices(req, res, next) {
     });
     if (order) {
       orderByPrice(order, dbServices);
-    }
-    if (score) {
-      orderByScore(score, dbServices);
+      return res.send(dbServices);
     }
     if (!title) return res.send(dbServices);
     //Devuelvo todos los servicios
