@@ -17,34 +17,49 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const server = require("./src/app.js");
+const {server,port} = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const { json } = require("./mock/dbJson");
 const { linkAllGroups } = require("./mock/categories");
 const { groups } = require("./mock/groups");
 const { users } = require("./mock/usersJson");
-const { Service, Users, Group } = require("./src/db");
+const { Service, Users, Group, Province, City } = require("./src/db");
+const { loadProvinces } = require("./mock/provinces");
+const { loadCities } = require("./mock/cities");
 const { ENV_VARIABLE } = process.env;
 
 conn.sync({ force: Boolean(Number(ENV_VARIABLE)) }).then(() => {
-  server.listen(3001, async () => {
-    await Group.bulkCreate(groups)
-      .then(() => {
-        console.log("Grupos cargados");
-        Promise.resolve(linkAllGroups()).then(() =>
-          console.log("Categorias cargadas")
+  server.listen(port, async () => {
+    try {
+      var flat = Boolean(Number(ENV_VARIABLE));
+      if (!flat) {
+        console.log(`Force ${flat}, datos no cargados`);
+      } else {
+        await Group.bulkCreate(groups).then(() => {
+          console.log(`force ${flat},Grupos cargados`);
+          Promise.resolve(linkAllGroups()).then(() =>
+            console.log("Categorias cargadas")
+          );
+        });
+
+        await Users.bulkCreate(users, { individualHooks: true }).then(() =>
+          console.log("Users Cargados")
         );
-      })
-      .catch((e) => console.log(e));
 
-    await Users.bulkCreate(users, { individualHooks: true }).then(() =>
-      console.log("Users Cargados")
-    );
+        await Service.bulkCreate(json).then(() =>
+          console.log("Servicios Cargados")
+        );
+        await loadProvinces()
+          .then((data) => Province.bulkCreate(data))
+          .then(() => console.log("Provincias Cargadas"));
 
-    await Service.bulkCreate(json).then(() =>
-      console.log("Servicios Cargados")
-    );
-
-    console.log("----listening on port 3001-----"); // eslint-disable-line no-console
+        await loadCities()
+          .then((data) => City.bulkCreate(data))
+          .then(() => console.log("Ciudades Cargadas"));
+      }
+      console.log(`--------listening on port ${port}---------`); // eslint-disable-line no-console
+    } catch (e) {
+      console.log(e);
+    }
   });
 });
