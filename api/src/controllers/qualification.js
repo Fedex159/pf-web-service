@@ -16,18 +16,6 @@ async function postComment(req, res, next) {
   }
 }
 
-// async function getComments(req, res, next) {
-//   try {
-//     const { comment, score, id } = req.query;
-//     let dbComments = await Service.findAll({
-//       include: [Qualification],
-//     });
-//     if (!id) return res.send(dbComments);
-//   } catch (e) {
-//     next(e);
-//   }
-// }
-
 async function putComment(req, res, next) {
   try {
     //recibo el nuevo comentario y el id del comentario a modificar
