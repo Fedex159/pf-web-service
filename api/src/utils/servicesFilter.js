@@ -1,3 +1,7 @@
+const { Service} = require("../db.js");
+const { Op } = require("sequelize");
+
+
 async function orderByPrice(order, dbServices) {
   order && order === "ASC"
     ? (dbServices = dbServices.sort(function (a, b) {
@@ -18,11 +22,14 @@ async function orderByPrice(order, dbServices) {
         }
         return 0;
       }));
+  console.log('ENTRE FUNCION ORDER')
+
   return dbServices;
 }
 
 
-async function filterByPriceRange(date) {
+async function filterByPriceRange(startRange, endRange) {
+
   let rangeFilter = await Service.findAll({
     where: {
       price: {
@@ -36,6 +43,7 @@ async function filterByPriceRange(date) {
   })
   return rangeFilter;
 }
+
 
 async function filterByDate(date) {
   if (date && date === "ASC" ){
@@ -58,5 +66,6 @@ module.exports = {
   orderByPrice,
   filterByPriceRange,
   filterByDate
+
 
 };

@@ -1,5 +1,4 @@
 
-
 const {
   Service,
   Users,
@@ -12,7 +11,11 @@ const {
 const {
   orderByPrice,
   filterByPriceRange,
+
   filterByDate
+} = require("../utils/servicesFilter.js");
+
+
 } = require("../utils/servicesFilter.js");
 
 const { validateServices } = require("../utils/validServices");
@@ -21,8 +24,11 @@ const { validateServices } = require("../utils/validServices");
 async function getServices(req, res, next) {
 
 
+
   const { title, order, dateOrder } = req.query;
   const { startRange, endRange } = req.query;
+
+
 
 
   try {
@@ -46,10 +52,13 @@ async function getServices(req, res, next) {
       orderByPrice(order, dbServices);
     }
 
+
      //FILTRO POR FECHA
      if (dateOrder) {
       filterByDate(order);
     }
+
+
     //FILTRO POR RANGO
     if (startRange & endRange) {
       let filteredByPriceRange = await filterByPriceRange(startRange, endRange);
@@ -62,7 +71,7 @@ async function getServices(req, res, next) {
       if (dbServices.length > 0) {
         if (title) {
           //si me pasan un title busco en la db los que coincidan
-          filteredServices = [];
+          const filteredServices = [];
           dbServices.map((service) => {
             if (service.title.toLowerCase().includes(title.toLowerCase()))
               filteredServices.push(service);
@@ -80,13 +89,42 @@ async function postServices(req, res, next) {
   try {
     const { userId } = req.cookies;
 
-    const { title, img, description, price, categoryId } = req.body;
+    const { title, img, description, price, categoryId, provinces } = req.body;
     // si se pasaron todos los parametros
-    if (title && img && description && price && categoryId) {
+    if (title && img && description && price && categoryId && provinces) {
       const errors = await validateServices(req.body);
       // si son todos los parametros validos
       if (!Object.keys(errors).length) {
-        await Service.create({ ...req.body, userId, categoryId });
+        const service = await Service.create({
+          ...req.body,
+          userId,
+          categoryId,
+        });
+
+        const promises = [];
+        // cargo las provincias
+        provinces.forEach((p) => {
+          promises.push(
+            Services_provinces.findOrCreate({
+              where: {
+                serviceId: service.id,
+                provinceId: p.id,
+              },
+            })
+          );
+          // cargo las ciudades
+          p.cities.forEach((c) => {
+            promises.push(
+              Services_cities.findOrCreate({
+                where: {
+                  cityId: c,
+                  serviceId: service.id,
+                },
+              })
+            );
+          });
+        });
+        await Promise.all(promises);
         res.json({ data: "Service created " });
       } else {
         res.status(400).json({ data: errors });
