@@ -16,8 +16,9 @@ async function postLogin(req, res, next) {
        }
         const checkPass = await userFinded.validPassword(password);
         if(userFinded.username = username &&  checkPass === true){
-           res.cookie('userId',userFinded.id, {expire : new Date() + 9999, path:"http://localhost:3000/"}); // HttpOnly el acceso al script del cliente no esta permitido
-            
+           res.cookie('userId',userFinded.id, {expire : new Date() + 9999}); // HttpOnly el acceso al script del cliente no esta permitido
+           var cookie = req.cookies
+           console.log(cookie)
            res.send(userFinded.id)
             
 

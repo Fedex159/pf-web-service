@@ -80,6 +80,9 @@ export default function Nav() {
           <Button variant="outlined" color="secondary" size="small">
             {button}
           </Button>
+          <Button variant="outlined" color="secondary" size="small">
+            {button2}
+          </Button>
         </Link>
         <IconButton onClick={routeChange}>
           <Badge color="secondary" badgeContent={count}>
