@@ -114,3 +114,15 @@ export function createService(body) {
     });
   };
 }
+
+export function singin(body) {
+  return async function (dispatch) {
+      var json = await axios.post(`http://localhost:3001/login`, body)
+      console.log("json",json.data)
+      return dispatch({
+          type: 'SINGIN_USER',
+          payload: json.data
+          
+      })
+  }
+}

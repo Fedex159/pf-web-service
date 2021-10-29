@@ -14,4 +14,5 @@ export const type = {
   BANNED_USER: 'BANNED_USER',
   //
   POST_PURCHASE: 'POST_PURCHAS',
+  SINGIN_USER: "SINGIN_USER",
 };
