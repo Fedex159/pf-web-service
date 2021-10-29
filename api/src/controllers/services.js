@@ -1,7 +1,6 @@
-const { Op } = require("sequelize");
 
 const { Service, Users, Qualification, Category, Group } = require("../db.js");
-const { orderByPrice } = require("../utils/servicesFilter.js");
+const { orderByPrice, filterByPriceRange } = require("../utils/servicesFilter.js");
 const { validateServices } = require("../utils/validServices");
 
 //por cada ruta un controler
@@ -32,18 +31,8 @@ async function getServices(req, res, next) {
     }
     //FILTRO POR RANGO
     if(startRange & endRange){
-      let rangeFilter = await Service.findAll({
-        where: {
-          price:{
-            [Op.between]: [startRange, endRange]
-          }
-        },
-        include: {
-          all: true,
-        },
-        order: [['price', ]],
-      });
-      return res.send(rangeFilter);
+      let filteredByPriceRange = await filterByPriceRange(startRange, endRange);
+      return res.send(filteredByPriceRange)
     }
     if (!title) return res.send(dbServices);
     //Devuelvo todos los servicios
