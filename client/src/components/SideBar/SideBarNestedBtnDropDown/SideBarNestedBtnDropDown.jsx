@@ -7,7 +7,7 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import HomeRepairServiceRoundedIcon from '@mui/icons-material/HomeRepairServiceRounded';
+import GradeOutlinedIcon from '@mui/icons-material/GradeOutlined';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -31,7 +31,7 @@ export default function SideBarNestedBtnDropDown({
     <Box key={index}>
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
-          <HomeRepairServiceRoundedIcon />
+          <GradeOutlinedIcon />
         </ListItemIcon>
         <ListItemText primary={group.name} />
         {open ? <ExpandLess /> : <ExpandMore />}
