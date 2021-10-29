@@ -43,6 +43,7 @@ async function getServices(req, res, next) {
     });
     if (order) {
       orderByPrice(order, dbServices);
+      return res.send(dbServices);
     }
 
     //FILTRO POR FECHA

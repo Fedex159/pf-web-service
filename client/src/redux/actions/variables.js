@@ -19,4 +19,8 @@ export const type = {
   LOGOUT_USER: "LOGOUT_USER",
 
 
+
+  //PROVINCES
+  GET_PROVINCES: 'GET_PROVINCES'
+
 };
