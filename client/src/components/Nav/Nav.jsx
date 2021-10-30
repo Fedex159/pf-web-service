@@ -31,7 +31,7 @@ export default function Nav() {
   let button;
   let button2;
   if (document.cookie) {
-    button = `Hello, user`;
+    button = `Your Account`;
   } else {
     button = "Hello, Sign In";
   }
