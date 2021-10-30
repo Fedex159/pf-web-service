@@ -1,38 +1,52 @@
-
-const { Service, Users, Qualification, Category, Group } = require("../db.js");
-const { orderByPrice, filterByPriceRange } = require("../utils/servicesFilter.js");
+const db = require("../db.js");
+const { addRating } = require("../utils/index");
+const {
+  Service,
+  Users,
+  Qualification,
+  Category,
+  Group,
+  conn,
+  Services_users_favourites,
+} = require("../db.js");
+const {
+  orderByPrice,
+  filterByPriceRange,
+} = require("../utils/servicesFilter.js");
 const { validateServices } = require("../utils/validServices");
 
 //por cada ruta un controler
 async function getServices(req, res, next) {
   const { title, order } = req.query;
-  const {startRange, endRange} = req.query;
-
+  const { startRange, endRange } = req.query;
 
   try {
     let dbServices = await Service.findAll({
       //Traigo todo de la db
+      attributes: ["id", "title", "img", "description", "price", "userId"],
+
+      // include: { all: true },
       include: [
         {
-          model: Users,
-          through: { attributes: [] },
-        },
-        Qualification,
-        {
           model: Category,
+          attributes: ["name"],
           include: {
             model: Group,
+            attributes: ["name"],
           },
         },
       ],
     });
+
+    dbServices = await addRating(dbServices);
+
     if (order) {
       orderByPrice(order, dbServices);
     }
     //FILTRO POR RANGO
-    if(startRange & endRange){
+    if (startRange & endRange) {
       let filteredByPriceRange = await filterByPriceRange(startRange, endRange);
-      return res.send(filteredByPriceRange)
+      return res.send(filteredByPriceRange);
     }
     if (!title) return res.send(dbServices);
     //Devuelvo todos los servicios
@@ -46,8 +60,7 @@ async function getServices(req, res, next) {
               filteredServices.push(service);
           });
           return res.send(filteredServices); //Si coincide mando el servicio con ese title
-        }
-        else return dbServices; //Si no, devuelvo todos los servicios
+        } else return dbServices; //Si no, devuelvo todos los servicios
       }
     }
   } catch (err) {
