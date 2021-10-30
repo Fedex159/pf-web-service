@@ -12,9 +12,9 @@ const {
 } = require("./functionsFilters.js");
 
 //--------------------------------------------------------------------------
-const servicesFilters =  function (objQuery, res, next) {
+const servicesFilters = function (objQuery, res, next) {
   if (objQuery.title) {
-   orderTitle(objQuery.title, res, next);
+    orderTitle(objQuery.title, res, next);
   }
   if (objQuery.province) {
     orderProvince(objQuery.province, res, next);
@@ -24,11 +24,10 @@ const servicesFilters =  function (objQuery, res, next) {
   }
 };
 
-//------------------------------------------------------------------------------------------------------functiones que ordenan y filtran
+//--------------------------------------------------------------------------------------------------routea functiones que ordenan y filtran
 function orderCategory(objQuery, res, next) {
   switch (objQuery.category) {
     case "price": {
-        console.log("entre a price")
       orderByPrice(objQuery, res, next);
       break;
     }
@@ -44,6 +43,7 @@ function orderCategory(objQuery, res, next) {
       orderByQualifications(objQuery, res, next);
       break;
     }
+    
   }
 }
 
