@@ -162,3 +162,17 @@ export const getUserFavs = (userId) => {
     );
   };
 };
+// Shopping
+export function addCart(service) {
+  return {
+    type: type.ADD_CART,
+    payload: service,
+  };
+}
+
+export function removeCart(idService) {
+  return {
+    type: type.REMOVE_CART,
+    payload: idService,
+  };
+}
