@@ -99,19 +99,47 @@ async function getServicesById(req, res, next) {
       where: {
         id: id,
       },
+      attributes: [
+        "id",
+        "title",
+        "img",
+        "description",
+        "price",
+        "userId",
+        "createdAt",
+        "updatedAt",
+        "userId",
+      ],
       include: [
-        Qualification,
+        {
+          model: Qualification,
+          include: {
+            model: Users,
+            attributes: ["userImg", "username"],
+          },
+        },
         {
           model: Category,
+          attributes: ["name"],
           include: {
             model: Group,
+            attributes: ["name"],
           },
         },
       ],
     });
 
+    service = await addRating(service, service.id);
+
+    let user = await Users.findOne({
+      where: {
+        id: service.dataValues.userId,
+      },
+      attributes: ["id", "userImg", "username", "name", "lastname", "email"],
+    });
+
     service
-      ? res.status(200).send(service)
+      ? res.status(200).send({ service, user })
       : res.status(404).send({ message: `Service (id: ${id}) not found` });
   } catch (e) {
     next(e);
