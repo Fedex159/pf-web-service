@@ -153,3 +153,12 @@ export function postLogout() {
     });
   };
 }
+
+export const getUserFavs = (userId) => {
+  return async function (dispatch) {
+    return await axios(`http://localhost:3001/favs/${userId}`).then(
+      (response) =>
+        dispatch({ type: type.GET_USER_FAVS, payload: response.data })
+    );
+  };
+};
