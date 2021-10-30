@@ -12,7 +12,7 @@ import {
 import { AddShoppingCart, Favorite, Share, Close } from "@mui/icons-material";
 
 export default function DetailService({ id }) {
-  let [service, setService] = useState({});
+  let [service, setService] = useState({ service: {}, user: {} });
 
   let history = useHistory();
 
@@ -31,7 +31,8 @@ export default function DetailService({ id }) {
   const IMG_TEMPLATE =
     "https://codyhouse.co/demo/squeezebox-portfolio-template/img/img.png";
 
-  let { img, title, price, description, rating } = service.service;
+  let { img, title, price, description, rating, qualifications } =
+    service.service;
 
   return (
     <Box
@@ -89,12 +90,14 @@ export default function DetailService({ id }) {
           </Typography>
           <Rating
             name="read-only"
-            value={rating}
+            value={Number(rating)}
             precision={0.5}
             readOnly
             sx={{}}
           />
-          {rating ? rating : "84 opiniones"}
+          {qualifications
+            ? `${qualifications.length} opiniones`
+            : "0 opiniones"}
         </Box>
 
         <Box
