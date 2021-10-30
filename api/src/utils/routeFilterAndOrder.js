@@ -12,9 +12,9 @@ const {
 } = require("./functionsFilters.js");
 
 //--------------------------------------------------------------------------
-const servicesFilters = async function (objQuery, res, next) {
+const servicesFilters =  function (objQuery, res, next) {
   if (objQuery.title) {
-    orderTitle(dbServices, objQuery.title, res, next);
+   orderTitle(objQuery.title, res, next);
   }
   if (objQuery.province) {
     orderProvince(objQuery.province, res, next);
