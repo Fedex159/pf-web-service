@@ -1,9 +1,13 @@
+const db = require("../db.js");
+const { addRating } = require("../utils/index");
 const {
   Service,
   Users,
   Qualification,
   Category,
   Group,
+  conn,
+  Services_users_favourites,
   Services_provinces,
   Services_cities,
 } = require("../db.js");
@@ -17,16 +21,16 @@ function getServices(req, res, next) {
   } else {
     Service.findAll({
       //Traigo todo de la db
+      attributes: ["id", "title", "img", "description", "price", "userId"],
+
+      // include: { all: true },
       include: [
         {
-          model: Users,
-          through: { attributes: [] },
-        },
-        Qualification,
-        {
           model: Category,
+          attributes: ["name"],
           include: {
             model: Group,
+            attributes: ["name"],
           },
         },
       ],
@@ -100,19 +104,47 @@ async function getServicesById(req, res, next) {
       where: {
         id: id,
       },
+      attributes: [
+        "id",
+        "title",
+        "img",
+        "description",
+        "price",
+        "userId",
+        "createdAt",
+        "updatedAt",
+        "userId",
+      ],
       include: [
-        Qualification,
+        {
+          model: Qualification,
+          include: {
+            model: Users,
+            attributes: ["userImg", "username"],
+          },
+        },
         {
           model: Category,
+          attributes: ["name"],
           include: {
             model: Group,
+            attributes: ["name"],
           },
         },
       ],
     });
 
+    service = await addRating(service, service.id);
+
+    let user = await Users.findOne({
+      where: {
+        id: service.dataValues.userId,
+      },
+      attributes: ["id", "userImg", "username", "name", "lastname", "email"],
+    });
+
     service
-      ? res.status(200).send(service)
+      ? res.status(200).send({ service, user })
       : res.status(404).send({ message: `Service (id: ${id}) not found` });
   } catch (e) {
     next(e);
