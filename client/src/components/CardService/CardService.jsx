@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { getUserFavs } from "../../redux/actions";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -10,11 +12,19 @@ import { Typography, CardActionArea } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Rating from "@mui/material/Rating";
 import { Link } from "react-router-dom";
+import { handleFav } from "../../utils/buttonHandlers";
 
 const IMG_TEMPLATE =
   "https://codyhouse.co/demo/squeezebox-portfolio-template/img/img.png";
 
-function CardService({ service }) {
+const theme = {
+  favorite: {
+    1: { color: "red" },
+    0: { color: "grey" },
+  },
+};
+
+function CardService({ service, favs, getUserFavs }) {
   const { title, img, price, id } = service;
   const rating = 5;
   return (
@@ -42,8 +52,22 @@ function CardService({ service }) {
       </CardActionArea>
 
       <CardActions disableSpacing>
-        <IconButton onClick={() => {}} aria-label="add to favorites">
-          <FavoriteIcon sx={{}} />
+        <IconButton
+          onClick={async () => {
+            let fav = favs.find((s) => s.serviceId === id) ? true : false;
+            console.log(fav);
+            await handleFav(fav, id);
+            getUserFavs(document.cookie.split("=")[1]);
+          }}
+          aria-label="add to favorites"
+        >
+          <FavoriteIcon
+            sx={
+              favs.find((f) => f.serviceId === id)
+                ? theme.favorite["1"]
+                : theme.favorite["0"]
+            }
+          />
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
@@ -62,4 +86,10 @@ function CardService({ service }) {
   );
 }
 
-export default CardService;
+const mapStatetoProps = (state) => {
+  return {
+    favs: state.favs,
+  };
+};
+
+export default connect(mapStatetoProps, { getUserFavs })(CardService);
