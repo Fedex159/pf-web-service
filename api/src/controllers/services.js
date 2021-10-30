@@ -8,16 +8,20 @@ const {
   Group,
   conn,
   Services_users_favourites,
+  Services_provinces,
+  Services_cities,
 } = require("../db.js");
 const {
   orderByPrice,
   filterByPriceRange,
+  filterByDate,
 } = require("../utils/servicesFilter.js");
+
 const { validateServices } = require("../utils/validServices");
 
 //por cada ruta un controler
 async function getServices(req, res, next) {
-  const { title, order } = req.query;
+  const { title, order, dateOrder } = req.query;
   const { startRange, endRange } = req.query;
 
   try {
@@ -42,12 +46,21 @@ async function getServices(req, res, next) {
 
     if (order) {
       orderByPrice(order, dbServices);
+      return res.send(dbServices);
     }
+
+    //FILTRO POR FECHA
+    /* if (dateOrder) {
+      filterByDate(order);
+    }
+
     //FILTRO POR RANGO
     if (startRange & endRange) {
       let filteredByPriceRange = await filterByPriceRange(startRange, endRange);
       return res.send(filteredByPriceRange);
     }
+    }*/
+
     if (!title) return res.send(dbServices);
     //Devuelvo todos los servicios
     else {
@@ -72,13 +85,42 @@ async function postServices(req, res, next) {
   try {
     const { userId } = req.cookies;
 
-    const { title, img, description, price, categoryId } = req.body;
+    const { title, img, description, price, categoryId, provinces } = req.body;
     // si se pasaron todos los parametros
-    if (title && img && description && price && categoryId) {
+    if (title && img && description && price && categoryId && provinces) {
       const errors = await validateServices(req.body);
       // si son todos los parametros validos
       if (!Object.keys(errors).length) {
-        await Service.create({ ...req.body, userId, categoryId });
+        const service = await Service.create({
+          ...req.body,
+          userId,
+          categoryId,
+        });
+
+        const promises = [];
+        // cargo las provincias
+        provinces.forEach((p) => {
+          promises.push(
+            Services_provinces.findOrCreate({
+              where: {
+                serviceId: service.id,
+                provinceId: p.id,
+              },
+            })
+          );
+          // cargo las ciudades
+          p.cities.forEach((c) => {
+            promises.push(
+              Services_cities.findOrCreate({
+                where: {
+                  cityId: c,
+                  serviceId: service.id,
+                },
+              })
+            );
+          });
+        });
+        await Promise.all(promises);
         res.json({ data: "Service created " });
       } else {
         res.status(400).json({ data: errors });
