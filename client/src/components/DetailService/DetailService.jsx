@@ -31,7 +31,7 @@ export default function DetailService({ id }) {
   const IMG_TEMPLATE =
     "https://codyhouse.co/demo/squeezebox-portfolio-template/img/img.png";
 
-  let { img, title, price, description, rating } = service;
+  let { img, title, price, description, rating } = service.service;
 
   return (
     <Box
