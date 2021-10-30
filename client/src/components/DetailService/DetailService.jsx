@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { handleFav } from "../../utils/buttonHandlers";
+import CardUser from "../CardUser/CardUser";
 import {
   Box,
   CardMedia,
@@ -158,6 +159,10 @@ export default function DetailService({ id }) {
             {" "}
             {description}{" "}
           </Typography>
+        </Box>
+
+        <Box gridColumn="span 12">
+          <CardUser user={service.user} />
         </Box>
       </Box>
     </Box>
