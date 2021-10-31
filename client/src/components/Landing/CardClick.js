@@ -35,7 +35,7 @@ export default function CardClick({ infoCardClick, checked }) {
       <CardMedia
         className={classes.media}
         image={infoCardClick.imageUrl}
-        title="Contemplative Reptile"
+        title="illustrative image"
       />
       <CardContent>
         <Typography

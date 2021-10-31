@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Collapse, IconButton, Toolbar } from "@material-ui/core";
+import {
+  AppBar,
+  Box,
+  Collapse,
+  IconButton,
+  Modal,
+  Toolbar,
+} from "@material-ui/core";
 import SortIcon from "@material-ui/icons/Sort";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Link as Scroll } from "react-scroll";
+import Login from "../Login/Login";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Nunito",
   },
   appbarWrapper: {
-    width: "80%",
+    width: "100%",
     textAlign: "left",
   },
   appbarTitle: {
@@ -47,6 +56,16 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
+  const [login, setLogin] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+  const history = useHistory();
+  if (login) {
+    history.push("/home");
+  }
+  const handleLogin = () => {
+    setLoginModal((prev) => !prev);
+  };
+
   useEffect(() => {
     setChecked(true);
   }, []);
@@ -57,9 +76,28 @@ const Header = () => {
           <h1 className={classes.appbarTitle}>
             WEB <span className={classes.colorText}>SERVICE. </span>
           </h1>
-          <IconButton>
-            <SortIcon className={classes.icon} />
-          </IconButton>
+          {!login ? (
+            <IconButton onClick={handleLogin}>
+              <SortIcon className={classes.icon} />
+            </IconButton>
+          ) : null}
+          <Modal
+            open={loginModal}
+            onClose={setLoginModal}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                height: "100%",
+                width: "100%",
+              }}
+            >
+              <Login setLoginModal={setLoginModal} setLogin={setLogin} />
+            </Box>
+          </Modal>
         </Toolbar>
       </AppBar>
       <Collapse

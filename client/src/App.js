@@ -6,11 +6,8 @@ import DetailService from "./components/DetailService/DetailService";
 import YourAccount from "./components/YourAccount/YourAccount";
 import Chat from "./components/chat/chat";
 import React from "react";
-<<<<<<< HEAD
 import Login from "./components/Login/Login";
 import Landing from "./components/Landing/Landing";
-=======
->>>>>>> e128078e238f751c68c5c43e852b862bd305d835
 
 function App() {
   return (
