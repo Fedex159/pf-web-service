@@ -1,14 +1,16 @@
 import "./App.css";
 import { Route } from "react-router-dom";
 import Home from "./components/Home/Home";
-import Register from "./components/Register/Register";
 import CreateService from "./components/CreateService/CreateService";
 import DetailService from "./components/DetailService/DetailService";
 import YourAccount from "./components/YourAccount/YourAccount";
 import Chat from "./components/chat/chat";
 import React from "react";
+<<<<<<< HEAD
 import Login from "./components/Login/Login";
 import Landing from "./components/Landing/Landing";
+=======
+>>>>>>> e128078e238f751c68c5c43e852b862bd305d835
 
 function App() {
   return (
@@ -16,7 +18,6 @@ function App() {
       <Route exact path="/" component={Landing} />
       <Route exact path="/home" component={Home} />
       <Route exact path="/chat" component={Chat} />
-      <Route exact path="/register" component={Register} />
       <Route exact path="/service" component={CreateService} />
       <Route
         exact
@@ -26,7 +27,6 @@ function App() {
         }}
       />
       <Route exact path="/account" component={YourAccount} />
-      <Route exact path="/login" component={Login} />
     </div>
   );
 }

@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 
 import s from "./YourAccount.module.css";
 
-import { Button, Avatar } from "@mui/material";
+//-------------- MATERIAL UI -------------------------------------
+import Button from '@mui/material/Button'
+import { Avatar } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
@@ -10,36 +12,50 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import DataSaverOffIcon from "@mui/icons-material/DataSaverOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import HomeIcon from "@mui/icons-material/Home";
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+//-------------------------------------------------------
+
 import CardService from "../CardService/CardService";
-import { Container, Grid, IconButton } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import { FormDialog } from "./FormDialog/FormDialog";
-import { getUsers, putUser } from "../../redux/actions";
+import { postLogout } from "../../utils/login";
+import { getUsersById, putUser } from "../../redux/actions";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function YourAccount() {
   const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.users);
+  const userId = document.cookie.slice(7);
 
+  useEffect(() => {
+    dispatch(getUsersById(userId));
+    // eslint-disable-next-line
+  }, []);
+
+  //BOTONES - YOUR ORDERS - YOUR FAVS - YOUR SERVICES
   const [viewServices, setViewservices] = useState(false);
   const [viewOrders, setViewOrders] = useState(false);
   const [viewFavs, setViewFavs] = useState(false);
+  //----------------------------------------------
 
+  //MODAL FORM PARA CAMBIAR DATOS
   const [openForm, setOpenForm] = useState(false);
+  //-----------------------------------
 
+  //ESTADOS APRA ALMACENAR LA IMAGEN CUANDO LA QUIERA CAMBIAR
+  // eslint-disable-next-line
   const [img, setImg] = useState("");
-  const [url, setUrl] = useState("");
 
-  console.log(img);
-  console.log(url);
+  //---------------------------------------------------
 
-  useEffect(() => {
-    dispatch(getUsers("aclowsere"));
-  }, []);
-
+  //REFERENCIA PARA ESCONDER EL INPUT DE CARGA DE IMAGEN
   const fileInput = useRef();
+  //----------------------------------------------------
 
+  //HANDLE IMAGEN CLOUDINARY
   const handleImageUpload = () => {
     const { files } = document.querySelector('input[type="file"]');
     const formData = new FormData();
@@ -59,9 +75,22 @@ export default function YourAccount() {
       .then((res) => dispatch(putUser({ userImg: res.secure_url })))
       .catch((err) => console.log(err));
   };
+  //--------------------------------------------------------------
+
+  // HANDLE LOGOUT
+  const logOutClear = async () => {
+    document.cookie = "userId=; max-age=0";
+    await postLogout();
+  };
+  //-------------------------------
+  // eslint-disable-next-line
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
   return (
     <div>
+      {/* ---------------    'NAVBAR' ---------------------------------------- */}
       <div className={s.nav}>
         <Link to="/">
           <IconButton color="secondary">
@@ -69,8 +98,24 @@ export default function YourAccount() {
           </IconButton>
         </Link>
         <p className={s.yourAccount}>Your Account</p>
+
+        <div className={s.logOut}>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="small"
+              onClick={logOutClear}
+            >
+              LOG OUT
+            </Button>
+          </Link>
+        </div>
       </div>
 
+      {/* --------------------------------------------------------- */}
+
+      {/* ------------------------USERINFO--------------------------- */}
       <div className={s.user}>
         <div>
           <Avatar
@@ -128,6 +173,10 @@ export default function YourAccount() {
           <p>{userData.location}</p>
         </div>
       </div>
+
+      {/* ------------------------------------------------------- */}
+
+      {/* ----------------------  BOTONERA ------------------------------------------- */}
 
       <div className={s.botonera}>
         <Button
@@ -212,16 +261,35 @@ export default function YourAccount() {
         </Button>
       </div>
 
-      {viewFavs && (
-        <Container>
-          <div>
-            <h1>YOUR FAVS</h1>
-            {userData.qualifications.map((s) => (
-              <CardService service={s} />
-            ))}
+      {/* ------------------------------------------------------ */}
+
+      {/* -------------------FAVS------------------------ */}
+      {viewFavs &&
+        (userData.qualifications.length > 0 ? (
+          <Container>
+            <div>
+              {userData.qualifications.map((s) => (
+                <Grid item key={s.id}>
+                  <CardService service={s} />
+                </Grid>
+              ))}
+            </div>
+          </Container>
+        ) : (
+          <div className={s.addFavContainer}>
+            <h3>Your Fav-list is currently empty</h3>
+            <div className={s.addToFav}>
+              <p>
+                Add Services that you like and want to see later by clicking on
+                the
+              </p>
+              <FavoriteIcon sx={{ marginLeft: 1 }} />
+            </div>
           </div>
-        </Container>
-      )}
+        ))}
+      {/* ------------------------------------------------ */}
+
+      {/* ------------------ORDERS---------------------------- */}
       {viewOrders && (
         <Container>
           <div>
@@ -229,19 +297,33 @@ export default function YourAccount() {
           </div>
         </Container>
       )}
-      {viewServices && (
-        <div>
-          <Container>
-            <Grid container justifyContent="center" spacing={3}>
-              {userData.services.map((s) => (
-                <Grid item key={s.id}>
-                  <CardService service={s} />
-                </Grid>
-              ))}
-            </Grid>
-          </Container>
-        </div>
-      )}
+      {/* ----------------------------------------------------- */}
+
+      {/* -------------------SERVICES-------------------------- */}
+      {viewServices &&
+        (userData.services.length > 0 ? (
+          <div>
+            <Container>
+              <Grid container justifyContent="center" spacing={3}>
+                {userData.services.map((s) => (
+                  <Grid item key={s.id}>
+                    <CardService service={s} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
+          </div>
+        ) : (
+          <div className={s.addFavContainer}>
+            <h3>You are currently not offering any services</h3>
+            <div className={s.addToFav}>
+              <p>
+                Post Services that you want to offer by clicking on POST SERVICE
+              </p>
+            </div>
+          </div>
+        ))}
+      {/* ---------------------------------------------- */}
 
       <FormDialog setOpenForm={setOpenForm} openForm={openForm} />
     </div>

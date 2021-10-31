@@ -107,6 +107,17 @@ export function getUsers(username) {
   };
 }
 
+export function getUsersById(id) {
+  return async (dispatch) => {
+    try {
+      const res = await axios(`/users?id=${id}`);
+      return dispatch({ type: type.GET_USERS_BY_ID, payload: res.data });
+    } catch (err) {
+      return new Error(err);
+    }
+  };
+}
+
 export function banUser(id) {
   return async () => {
     try {
@@ -133,23 +144,25 @@ export function getProvinces() {
   };
 }
 
-export function postLogin(body) {
+export const getUserFavs = (userId) => {
   return async function (dispatch) {
-    var json = await axios.post(`/login`, body);
-    console.log("json", json.data);
-    return dispatch({
-      type: type.SINGIN_USER,
-      payload: json.data,
-    });
+    return await axios(`http://localhost:3001/favs/${userId}`).then(
+      (response) =>
+        dispatch({ type: type.GET_USER_FAVS, payload: response.data })
+    );
+  };
+};
+// Shopping
+export function addCart(service) {
+  return {
+    type: type.ADD_CART,
+    payload: service,
   };
 }
 
-export function postLogout() {
-  return async function (dispatch) {
-    var json = await axios.post(`/logout`);
-    return dispatch({
-      type: type.LOGOUT_USER,
-      payload: json,
-    });
+export function removeCart(idService) {
+  return {
+    type: type.REMOVE_CART,
+    payload: idService,
   };
 }

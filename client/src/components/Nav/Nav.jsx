@@ -1,117 +1,119 @@
-import React from "react";
-// import AppBar from '@mui/material/AppBar';
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import React, { useState, useEffect } from "react";
+import { Box, Toolbar, Button, AppBar, Modal } from "@mui/material";
 import SearchBar from "../SearchBar/SearchBar";
-// import MenuIcon from '@mui/icons-material/Menu';
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Badge } from "@mui/material";
-import { Button } from "@mui/material";
-import { useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { postLogout } from "../../redux/actions";
-import { useDispatch } from "react-redux";
+import Cart from "../Cart/Cart";
+import SideBar from "../SideBar/SideBar";
+import UserMenu from "./UserMenu";
+import Login from "../Login/Login";
+import Register from "../Register/Register";
 
 export default function Nav() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const cookiesState = useSelector((state) => state.cookies);
-  if (cookiesState.length > 0) {
-    document.cookie =
-      encodeURIComponent("userId") + "=" + encodeURIComponent(cookiesState);
-    console.log(document.cookie);
-  }
+  const [login, setLogin] = useState(false);
+  const [registerModal, setRegisterModal] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+  const [cookie, setCookie] = useState(document.cookie);
 
-  const routeChange = () => {
-    let path = "/carrito";
-    history.push(path);
+  useEffect(() => {
+    setCookie(() => document.cookie);
+  }, []);
+
+  // Descomentar para ver las cookies en la consola del navegador
+  // console.log("Cookies: ", document.cookie);
+
+  const handleLogin = () => {
+    setLoginModal((prev) => !prev);
+    setRegisterModal(() => false);
   };
 
-  const logOutClear = () => {
-    document.cookie = "userId=; max-age=0";
-    dispatch(postLogout());
-    history.push("/login");
+  const handleRegister = () => {
+    setRegisterModal((prev) => !prev);
+    setLoginModal(() => false);
   };
 
-  //cheque si el usuario esta logeado
-  // const user = useSelector((state) => state.userData);
-  let button;
-  let button2;
-  if (document.cookie) {
-    button = `Your Account`;
-  } else {
-    button = "Hello, Sign In";
-  }
-
-  if (document.cookie) {
-    button2 = `LogOut`;
-  } else {
-    button2 = "Register";
-  }
-
-  let reDirect;
-  if (document.cookie) {
-    reDirect = "/account";
-  } else {
-    reDirect = "/login";
-  }
-  let reDirect2;
-  if (!document.cookie) {
-    reDirect2 = "/register";
-  } else {
-    reDirect2 = "/login";
-  }
-
-  console.log('COOKIE:', document.cookie);
-
-  //-- count tiene que ser igual a las cosas que hayan en el carrito
-
-  let count = 4;
-
-  //--------------------
-  //solo saqué el botón porque lo tengo en la SideBar
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Toolbar>
-        {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
+    <Box sx={{ flexGrow: 1, width: "101%" }}>
+      <AppBar position="fixed" sx={{ zIndex: "9999" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: "5px",
+          }}
+        >
+          <Box>
+            <SideBar />
+          </Box>
+          <Box sx={{ width: "50%", ml: "auto", mr: "auto" }}>
+            <SearchBar />
+          </Box>
+
+          {/* Register */}
+
+          {login || cookie ? null : (
+            <Button
+              variant="contained"
+              size="medium"
+              color="secondary"
+              onClick={handleRegister}
+            >
+              Register
+            </Button>
+          )}
+          <Modal
+            open={registerModal}
+            onClose={handleRegister}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
           >
-            <MenuIcon />
-          </IconButton> */}
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-        ></Typography>
-        <SearchBar />
-        <Link to={reDirect} style={{ textDecoration: "none" }}>
-          <Button variant="outlined" color="secondary" size="small">
-            {button}
-          </Button>
-        </Link>
-        <Link to={reDirect2} style={{ textDecoration: "none" }}>
-          <Button
-            variant="outlined"
-            color="secondary"
-            size="small"
-            onClick={logOutClear}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                height: "100%",
+                width: "100%",
+              }}
+            >
+              <Register setRegisterModal={setRegisterModal} />
+            </Box>
+          </Modal>
+
+          {/* Login */}
+
+          {!login && !cookie ? (
+            <Button
+              variant="contained"
+              size="medium"
+              color="secondary"
+              onClick={handleLogin}
+            >
+              Login
+            </Button>
+          ) : null}
+          <Modal
+            open={loginModal}
+            onClose={handleLogin}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
           >
-            {button2}
-          </Button>
-        </Link>
-        <IconButton onClick={routeChange}>
-          <Badge color="secondary" badgeContent={count}>
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-      </Toolbar>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                height: "100%",
+                width: "100%",
+              }}
+            >
+              <Login setLogin={setLogin} setLoginModal={setLoginModal} />
+            </Box>
+          </Modal>
+
+          <Cart />
+          {login || cookie ? (
+            <UserMenu setLogin={setLogin} setCookie={setCookie} />
+          ) : null}
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }
