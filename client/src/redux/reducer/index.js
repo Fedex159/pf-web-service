@@ -1,4 +1,4 @@
-import { type } from "../actions/variables";
+import { type } from '../actions/variables';
 
 const initialState = {
   services: [],
@@ -7,10 +7,12 @@ const initialState = {
   provinces: [],
   favs: [],
   cart: [],
+  categories: [],
 };
 
 const rootReducer = (state = initialState, action) => {
   const { payload } = action;
+
   switch (action.type) {
     //usar importacion type que incluye las constantes para facilitarte,agregar constantes si es necesario en variables.js ""
 
@@ -49,6 +51,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         favs: action.payload,
+      };
+
+    case type.POST_CATEGORY:
+      return {
+        ...state,
+        categories: payload,
       };
     default:
       return state;

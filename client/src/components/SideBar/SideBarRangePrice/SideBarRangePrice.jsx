@@ -1,19 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { getServices } from '../../../redux/actions';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 
-export default function SideBarRanges({ text, index }) {
+export default function SideBarRangePrice({ text, index }) {
+  const dispatch = useDispatch();
+  const allCategories = useSelector((state) => state.categories);
+
   const [rangePrice, setRangePrice] = useState({
     ascending: true,
     descending: false,
   });
 
+  //dispatcho el objeto que necesita db con allCategories que refiere a la categorí tildad en checkbox de sub-grupos
   const handleChangeCheck = (event) => {
+    let obj = {
+      category: allCategories,
+      order: event.target.value,
+      filter: 'price',
+    };
+
     if (event.target.name === 'ascending') {
       setRangePrice({
         descending: false,
@@ -26,7 +39,10 @@ export default function SideBarRanges({ text, index }) {
         [event.target.name]: event.target.checked,
       });
     }
+
+    dispatch(getServices(obj));
   };
+
   return (
     <List>
       <ListItem button key={index}>
@@ -42,7 +58,7 @@ export default function SideBarRanges({ text, index }) {
         />
         <FormControlLabel
           name="descending"
-          value="DES"
+          value="DESC"
           control={<Checkbox />}
           label="des"
           labelPlacement="top"
