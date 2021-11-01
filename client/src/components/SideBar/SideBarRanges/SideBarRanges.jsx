@@ -1,9 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default function SideBarRanges() {
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import List from '@mui/material/List';
+
+export default function SideBarRanges({ text, index }) {
+  const [rangePrice, setRangePrice] = useState({
+    ascending: true,
+    descending: false,
+  });
+
+  const handleChangeCheck = (event) => {
+    if (event.target.name === 'ascending') {
+      setRangePrice({
+        descending: false,
+        [event.target.name]: event.target.checked,
+      });
+    }
+    if (event.target.name === 'descending') {
+      setRangePrice({
+        ascending: false,
+        [event.target.name]: event.target.checked,
+      });
+    }
+  };
   return (
-    <div>
-      <p>SideBarRanges</p>
-    </div>
+    <List>
+      <ListItem button key={index}>
+        <ListItemText primary={text} />
+        <FormControlLabel
+          name="ascending"
+          value="ASC"
+          control={<Checkbox />}
+          label="asc"
+          labelPlacement="top"
+          checked={rangePrice.ascending}
+          onChange={handleChangeCheck}
+        />
+        <FormControlLabel
+          name="descending"
+          value="DES"
+          control={<Checkbox />}
+          label="des"
+          labelPlacement="top"
+          checked={rangePrice.descending}
+          onChange={handleChangeCheck}
+        />
+      </ListItem>
+    </List>
   );
 }

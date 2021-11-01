@@ -61,31 +61,10 @@ export default function MiniDrawer() {
       <Drawer open={open} sx={{ width: drawerWidth }}>
         <SideBarNested openFromFather={open} />
         <Divider />
-        <List>
-          {['Price Range', 'Date Range'].map((text, index) => (
-            <ListItem button key={index}>
-              <ListItemText primary={text} />
-              <FormControlLabel
-                name="ascending"
-                value="ASC"
-                control={<Checkbox />}
-                label="asc"
-                labelPlacement="top"
-                checked={rangePrice.ascending}
-                onChange={handleChangeCheck}
-              />
-              <FormControlLabel
-                name="descending"
-                value="DES"
-                control={<Checkbox />}
-                label="des"
-                labelPlacement="top"
-                checked={rangePrice.descending}
-                onChange={handleChangeCheck}
-              />
-            </ListItem>
-          ))}
-        </List>
+        {['Price Range', 'Date Range'].map((text, index) => {
+          return <SideBarRanges text={text} key={index} />;
+        })}
+
         <Divider />
         <List>
           {['Info', 'About', 'Something'].map((text, index) => (
