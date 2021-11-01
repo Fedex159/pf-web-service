@@ -5,7 +5,7 @@ const {
   orderByQualifications,
   filterByDate,
   orderTitle,
-  orderProvince,
+  orderByProvince,
   orderByPrice,
 } = require('./functionsFilters.js');
 const {
@@ -19,7 +19,6 @@ const {
   Services_provinces,
   Services_cities,
 } = require('../db.js');
-const { addRating } = require('../utils/index');
 
 //--------------------------------------------------------------------------
 const servicesFilters = function (objQuery, res, next) {
@@ -52,36 +51,8 @@ async function orderCategory(objQuery, res, next) {
     }
 
     case 'title': {
-      const { name } = objQuery;
-      dbServices = await Service.findAll({
-        //Traigo todo de la db
-        attributes: ['id', 'title', 'img', 'description', 'price', 'userId'],
-
-        // include: { all: true },
-        include: [
-          {
-            model: Category,
-            attributes: ['name'],
-            include: {
-              model: Group,
-              attributes: ['name'],
-            },
-          },
-        ],
-      });
-
-      dbServices = await addRating(dbServices);
-      if (dbServices.length > 0) {
-        if (name) {
-          //si me pasan un title busco en la db los que coincidan
-          const filteredServices = [];
-          dbServices.map((service) => {
-            if (service.title.toLowerCase().includes(name.toLowerCase()))
-              filteredServices.push(service);
-          });
-          return res.send(filteredServices); //Si coincide mando el servicio con ese title
-        } else return dbServices; //Si no, devuelvo todos los servicios
-      }
+      orderTitle(objQuery, res, next);
+      break;
     }
   }
 }
