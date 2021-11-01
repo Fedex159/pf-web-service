@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function Home() {
   const classes = useStyles();
   const servicesState = useSelector((state) => state.services);
@@ -25,6 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getServices());
+
     document.cookie && dispatch(getUserFavs(document.cookie.split("=")[1]));
   }, [dispatch]);
 

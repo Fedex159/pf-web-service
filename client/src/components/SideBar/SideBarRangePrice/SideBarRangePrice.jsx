@@ -1,71 +1,91 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getServices } from '../../../redux/actions';
 
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import List from '@mui/material/List';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import Button from '@mui/material/Button';
 
-export default function SideBarRangePrice({ text, index }) {
+export default function SideBarRangePrice() {
   const dispatch = useDispatch();
   const allCategories = useSelector((state) => state.categories);
+  const allServices = useSelector((state) => state.services);
 
   const [rangePrice, setRangePrice] = useState({
-    ascending: true,
-    descending: false,
+    startRange: '',
+    endRange: '',
   });
 
-  //dispatcho el objeto que necesita db con allCategories que refiere a la categorí tildad en checkbox de sub-grupos
-  const handleChangeCheck = (event) => {
-    let obj = {
-      category: allCategories,
-      order: event.target.value,
-      filter: 'price',
-    };
-
-    if (event.target.name === 'ascending') {
+  const handleMinMaxChange = (event) => {
+    if (event.target.id === 'startRange') {
       setRangePrice({
-        descending: false,
-        [event.target.name]: event.target.checked,
+        ...rangePrice,
+        [event.target.id]: Number(event.target.value),
       });
     }
-    if (event.target.name === 'descending') {
+    if (event.target.id === 'endRange') {
       setRangePrice({
-        ascending: false,
-        [event.target.name]: event.target.checked,
+        ...rangePrice,
+        [event.target.id]: Number(event.target.value),
       });
     }
-
-    dispatch(getServices(obj));
   };
 
+  const handleBtn = () => {
+    let obj = {
+      category: allCategories,
+      order: 'ASC',
+      filter: 'price',
+      startRange: rangePrice.startRange,
+      endRange: rangePrice.endRange,
+    };
+
+    if (rangePrice.startRange < rangePrice.endRange) {
+      // console.log(obj);
+      dispatch(getServices(obj));
+      setRangePrice({
+        startRange: '',
+        endRange: '',
+      });
+    }
+  };
+
+  // console.log(allServices)
+
   return (
-    <List>
-      <ListItem button key={index}>
-        <ListItemText primary={text} />
-        <FormControlLabel
-          name="ascending"
-          value="ASC"
-          control={<Checkbox />}
-          label="asc"
-          labelPlacement="top"
-          checked={rangePrice.ascending}
-          onChange={handleChangeCheck}
-        />
-        <FormControlLabel
-          name="descending"
-          value="DESC"
-          control={<Checkbox />}
-          label="des"
-          labelPlacement="top"
-          checked={rangePrice.descending}
-          onChange={handleChangeCheck}
-        />
-      </ListItem>
-    </List>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        '& > :not(style)': { m: 1 },
+      }}
+    >
+      <TextField
+        required
+        id="startRange"
+        label="Minimun price"
+        type="number"
+        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+        onChange={handleMinMaxChange}
+        value={rangePrice.startRange}
+      />
+      <TextField
+        required
+        id="endRange"
+        label="Maximun price"
+        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+        onChange={handleMinMaxChange}
+        value={rangePrice.endRange}
+      />
+      <Button
+        variant="outlined"
+        endIcon={<ArrowRightIcon />}
+        onClick={handleBtn}
+      >
+        Search
+      </Button>
+    </Box>
   );
 }

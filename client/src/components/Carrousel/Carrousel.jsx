@@ -69,6 +69,7 @@ const featured = [
 export default function Carrousel() {
   return (
     <div style={{ opacity: "98%", width: "80%", margin: "40px auto 0 auto" }}>
+
       <Carousel
         dynamicHeight={true}
         autoPlay={true}
@@ -78,7 +79,7 @@ export default function Carrousel() {
         showStatus={false}
       >
         {featured.map((f) => (
-          <CarrouselItem key={f.title} title={f.title} img={f.img} />
+          <CarrouselItem key={f.title} title={f.title} img={f.img}/>
         ))}
       </Carousel>
     </div>
