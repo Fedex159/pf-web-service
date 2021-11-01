@@ -35,17 +35,15 @@ export default function SideBarRangePrice() {
 
   const handleBtn = () => {
     let obj = {
-      //   category: allCategories,
+      category: allCategories,
       order: 'ASC',
       filter: 'price',
       startRange: rangePrice.startRange,
       endRange: rangePrice.endRange,
-      province: '',
-      group: '',
     };
 
     if (rangePrice.startRange < rangePrice.endRange) {
-      console.log(obj);
+      // console.log(obj);
       dispatch(getServices(obj));
       setRangePrice({
         startRange: '',
@@ -54,7 +52,7 @@ export default function SideBarRangePrice() {
     }
   };
 
-  console.log(allServices);
+  // console.log(allServices)
 
   return (
     <Box
