@@ -19,7 +19,6 @@ export default function SideBarNestedBtnDropDownInner({ name }) {
 
   const handleChange = () => {
     setChecked(!checked);
-    console.log('OBJETO', obj);
 
     dispatch(postCategory(name));
     dispatch(getServices(obj));
