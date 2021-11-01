@@ -26,8 +26,6 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getServices());
-
-    document.cookie && dispatch(getUserFavs(document.cookie.split("=")[1]));
   }, [dispatch]);
 
   return (
