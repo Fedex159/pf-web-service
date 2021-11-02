@@ -20,6 +20,7 @@ export default function SideBarRangeDate({ text, index }) {
 
   const handleChangeCheck = (event) => {
     let obj = {
+      category: allCategories,
       order: event.target.value,
       filter: 'created',
     };
