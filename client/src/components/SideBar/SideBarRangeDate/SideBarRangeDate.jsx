@@ -9,30 +9,29 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 
-export default function SideBarOrderPrice({ text, index }) {
+export default function SideBarRangeDate({ text, index }) {
   const dispatch = useDispatch();
   const allCategories = useSelector((state) => state.categories);
 
-  const [rangePrice, setRangePrice] = useState({
+  const [rangeDate, setRangeDate] = useState({
     ascending: true,
     descending: false,
   });
 
   const handleChangeCheck = (event) => {
     let obj = {
-      category: allCategories,
       order: event.target.value,
-      filter: 'price',
+      filter: 'created',
     };
 
     if (event.target.name === 'ascending') {
-      setRangePrice({
+      setRangeDate({
         descending: false,
         [event.target.name]: event.target.checked,
       });
     }
     if (event.target.name === 'descending') {
-      setRangePrice({
+      setRangeDate({
         ascending: false,
         [event.target.name]: event.target.checked,
       });
@@ -51,7 +50,7 @@ export default function SideBarOrderPrice({ text, index }) {
           control={<Checkbox />}
           label="asc"
           labelPlacement="top"
-          checked={rangePrice.ascending}
+          checked={rangeDate.ascending}
           onChange={handleChangeCheck}
         />
         <FormControlLabel
@@ -60,7 +59,7 @@ export default function SideBarOrderPrice({ text, index }) {
           control={<Checkbox />}
           label="des"
           labelPlacement="top"
-          checked={rangePrice.descending}
+          checked={rangeDate.descending}
           onChange={handleChangeCheck}
         />
       </ListItem>
