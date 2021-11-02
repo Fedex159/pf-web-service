@@ -138,6 +138,7 @@ export default function DetailService({ id }) {
             updateService={updateService}
             serviceId={id}
             qualifications={qualifications}
+            cookie={cookie}
           />
         </Box>
 
@@ -183,6 +184,13 @@ export default function DetailService({ id }) {
               {" "}
               {title}{" "}
             </Typography>
+          </Box>
+          <Box
+            gridColumn="span 12"
+            display="flex"
+            flexDirection="row"
+            justifyContent="left"
+          >
             <Rating
               name="read-only"
               value={Number(rating)}
@@ -190,9 +198,13 @@ export default function DetailService({ id }) {
               readOnly
               sx={{}}
             />
-            {qualifications
-              ? `${qualifications.length} opiniones`
-              : "0 opiniones"}
+            <Typography variant="subtitle 1" sx={{ ml: "10px" }}>
+              {qualifications
+                ? qualifications.length === 1
+                  ? ` ${qualifications.length} opinion`
+                  : ` ${qualifications.length} opinions`
+                : "0 opiniones"}
+            </Typography>
           </Box>
 
           <Box
