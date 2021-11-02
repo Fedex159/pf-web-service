@@ -27,7 +27,7 @@ const featured = [
   {
     title: 'paseadora de perros',
     description: 'i love little dogs',
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDmC-h2qa-r4ab5AYeIs3OX8Ce_Ytx5J8VQzGi0LeYpEqOM2f1RuwbABAZ-f9_dEkwcLI&usqp=CAU',
+    img: 'https://www.ciudaddelosangeles.com/wp-content/uploads/2016/03/paseador-de-perros.jpg',
     price: 15.3,
   },
   {
