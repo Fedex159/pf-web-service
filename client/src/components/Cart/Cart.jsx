@@ -10,7 +10,7 @@ import {
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartList from './CartList';
 import { useSelector } from 'react-redux';
-import Checkout from '../Checkout/Checkout';
+import CheckoutBtn from '../CheckoutDetail/CheckoutBtn/CheckoutBtn';
 
 function Cart() {
   const [openCart, setOpenCart] = useState(false);
@@ -49,7 +49,7 @@ function Cart() {
         >
           {`Total $${total ? total : 0}`}
         </Typography>
-        <Checkout />
+        <CheckoutBtn />
       </Drawer>
     </Box>
   );

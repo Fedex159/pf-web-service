@@ -3,15 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Button from '@mui/material/Button';
 
-export default function Checkout() {
+export default function CheckoutBtn() {
   const cookie = useSelector((state) => state.cookie);
-
-  console.log(cookie);
 
   return (
     <>
       {cookie && cookie.length > 0 ? (
-        <Button variant="contained" disabled={false}>
+        <Button variant="contained" disabled={false} href="/checkout">
           Checkout
         </Button>
       ) : (
