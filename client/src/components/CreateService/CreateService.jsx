@@ -141,8 +141,9 @@ function CreateService(props) {
       inputs.price &&
       inputs.cities.length
     ) {
+
       setModal(true);
-      dispatch(createService({ ...inputs, price: parseInt(inputs.price) }));
+      dispatch(createService({ ...inputs, price: parseInt(inputs.price), img : inputs.img }));
 
       setInputs({
         title: "",
@@ -156,39 +157,39 @@ function CreateService(props) {
         cities: [],
       });
     } else {
+
       alert("Faltan parmetros");
     }
   }
 
-  const loadImg = async (files) => {
+
+  const loadImg = (files) => {
     const reader = new FileReader();
     reader.onload = function () {
-      let imgDiv = document.querySelector("#imgBox");
+    let imgDiv = document.querySelector("#imgBox");
       imgDiv.src = reader.result; //Básicamente lo que hago acá es
-      //convertir la img en una URL para poder mandarla
-    };
+     //convertir la img en una URL para poder mandarla
+   };
     reader.readAsDataURL(files);
-
-    const formData = new FormData();
-    formData.append("file", files);
-    // replace this with your upload preset name
-    formData.append("upload_preset", "hn1tlyfq");
-    const options = {
-      method: "POST",
-      body: formData,
-    };
-
-    try {
-      const res = await fetch(
-        "https://api.cloudinary.com/v1_1/dzjz8pe0y/image/upload",
-        options
-      );
-      const res_1 = await res.json();
-      return setInputs({ ...inputs, img: res_1.secure_url });
-    } catch (err) {
-      return console.log(err);
-    }
-  };
+    
+     const formData = new FormData();
+     formData.append("file", files);
+     // replace this with your upload preset name
+     formData.append("upload_preset", "hn1tlyfq");
+     const options = {
+       method: "POST",
+       body: formData,
+     };
+ 
+     return fetch(
+       "https://api.cloudinary.com/v1_1/dzjz8pe0y/image/upload",
+       options
+     )
+       .then((res) => res.json())
+       .then((res) => setInputs({ ...inputs, img: res.secure_url }))
+       .catch((err) => console.log(err));
+ 
+   };
   //---------------------------------------------------------------------------------validate
   function isNumber(price) {
     return /^[+-]?\d*\.?\d+(?:[Ee][+-]?\d+)?$/.test(price);
