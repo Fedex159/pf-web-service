@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setCookie } from './redux/actions';
 import CheckoutDetail from './components/CheckoutDetail/CheckoutDetail';
+import { useSelector } from 'react-redux';
 
 function App() {
   // cargamos la cookie en el estado de redux
@@ -20,6 +21,10 @@ function App() {
   useEffect(() => {
     dispatch(setCookie(document.cookie));
   });
+
+  const cart = useSelector((state) => state.cart);
+
+  console.log(cart);
 
   return (
     <div className="App">

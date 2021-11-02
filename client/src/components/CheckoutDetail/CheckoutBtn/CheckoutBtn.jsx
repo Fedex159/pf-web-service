@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 export default function CheckoutBtn() {
   const cookie = useSelector((state) => state.cookie);
@@ -9,9 +10,16 @@ export default function CheckoutBtn() {
   return (
     <>
       {cookie && cookie.length > 0 ? (
-        <Button variant="contained" disabled={false} href="/checkout">
-          Checkout
-        </Button>
+        <Link to="/checkout" style={{ textDecoration: 'none' }}>
+          <Button
+            variant="contained"
+            disabled={false}
+            type="submit"
+            sx={{ width: 1 }}
+          >
+            Checkout
+          </Button>
+        </Link>
       ) : (
         <Button variant="contained" disabled={true}>
           Checkout
