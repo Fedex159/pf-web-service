@@ -18,7 +18,7 @@ import { AddShoppingCart, Favorite, Share, Close } from "@mui/icons-material";
 import CardUser from "../CardUser/CardUser";
 import Comments from "../Comments/Comments";
 
-export default function DetailService({ id }) {
+export default function DetailService({ id, closeModal }) {
   let [service, setService] = useState({ service: {}, user: {} });
   const [favState, setFavState] = useState(false);
   const [added, setAdded] = useState(false);
@@ -115,7 +115,7 @@ export default function DetailService({ id }) {
 
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
@@ -123,7 +123,7 @@ export default function DetailService({ id }) {
         p={2}
         border="solid 1px lightgrey"
         maxWidth="80%"
-        m="60px auto"
+        m="0px auto"
       >
         <Box gridColumn="span 8" p={2}>
           <CardMedia
@@ -167,7 +167,8 @@ export default function DetailService({ id }) {
             </Box>
 
             <Box gridColumn="span 6">
-              <IconButton onClick={() => handleClose()}>
+              {/* () => handleClose() */}
+              <IconButton onClick={closeModal}>
                 <Close />
               </IconButton>
             </Box>
