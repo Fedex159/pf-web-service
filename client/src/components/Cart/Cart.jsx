@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   IconButton,
   Badge,
@@ -6,10 +6,11 @@ import {
   Divider,
   Box,
   Typography,
-} from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import CartList from "./CartList";
-import { useSelector } from "react-redux";
+} from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CartList from './CartList';
+import { useSelector } from 'react-redux';
+import Checkout from '../Checkout/Checkout';
 
 function Cart() {
   const [openCart, setOpenCart] = useState(false);
@@ -39,15 +40,16 @@ function Cart() {
       </IconButton>
       <Drawer anchor="right" open={openCart}>
         <CartList cart={cart} />
-        <Divider sx={{ marginTop: "auto", width: "370px" }} />
+        <Divider sx={{ marginTop: 'auto', width: '370px' }} />
         <Typography
           variant="h4"
           component="div"
           gutterBottom
-          sx={{ ml: "auto", mr: "auto" }}
+          sx={{ ml: 'auto', mr: 'auto' }}
         >
           {`Total $${total ? total : 0}`}
         </Typography>
+        <Checkout />
       </Drawer>
     </Box>
   );

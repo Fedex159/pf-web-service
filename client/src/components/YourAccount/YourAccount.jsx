@@ -1,38 +1,34 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
-import s from "./YourAccount.module.css";
+import s from './YourAccount.module.css';
 
 //-------------- MATERIAL UI -------------------------------------
-import Button from "@mui/material/Button";
-import { Avatar } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import PostAddIcon from "@mui/icons-material/PostAdd";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
-import DataSaverOffIcon from "@mui/icons-material/DataSaverOff";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import HomeIcon from "@mui/icons-material/Home";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
+import Button from '@mui/material/Button';
+import { Avatar } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import DataSaverOffIcon from '@mui/icons-material/DataSaverOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import HomeIcon from '@mui/icons-material/Home';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 //-------------------------------------------------------
-import CardService from "../CardService/CardService";
-import { FormDialog } from "./FormDialog/FormDialog";
-import { postLogout } from "../../utils/login";
-import { getUserInfo, putUser, getUserFavs } from "../../redux/actions";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import CardService from '../CardService/CardService';
+import { FormDialog } from './FormDialog/FormDialog';
+import { postLogout } from '../../utils/login';
+import { getUserInfo, putUser, getUserFavs } from '../../redux/actions';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 // import CreateService from '../CreateService/CreateService'
-import ModalCreateService from './ModalCreateService'
-
-
-
+import ModalCreateService from './ModalCreateService';
 
 export default function YourAccount() {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
 
-  
   useEffect(() => {
     (async () => {
       dispatch(await getUserInfo());
@@ -50,12 +46,12 @@ export default function YourAccount() {
 
   //MODAL FORM PARA CAMBIAR DATOS
   const [openForm, setOpenForm] = useState(false);
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
   //-----------------------------------
 
   //ESTADOS APRA ALMACENAR LA IMAGEN CUANDO LA QUIERA CAMBIAR
   // eslint-disable-next-line
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState('');
 
   //---------------------------------------------------
 
@@ -67,16 +63,16 @@ export default function YourAccount() {
   const handleImageUpload = () => {
     const { files } = document.querySelector('input[type="file"]');
     const formData = new FormData();
-    formData.append("file", files[0]);
+    formData.append('file', files[0]);
     // replace this with your upload preset name
-    formData.append("upload_preset", "hn1tlyfq");
+    formData.append('upload_preset', 'hn1tlyfq');
     const options = {
-      method: "POST",
+      method: 'POST',
       body: formData,
     };
 
     return fetch(
-      "https://api.cloudinary.com/v1_1/dzjz8pe0y/image/upload",
+      'https://api.cloudinary.com/v1_1/dzjz8pe0y/image/upload',
       options
     )
       .then((res) => res.json())
@@ -87,7 +83,7 @@ export default function YourAccount() {
 
   // HANDLE LOGOUT
   const logOutClear = async () => {
-    document.cookie = "userId=; max-age=0";
+    document.cookie = 'userId=; max-age=0';
     await postLogout();
   };
   //-------------------------------
@@ -106,7 +102,7 @@ export default function YourAccount() {
         <p className={s.yourAccount}>Your Account</p>
 
         <div className={s.logOut}>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: 'none' }}>
             <Button
               variant="outlined"
               color="primary"
@@ -133,7 +129,7 @@ export default function YourAccount() {
 
           <div className={s.changePhoto}>
             <input
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               type="file"
               name="myImage"
               ref={fileInput}
@@ -157,7 +153,7 @@ export default function YourAccount() {
               // startIcon={<PhotoCameraIcon />}
               size="small"
               color="secondary"
-              sx={{ boxShadow: "none", marginLeft: 1 }}
+              sx={{ boxShadow: 'none', marginLeft: 1 }}
               // onClick={() => {
               //   fileInput.current.click();
               // }}
@@ -185,8 +181,8 @@ export default function YourAccount() {
 
       <div className={s.botonera}>
         <Button
-          variant={viewOrders ? "contained" : "outlined"}
-          color={viewOrders ? "secondary" : "primary"}
+          variant={viewOrders ? 'contained' : 'outlined'}
+          color={viewOrders ? 'secondary' : 'primary'}
           startIcon={<ShoppingBagIcon />}
           onClick={() => {
             setViewFavs(false);
@@ -202,8 +198,8 @@ export default function YourAccount() {
           Your Orders
         </Button>
         <Button
-          variant={viewFavs ? "contained" : "outlined"}
-          color={viewFavs ? "secondary" : "primary"}
+          variant={viewFavs ? 'contained' : 'outlined'}
+          color={viewFavs ? 'secondary' : 'primary'}
           startIcon={<FavoriteIcon />}
           onClick={() => {
             setViewFavs(!viewFavs);
@@ -219,8 +215,8 @@ export default function YourAccount() {
           Your Favs
         </Button>
         <Button
-          variant={viewServices ? "contained" : "outlined"}
-          color={viewServices ? "secondary" : "primary"}
+          variant={viewServices ? 'contained' : 'outlined'}
+          color={viewServices ? 'secondary' : 'primary'}
           startIcon={<VisibilityIcon />}
           onClick={() => {
             setViewFavs(false);
@@ -237,20 +233,20 @@ export default function YourAccount() {
         </Button>
 
         {/* <Link to="/service" style={{ textDecoration: "none" }}> */}
-          <Button
-            variant="outlined"
-            startIcon={<PostAddIcon />}
-            sx={{
-              marginRight: 1,
-              marginLeft: 1,
-              marginBottom: 1,
-            }}
-            onClick={() => {
-              setModal(true);
-            }}
-          >
-            Post Service
-          </Button>
+        <Button
+          variant="outlined"
+          startIcon={<PostAddIcon />}
+          sx={{
+            marginRight: 1,
+            marginLeft: 1,
+            marginBottom: 1,
+          }}
+          onClick={() => {
+            setModal(true);
+          }}
+        >
+          Post Service
+        </Button>
         {/* </Link> */}
 
         <Button
@@ -311,7 +307,7 @@ export default function YourAccount() {
 
       {/* -------------------SERVICES-------------------------- */}
       {viewServices &&
-        (userData.servicesOwn.length > 0 ? (
+        (userData.servicesOwn && userData.servicesOwn.length > 0 ? (
           <div>
             <Container>
               <Grid container justifyContent="center" spacing={3}>
@@ -336,12 +332,7 @@ export default function YourAccount() {
       {/* ---------------------------------------------- */}
 
       <FormDialog setOpenForm={setOpenForm} openForm={openForm} />
-      <ModalCreateService
-          modal={modal}
-          setModal={setModal}
-
-
-        />
+      <ModalCreateService modal={modal} setModal={setModal} />
     </div>
   );
 }
