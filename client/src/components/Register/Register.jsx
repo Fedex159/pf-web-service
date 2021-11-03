@@ -3,6 +3,7 @@ import s from "./Register.module.css";
 import { TextField, Button } from "@mui/material";
 import { validateInput, registerUser } from "../../utils/registerValidations";
 import ModalRegister from "./ModalRegister";
+import {GoogleLogin, googleData} from "react-google-login";
 
 function Register({ setRegisterModal, handleRedirect }) {
   const [start, setStart] = useState(true);
@@ -65,6 +66,18 @@ function Register({ setRegisterModal, handleRedirect }) {
       });
     }
   };
+  const handleLogin = async googleData => {
+     const token = googleData.tokenId
+     console.log(token)
+     setInputs({
+      name: googleData.profileObj.givenName,
+      lastname: googleData.profileObj.familyName,
+      username: googleData.profileObj.email.replace("@gmail.com", ""),
+      password: "",
+      email: googleData.profileObj.email,
+    });
+      // store returned user somehow
+    }
 
   return (
     <div className={s.container}>
@@ -135,6 +148,13 @@ function Register({ setRegisterModal, handleRedirect }) {
         >
           Register
         </Button>
+        <GoogleLogin
+    clientId="316128007785-fif02sojlsoinu9s5eugus3qaagiclid.apps.googleusercontent.com"
+    buttonText="Fill fields with Google"
+    onSuccess={handleLogin}
+    onFailure={inputsErrors.google}
+    helperText={inputsErrors.google}
+/>
       </form>
       <ModalRegister
         modal={modal}
