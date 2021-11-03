@@ -6,6 +6,8 @@ import { validateLogin } from "../../utils/registerValidations";
 import { postLogin } from "../../utils/login";
 import { useDispatch } from "react-redux";
 import { setCookie } from "../../redux/actions";
+import { GoogleLogin, googleData } from "react-google-login";
+import axios from "axios";
 import Divider from "@mui/material/Divider";
 
 function Login({ setLogin, setLoginModal, setRegisterModal }) {
@@ -46,9 +48,9 @@ function Login({ setLogin, setLoginModal, setRegisterModal }) {
         password: "",
       });
 
-      setLogin(() => true);
       setLoginModal(() => false);
       dispatch(setCookie(document.cookie));
+      setLogin && setLogin(true);
     } catch (e) {
       setInputErrors(() => {
         let error = {};
@@ -61,11 +63,22 @@ function Login({ setLogin, setLoginModal, setRegisterModal }) {
       });
     }
   };
+  const handleLogin = async (googleData) => {
+    try {
+      const token = googleData.tokenId;
+      const res = await axios.post(`/login?token=${token}`);
+      setLogin(() => true);
+      setLoginModal(() => false);
+      dispatch(setCookie(document.cookie));
+    } catch (e) {
+      alert("Unregistered user");
+    }
+  };
 
   const handleCreateAccount = () => {
-    setRegisterModal((prev) => !prev)
-    setLoginModal((prev) => !prev)
-  }
+    setRegisterModal((prev) => !prev);
+    setLoginModal((prev) => !prev);
+  };
 
   return (
     <form className={s.form} onSubmit={handleSubmit}>
@@ -125,6 +138,14 @@ function Login({ setLogin, setLoginModal, setRegisterModal }) {
         >
           CREATE ACCOUNT
         </Button>
+
+        <GoogleLogin
+          clientId="316128007785-fif02sojlsoinu9s5eugus3qaagiclid.apps.googleusercontent.com"
+          buttonText="Log in with Google"
+          onSuccess={handleLogin}
+          onFailure={inputsErrors.google}
+          helperText={inputsErrors.google}
+        />
       </div>
     </form>
   );

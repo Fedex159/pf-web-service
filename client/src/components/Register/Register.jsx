@@ -5,6 +5,7 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import { validateInput, registerUser } from "../../utils/registerValidations";
 import ModalRegister from "./ModalRegister";
+import { GoogleLogin, googleData } from "react-google-login";
 
 function Register({ setRegisterModal, handleRedirect, setLoginModal }) {
   const [start, setStart] = useState(true);
@@ -68,10 +69,23 @@ function Register({ setRegisterModal, handleRedirect, setLoginModal }) {
     }
   };
 
+  const handleLogin = async (googleData) => {
+    const token = googleData.tokenId;
+    console.log(token);
+    setInputs({
+      name: googleData.profileObj.givenName,
+      lastname: googleData.profileObj.familyName,
+      username: googleData.profileObj.email.replace("@gmail.com", ""),
+      password: "",
+      email: googleData.profileObj.email,
+    });
+    // store returned user somehow
+  };
+
   const HandleSingIn = () => {
-    setLoginModal((prev) => !prev)
-    setRegisterModal((prev) => !prev)
-  }
+    setLoginModal((prev) => !prev);
+    setRegisterModal((prev) => !prev);
+  };
 
   return (
     <div className={s.modal}>
@@ -174,6 +188,13 @@ function Register({ setRegisterModal, handleRedirect, setLoginModal }) {
           >
             SING IN
           </Button>
+          <GoogleLogin
+            clientId="316128007785-fif02sojlsoinu9s5eugus3qaagiclid.apps.googleusercontent.com"
+            buttonText="Fill fields with Google"
+            onSuccess={handleLogin}
+            onFailure={inputsErrors.google}
+            helperText={inputsErrors.google}
+          />
         </div>
       </div>
     </div>

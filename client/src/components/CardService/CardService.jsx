@@ -18,6 +18,8 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Rating from "@mui/material/Rating";
 import DetailService from "../DetailService/DetailService";
 
+import ModalCardService from "./CardServiceModal";
+
 const IMG_TEMPLATE =
   "https://codyhouse.co/demo/squeezebox-portfolio-template/img/img.png";
 
@@ -28,6 +30,9 @@ function CardService({ service }) {
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
   const [favState, setFavState] = useState(false);
+
+  const [modal, setModal] = useState(false);
+
   const [open, setOpen] = React.useState(false); //Estado para abrir DetailService modal
   const { title, img, price, id, userId, rating } = service;
 
@@ -98,80 +103,105 @@ function CardService({ service }) {
       console.log(e.response.data);
     }
   };
+
+  function handleModal(e) {
+    setModal(true);
+    console.log("holaaaa");
+  }
   return (
-    <Card sx={{ width: 345, height: 420, textDecoration: "none" }}>
-      {/* component={Link} to={`/services/${id}`} */}
-      <CardActionArea onClick={handleOpen}>
-        <CardHeader title={fixedTitle} sx={{ pb: "0", height: "64px" }} />
-        <Rating
-          name="read-only"
-          value={Number(rating)}
-          precision={0.5}
-          readOnly
-          sx={{ p: "8px" }}
-        />
+    <div>
+      <Card sx={{ width: 345, height: 420, textDecoration: "none" }}>
+        {/* component={Link} to={`/services/${id}`} */}
+        <CardActionArea onClick={handleOpen}>
+          <CardHeader title={fixedTitle} sx={{ pb: "0", height: "64px" }} />
 
-        <CardMedia
-          component="img"
-          height="194"
-          image={img ? img : IMG_TEMPLATE}
-          alt={title}
-          sx={{ objectFit: "cover" }}
-        />
-        <Typography variant="h5" component="div" sx={{ p: "5px" }}>
-          {`$${price ? price : 0}`}
-        </Typography>
-      </CardActionArea>
+          <Rating
+            name="read-only"
+            value={Number(rating)}
+            precision={0.5}
+            readOnly
+            sx={{ p: "8px" }}
+          />
 
-      <CardActions disableSpacing>
-        <IconButton
-          onClick={handleFavs}
-          aria-label="add to favorites"
-          sx={
-            cookie && cookie.split("=")[1] !== userId ? {} : { display: "none" }
-          }
-        >
-          <FavoriteIcon color={favState ? "error" : ""} />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+          <CardMedia
+            component="img"
+            height="194"
+            image={img ? img : IMG_TEMPLATE}
+            alt={title}
+            sx={{ objectFit: "cover" }}
+          />
+          <Typography variant="h5" component="div" sx={{ p: "5px" }}>
+            {`$${price ? price : 0}`}
+          </Typography>
+        </CardActionArea>
 
-        <IconButton
+        <CardActions disableSpacing>
+          <IconButton
+            onClick={handleFavs}
+            aria-label="add to favorites"
+            sx={
+              cookie && cookie.split("=")[1] !== userId
+                ? {}
+                : { display: "none" }
+            }
+          >
+            <FavoriteIcon color={favState ? "error" : ""} />
+          </IconButton>
+          <IconButton aria-label="share" onClick={(e) => handleModal(e)}>
+            <ShareIcon />
+          </IconButton>
+
+          {/*
+        //J0n: no borrar
+         <IconButton
           onClick={handleClick}
           color={!added ? "primary" : "success"}
           aria-label="add to shopping cart"
           sx={{ ml: "auto" }}
-        >
-          <AddShoppingCartIcon />
-        </IconButton>
-      </CardActions>
+        > */}
+          {}
 
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "100%",
-            height: "100%",
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            overflowY: "scroll",
-            overflowX: "hidden",
-            m: "60px auto",
-          }}
+          <IconButton
+            onClick={handleClick}
+            color={!added ? "primary" : "success"}
+            aria-label="add to shopping cart"
+            sx={
+              cart && cookie.split("=")[1] !== userId
+                ? { ml: "auto" }
+                : { display: "none" }
+            }
+          >
+            <AddShoppingCartIcon />
+          </IconButton>
+        </CardActions>
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-          <DetailService closeModal={handleClose} id={id} />
-        </Box>
-      </Modal>
-    </Card>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "100%",
+              height: "100%",
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              overflowY: "scroll",
+              overflowX: "hidden",
+              m: "60px auto",
+            }}
+          >
+            <DetailService closeModal={handleClose} id={id} />
+          </Box>
+        </Modal>
+      </Card>
+      <ModalCardService modal={modal} setModal={setModal} />
+    </div>
   );
 }
 
