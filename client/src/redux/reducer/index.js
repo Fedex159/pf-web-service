@@ -10,17 +10,20 @@ const initialState = {
   categories: [],
   cookie: "",
   objGlobal: {
-    category: [],
-    filter: "price",
-    order: "ASC",
-    province: "",
     startRange: "",
     endRange: "",
-  }
+    category: [],
+    page: "0",
+    pageSize: "20",
+    order: "",
+    type: "",
+    province: "",
+    city: "",
+  },
 };
 
 const rootReducer = (state = initialState, action) => {
-  const { payload, objState } = action;
+  const { payload } = action;
 
   switch (action.type) {
     //usar importacion type que incluye las constantes para facilitarte,agregar constantes si es necesario en variables.js ""
@@ -73,6 +76,12 @@ const rootReducer = (state = initialState, action) => {
         cookie: action.payload,
       };
     }
+
+    case type.OBJ_GLOBAL:
+      return {
+        ...state,
+        objGlobal: action.payload,
+      };
     default:
       return state;
   }

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  AppBar,
-  Box,
-  Collapse,
-  IconButton,
-  Modal,
-  Toolbar,
-} from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import Box from "@material-ui/core/Box";
+import Collapse from "@material-ui/core/Collapse";
+import IconButton from "@material-ui/core/IconButton";
+import Modal from "@material-ui/core/Modal";
+import Toolbar from "@material-ui/core/Toolbar";
 import SortIcon from "@material-ui/icons/Sort";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Link as Scroll } from "react-scroll";
@@ -62,17 +60,17 @@ const styleLogin = {
   maxWidth: 600,
   width: "70%",
   bgcolor: "background.paper",
-  border: "2px solid #000",
   borderRadius: "10px",
   boxShadow: 24,
   p: 2,
 };
 
-const Header = ({ cookie, setCookie }) => {
+const Header = ({ cookie }) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
   const [login, setLogin] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
+  const [registerModal, setRegisterModal] = useState(false);
   const history = useHistory();
 
   if (login) {
@@ -99,7 +97,7 @@ const Header = ({ cookie, setCookie }) => {
               <SortIcon className={classes.icon} />
             </IconButton>
           ) : (
-            <UserMenu setLogin={setLogin} setCookie={setCookie} />
+            <UserMenu />
           )}
           <Modal
             open={loginModal}
@@ -108,7 +106,11 @@ const Header = ({ cookie, setCookie }) => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={styleLogin}>
-              <Login setLoginModal={setLoginModal} setLogin={setLogin} />
+              <Login
+                setLoginModal={setLoginModal}
+                setLogin={setLogin}
+                setRegisterModal={setRegisterModal}
+              />
             </Box>
           </Modal>
         </Toolbar>

@@ -6,19 +6,30 @@ import YourAccount from "./components/YourAccount/YourAccount";
 import Chat from "./components/chat/chat";
 import React from "react";
 import Landing from "./components/Landing/Landing";
-import CreateService from "./components/CreateService/CreateService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setCookie } from "./redux/actions";
+
+import UserProfile from "./components/UserProfile/UserProfile";
+import { setCookie, getServices, getGroups } from "./redux/actions";
 
 function App() {
   // cargamos la cookie en el estado de redux
   // cada vez hau haya alguna modificaficion de algun componente
   const dispatch = useDispatch();
+  const objGlobal = useSelector((state) => state.objGlobal);
+  const cookie = useSelector((state) => state.cookie);
 
   useEffect(() => {
     dispatch(setCookie(document.cookie));
-  });
+  }, [cookie, dispatch]);
+
+  useEffect(() => {
+    dispatch(getServices(objGlobal));
+  }, [objGlobal, dispatch]);
+
+  useEffect(() => {
+    dispatch(getGroups());
+  }, [dispatch]);
 
   return (
     <div className="App">
@@ -33,6 +44,7 @@ function App() {
         }}
       />
       <Route exact path="/account" component={YourAccount} />
+      <Route exact path="/users/:id" component={UserProfile} />
     </div>
   );
 }
