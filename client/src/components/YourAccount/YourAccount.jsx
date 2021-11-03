@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
-import s from "./YourAccount.module.css";
+import s from './YourAccount.module.css';
 
 //-------------- MATERIAL UI -------------------------------------
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 //-------------------------------------------------------
-import CardService from "../CardService/CardService";
-import { FormDialog } from "./FormDialog/FormDialog";
-import { getUserInfo, getUserFavs } from "../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
-import ModalCreateService from "./ModalCreateService";
-import AccountNav from "./AccountNav/AccountNav";
-import UserInfo from "./UserInfo/UserInfo";
-import Botonera from "./Botonera/Botonera";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import CardService from '../CardService/CardService';
+import { FormDialog } from './FormDialog/FormDialog';
+import { getUserInfo, getUserFavs } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import ModalCreateService from './ModalCreateService';
+import AccountNav from './AccountNav/AccountNav';
+import UserInfo from './UserInfo/UserInfo';
+import Botonera from './Botonera/Botonera';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function YourAccount({ userProfile, profileInfo }) {
   const dispatch = useDispatch();
@@ -50,7 +50,9 @@ export default function YourAccount({ userProfile, profileInfo }) {
     <div>
       {!userProfile && <AccountNav />}
 
+
       <UserInfo userProfile={userProfile} profileInfo={profileInfo} />
+
 
       {!userProfile && (
         <Botonera
@@ -106,7 +108,7 @@ export default function YourAccount({ userProfile, profileInfo }) {
       {/* ----------------------------------------------------- */}
       {/* -------------------SERVICES-------------------------- */}
       {viewServices &&
-        (userData.servicesOwn.length > 0 ? (
+        (userData.servicesOwn && userData.servicesOwn.length > 0 ? (
           <div>
             <Container>
               <Grid container justifyContent="center" spacing={3}>
