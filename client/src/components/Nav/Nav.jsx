@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Toolbar, Button, AppBar, Modal } from '@mui/material';
+import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import AppBar from '@mui/material/AppBar';
+import Modal from '@mui/material/Modal';
 import SearchBar from '../SearchBar/SearchBar';
 import Cart from '../Cart/Cart';
 import SideBar from '../SideBar/SideBar';
@@ -15,10 +19,8 @@ const style = {
   maxWidth: 600,
   width: '70%',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
   borderRadius: '10px',
   boxShadow: 24,
-  p: 2,
 };
 
 export default function Nav() {
@@ -46,7 +48,7 @@ export default function Nav() {
 
   return (
     <Box sx={{ flexGrow: 1, width: '101%' }}>
-      <AppBar position="fixed" sx={{ zIndex: '9999' }}>
+      <AppBar position="fixed" sx={{ zIndex: '1201' }}>
         <Toolbar
           sx={{
             display: 'flex',
@@ -81,7 +83,10 @@ export default function Nav() {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Register setRegisterModal={setRegisterModal} />
+              <Register
+                setRegisterModal={setRegisterModal}
+                setLoginModal={setLoginModal}
+              />
             </Box>
           </Modal>
 
@@ -104,7 +109,11 @@ export default function Nav() {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Login setLogin={setLogin} setLoginModal={setLoginModal} />
+              <Login
+                setLogin={setLogin}
+                setLoginModal={setLoginModal}
+                setRegisterModal={setRegisterModal}
+              />
             </Box>
           </Modal>
 

@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import Box from "@mui/material/Box";
@@ -8,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import ChatIcon from "@mui/icons-material/Chat";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import ListAltIcon from "@mui/icons-material/ListAlt";
 import IconButton from "@mui/material/IconButton";
 
 const IMG_TEMPLATE =
@@ -43,7 +41,7 @@ export default function CardUser({ user }) {
         gap={1}
         sx={{ m: "5px 0px" }}
       >
-        <Box gridColumn="span 4">
+        <Box gridColumn="span 5">
           <CardMedia
             component="img"
             image={userImg ? userImg : IMG_TEMPLATE}
@@ -59,10 +57,10 @@ export default function CardUser({ user }) {
           />
         </Box>
 
-        <Box gridColumn="span 8" display="flex" flexDirection="column">
+        <Box gridColumn="span 7" display="flex" flexDirection="column">
           <Box gridColumn="span 12" display="flex" flexDirection="column">
             <Typography
-              variant="h6"
+              variant="subtitle1"
               sx={{
                 height: "minContent",
                 textAlign: "left",

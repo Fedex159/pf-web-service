@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { removeCart } from '../../redux/actions';
-
-import {
-  IconButton,
-  Badge,
-  Drawer,
-  Divider,
-  Box,
-  Typography,
-} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import Drawer from '@mui/material/Drawer';
+import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartList from './CartList';
 import { useSelector } from 'react-redux';
 import CheckoutBtn from '../CheckoutDetail/CheckoutBtn/CheckoutBtn';
+
+import { useDispatch } from 'react-redux';
+import { removeCart } from '../../redux/actions';
 
 function Cart() {
   const dispatch = useDispatch();
