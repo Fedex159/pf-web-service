@@ -32,6 +32,7 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
+  position: "relative",
 });
 
 const closedMixin = (theme) => ({
@@ -41,6 +42,7 @@ const closedMixin = (theme) => ({
   }),
   overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
+  position: "relative",
 });
 
 const Drawer = styled(MuiDrawer, {
@@ -73,7 +75,7 @@ export default function AdminSideBar() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", position: "relative" }}>
       <Drawer variant="permanent" open={open}>
         <List>
           <ListItem button key={"openDrawerButton"}>
