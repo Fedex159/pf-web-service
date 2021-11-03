@@ -34,8 +34,6 @@ function CreateService(props) {
   const [names, setNames] = useState({
     province: "",
     category: "",
-    subCategory: "",
-    city: "",
   }); //names
 
   //props input client
@@ -142,7 +140,10 @@ function CreateService(props) {
     ) {
       setModal(true);
       dispatch(createService({ ...inputs, price: parseInt(inputs.price) }));
-
+      setNames({
+        province: "",
+        category: "",
+      });
       setInputs({
         title: "",
         description: "",
