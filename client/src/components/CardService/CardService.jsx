@@ -15,6 +15,7 @@ import { addCart } from "../../redux/actions/index";
 import { useSelector } from "react-redux";
 import { deleteFavs, addFavs } from "../../utils/favs";
 import { getUserInfo } from "../../redux/actions/index";
+import ModalCardService from "./CardServiceModal";
 
 const IMG_TEMPLATE =
   "https://codyhouse.co/demo/squeezebox-portfolio-template/img/img.png";
@@ -26,6 +27,7 @@ function CardService({ service }) {
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
   const [favState, setFavState] = useState(false);
+  const [modal, setModal] = useState(false)
 
   const { title, img, price, id, userId, ratingService } = service;
   const rating = ratingService ? ratingService : 5;
@@ -92,7 +94,13 @@ function CardService({ service }) {
       console.log(e.response.data);
     }
   };
+
+  function handleModal (e){
+    setModal(true)
+    console.log('holaaaa')
+  }
   return (
+   <div>
     <Card sx={{ width: 345, height: 420, textDecoration: "none" }}>
       <CardActionArea component={Link} to={`/services/${id}`}>
         <CardHeader title={fixedTitle} sx={{ pb: "0", height: "64px" }} />
@@ -126,7 +134,7 @@ function CardService({ service }) {
         >
           <FavoriteIcon color={favState ? "error" : ""} />
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton aria-label="share"  onClick={(e) => handleModal(e)}>
           <ShareIcon />
         </IconButton>
 
@@ -140,6 +148,10 @@ function CardService({ service }) {
         </IconButton>
       </CardActions>
     </Card>
+       <ModalCardService
+           modal={modal}
+           setModal={setModal}/>
+      </div>
   );
 }
 
