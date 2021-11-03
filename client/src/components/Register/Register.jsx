@@ -5,7 +5,7 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import { validateInput, registerUser } from "../../utils/registerValidations";
 import ModalRegister from "./ModalRegister";
-import {GoogleLogin, googleData} from "react-google-login";
+import { GoogleLogin, googleData } from "react-google-login";
 
 function Register({ setRegisterModal, handleRedirect, setLoginModal }) {
   const [start, setStart] = useState(true);
@@ -68,23 +68,23 @@ function Register({ setRegisterModal, handleRedirect, setLoginModal }) {
       });
     }
   };
-  const handleLogin = async googleData => {
-     const token = googleData.tokenId
-     console.log(token)
-     setInputs({
+  const handleLogin = async (googleData) => {
+    const token = googleData.tokenId;
+    console.log(token);
+    setInputs({
       name: googleData.profileObj.givenName,
       lastname: googleData.profileObj.familyName,
       username: googleData.profileObj.email.replace("@gmail.com", ""),
       password: "",
       email: googleData.profileObj.email,
     });
-      // store returned user somehow
-    }
+    // store returned user somehow
+  };
 
   const HandleSingIn = () => {
-    setLoginModal((prev) => !prev)
-    setRegisterModal((prev) => !prev)
-  }
+    setLoginModal((prev) => !prev);
+    setRegisterModal((prev) => !prev);
+  };
 
   return (
     <div className={s.modal}>
@@ -158,7 +158,7 @@ function Register({ setRegisterModal, handleRedirect, setLoginModal }) {
           >
             Register
           </Button>
-       
+        </form>
         <ModalRegister
           modal={modal}
           setModal={setRegisterModal}
@@ -172,27 +172,47 @@ function Register({ setRegisterModal, handleRedirect, setLoginModal }) {
             marginBottom: "2%",
           }}
         />
-      
-      
-      <div>
+
         <div className={s.new}>
           <p>Already have an account?</p>
-          </div>
-      </div>
 
+          <Button
+            disabled={
+              start ? true : !Object.keys(inputsErrors).length ? false : true
+            }
+            type="submit"
+            variant="contained"
+          >
+            Register
+          </Button>
+        </div>
         <GoogleLogin
-    clientId="316128007785-fif02sojlsoinu9s5eugus3qaagiclid.apps.googleusercontent.com"
-    buttonText="Fill fields with Google"
-    onSuccess={handleLogin}
-    onFailure={inputsErrors.google}
-    helperText={inputsErrors.google}
-/>
-      </form>
-      </div>
-      </div>
-      
+          clientId="316128007785-fif02sojlsoinu9s5eugus3qaagiclid.apps.googleusercontent.com"
+          buttonText="Fill fields with Google"
+          onSuccess={handleLogin}
+          onFailure={inputsErrors.google}
+          helperText={inputsErrors.google}
+        />
+        <ModalRegister
+          modal={modal}
+          setModal={setRegisterModal}
+          message={"Successful registration"}
+        />
 
+        <Button
+          variant="outlined"
+          color="secondary"
+          disableElevation
+          size="small"
+          sx={{ marginRight: "4%" }}
+          onClick={HandleSingIn}
+        >
+          SING IN
+        </Button>
+      </div>
+    </div>
   );
 }
 
 export default Register;
+
