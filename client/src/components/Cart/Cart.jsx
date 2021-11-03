@@ -14,6 +14,8 @@ import { useDispatch } from 'react-redux';
 import { removeCart } from '../../redux/actions';
 
 function Cart() {
+  const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [openCart, setOpenCart] = useState(false);
   const [total, setTotal] = useState(0);
@@ -21,9 +23,10 @@ function Cart() {
   useEffect(() => {
     setTotal(() => {
       let count = 0;
-      cart.forEach((s) => {
-        count += s.price;
-      });
+      cart &&
+        cart.forEach((s) => {
+          count += s.price;
+        });
       return count;
     });
   }, [cart]);
@@ -32,9 +35,9 @@ function Cart() {
     setOpenCart((prev) => !prev);
   };
 
+  console.log(user);
+  console.log(cart);
   //lógica para eliminar items del carro si el usuario los eligió sin loguearse pero se loguéa y eran de él
-  const user = useSelector((state) => state.user);
-  const cart = useSelector((state) => state.cart);
 
   if (user.servicesOwn && user.servicesOwn.length > 0) {
     const intersection = user.servicesOwn.filter((x) =>

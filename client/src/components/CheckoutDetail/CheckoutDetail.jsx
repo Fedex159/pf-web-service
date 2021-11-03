@@ -54,10 +54,11 @@ export default function CheckoutDetail() {
         </AppBar>
       </Box>
       {cart.length > 0 &&
-        cart.map((item) => {
+        cart.map((item, index) => {
           total.push(item.price);
           return (
             <CheckoutCard
+              key={index}
               title={item.title}
               img={item.img}
               price={item.price}
