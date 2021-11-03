@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { removeCart } from '../../redux/actions';
+
 import {
   IconButton,
   Badge,
@@ -13,9 +16,9 @@ import { useSelector } from 'react-redux';
 import CheckoutBtn from '../CheckoutDetail/CheckoutBtn/CheckoutBtn';
 
 function Cart() {
+  const dispatch = useDispatch();
   const [openCart, setOpenCart] = useState(false);
   const [total, setTotal] = useState(0);
-  const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
     setTotal(() => {
@@ -30,6 +33,19 @@ function Cart() {
   const handleCart = () => {
     setOpenCart((prev) => !prev);
   };
+
+  //lógica para eliminar items del carro si el usuario los eligió sin loguearse pero se loguéa y eran de él
+  const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
+
+  if (user.servicesOwn && user.servicesOwn.length > 0) {
+    const intersection = user.servicesOwn.filter((x) =>
+      cart.map((y) => y.id).includes(x.id)
+    );
+    if (intersection.length > 0) {
+      intersection.map((item) => dispatch(removeCart(item.id)));
+    }
+  }
 
   return (
     <Box>

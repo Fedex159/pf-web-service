@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import { Typography, CardActionArea } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import Rating from "@mui/material/Rating";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addCart } from "../../redux/actions/index";
-import { useSelector } from "react-redux";
-import { deleteFavs, addFavs } from "../../utils/favs";
-import { getUserInfo } from "../../redux/actions/index";
+import React, { useState, useEffect } from 'react';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardActions from '@mui/material/CardActions';
+import IconButton from '@mui/material/IconButton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import { Typography, CardActionArea } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import Rating from '@mui/material/Rating';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addCart } from '../../redux/actions/index';
+import { useSelector } from 'react-redux';
+import { deleteFavs, addFavs } from '../../utils/favs';
+import { getUserInfo } from '../../redux/actions/index';
 
 const IMG_TEMPLATE =
-  "https://codyhouse.co/demo/squeezebox-portfolio-template/img/img.png";
+  'https://codyhouse.co/demo/squeezebox-portfolio-template/img/img.png';
 
 function CardService({ service }) {
   const cart = useSelector((state) => state.cart);
@@ -93,15 +93,15 @@ function CardService({ service }) {
     }
   };
   return (
-    <Card sx={{ width: 345, height: 420, textDecoration: "none" }}>
+    <Card sx={{ width: 345, height: 420, textDecoration: 'none' }}>
       <CardActionArea component={Link} to={`/services/${id}`}>
-        <CardHeader title={fixedTitle} sx={{ pb: "0", height: "64px" }} />
+        <CardHeader title={fixedTitle} sx={{ pb: '0', height: '64px' }} />
         <Rating
           name="read-only"
           value={rating}
           precision={0.5}
           readOnly
-          sx={{ p: "8px" }}
+          sx={{ p: '8px' }}
         />
 
         <CardMedia
@@ -109,9 +109,9 @@ function CardService({ service }) {
           height="194"
           image={img ? img : IMG_TEMPLATE}
           alt={title}
-          sx={{ objectFit: "cover" }}
+          sx={{ objectFit: 'cover' }}
         />
-        <Typography variant="h5" component="div" sx={{ p: "5px" }}>
+        <Typography variant="h5" component="div" sx={{ p: '5px' }}>
           {`$${price ? price : 0}`}
         </Typography>
       </CardActionArea>
@@ -121,20 +121,34 @@ function CardService({ service }) {
           onClick={handleFavs}
           aria-label="add to favorites"
           sx={
-            cookie && cookie.split("=")[1] !== userId ? {} : { display: "none" }
+            cookie && cookie.split('=')[1] !== userId ? {} : { display: 'none' }
           }
         >
-          <FavoriteIcon color={favState ? "error" : ""} />
+          <FavoriteIcon color={favState ? 'error' : ''} />
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
 
-        <IconButton
+        {/*
+        //J0n: no borrar
+         <IconButton
           onClick={handleClick}
           color={!added ? "primary" : "success"}
           aria-label="add to shopping cart"
           sx={{ ml: "auto" }}
+        > */}
+        {}
+
+        <IconButton
+          onClick={handleClick}
+          color={!added ? 'primary' : 'success'}
+          aria-label="add to shopping cart"
+          sx={
+            cart && cookie.split('=')[1] !== userId
+              ? { ml: 'auto' }
+              : { display: 'none' }
+          }
         >
           <AddShoppingCartIcon />
         </IconButton>

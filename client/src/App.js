@@ -22,10 +22,6 @@ function App() {
     dispatch(setCookie(document.cookie));
   });
 
-  const cart = useSelector((state) => state.cart);
-
-  console.log(cart);
-
   return (
     <div className="App">
       <Route exact path="/" component={Landing} />

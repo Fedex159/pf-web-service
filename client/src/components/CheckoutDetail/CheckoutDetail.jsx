@@ -1,9 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserMenu from '../Nav/UserMenu';
 import CheckoutCard from '../CheckoutDetail/CheckoutCard/CheckoutCard';
+import { getUserInfo } from '../../redux/actions';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,12 +15,22 @@ import HomeIcon from '@mui/icons-material/Home';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import ButtonBase from '@mui/material/ButtonBase';
+import Button from '@mui/material/Button';
 
 export default function CheckoutDetail() {
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const cookie = useSelector((state) => state.cookie);
 
-  let total = [];
+  useEffect(() => {
+    if (cookie) {
+      (async () => {
+        dispatch(await getUserInfo());
+      })();
+    }
+  }, [cookie, dispatch]);
+
+  const total = [];
 
   return (
     <>
@@ -35,7 +47,7 @@ export default function CheckoutDetail() {
               color="inherit"
               aria-label="menu"
             >
-              <HomeIcon />
+              <HomeIcon show={true} />
             </IconButton>
             <UserMenu />
           </Toolbar>
@@ -65,15 +77,21 @@ export default function CheckoutDetail() {
                   TOTAL:
                   {total.length > 0 && (
                     <Typography gutterBottom variant="h4" component="div">
-                      {total.reduce((a, b) => a + b, 0)}
+                      {total.reduce((a, b) => a + b, 0)} $
                     </Typography>
                   )}
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography sx={{ cursor: 'pointer' }} variant="button">
-                  Buy
-                </Typography>
+                {total.length > 0 ? (
+                  <Button variant="contained" size="large">
+                    BUY
+                  </Button>
+                ) : (
+                  <Button variant="contained" size="large" disabled>
+                    BUY
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </Grid>
