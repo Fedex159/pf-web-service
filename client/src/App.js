@@ -11,6 +11,7 @@ import { useEffect } from "react";
 
 import UserProfile from "./components/UserProfile/UserProfile";
 import { setCookie, getServices, getGroups } from "./redux/actions";
+import { match } from "assert";
 
 function App() {
   // cargamos la cookie en el estado de redux
@@ -43,7 +44,13 @@ function App() {
         }}
       />
       <Route exact path="/account" component={YourAccount} />
-      <Route exact path="/users/:id" component={UserProfile} />
+      <Route
+        exact
+        path="/users/:id"
+        render={({ match }) => {
+          return <UserProfile id={match.params.id} />;
+        }}
+      />
     </div>
   );
 }

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import s from "./YourAccount.module.css";
 
 //-------------- MATERIAL UI -------------------------------------
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 //-------------------------------------------------------
@@ -17,7 +16,7 @@ import UserInfo from "./UserInfo/UserInfo";
 import Botonera from "./Botonera/Botonera";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-export default function YourAccount({ userProfile }) {
+export default function YourAccount({ userProfile, profileInfo }) {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
 
@@ -51,7 +50,7 @@ export default function YourAccount({ userProfile }) {
     <div>
       {!userProfile && <AccountNav />}
 
-      <UserInfo userProfile={userProfile}/>
+      <UserInfo userProfile={userProfile} profileInfo={profileInfo} />
 
       {!userProfile && (
         <Botonera
