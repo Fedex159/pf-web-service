@@ -65,7 +65,7 @@ const styleLogin = {
   p: 2,
 };
 
-const Header = ({ cookie, setCookie }) => {
+const Header = ({ cookie }) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
   const [login, setLogin] = useState(false);
@@ -97,7 +97,7 @@ const Header = ({ cookie, setCookie }) => {
               <SortIcon className={classes.icon} />
             </IconButton>
           ) : (
-            <UserMenu setLogin={setLogin} setCookie={setCookie} />
+            <UserMenu />
           )}
           <Modal
             open={loginModal}
