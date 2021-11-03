@@ -147,9 +147,9 @@ function Login({ setLogin, setLoginModal, setRegisterModal }) {
     onSuccess={handleLogin}
     onFailure={inputsErrors.google}
     helperText={inputsErrors.google}
-/>
+/></div>
       </form>
-    </div>
+    
   );
 }
 
