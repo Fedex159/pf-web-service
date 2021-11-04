@@ -7,6 +7,7 @@ const danzas = [
     price: 500,
     categoryId: 1,
     userId: "4e218e1c-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2020-09-13T08:34:54.602Z",
   },
   {
     title: "Clases Danza Árabe individuales o dúos",
@@ -16,6 +17,7 @@ const danzas = [
     price: 1000,
     categoryId: 1,
     userId: "4e21929a-36ad-11ec-8d3d-0242ad130003",
+    createdAt: "2020-07-24T21:03:10.438Z",
   },
   {
     title: "ACRODANCE FUSION NIÑAS PEQUEÑAS",
@@ -25,6 +27,7 @@ const danzas = [
     price: 2900,
     categoryId: 1,
     userId: "4e219448-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2021-01-09T14:32:38.409Z",
   },
 ];
 
@@ -32,12 +35,12 @@ const idiomas = [
   {
     title: "Clases de inglés americano y británico",
     description:
-      "Clases de inglés americano y británico. Cursos, exámenes nacionales e internacionales, apoyo escolar, conversación. Solamente clases individuales, a tu ritmo y necesidad. Amplia experiencia." +
-      "      Estoy en Villa Martelli, pero doy clases por videollamada de WhatsApp también.",
+      "Clases de inglés americano y británico. Cursos, exámenes nacionales e internacionales, apoyo escolar, conversación. Solamente clases individuales, a tu ritmo y necesidad. Amplia experiencia.      Estoy en Villa Martelli, pero doy clases por videollamada de WhatsApp también.",
     img: "https://apollo-virginia.akamaized.net/v1/files/2j8uu9cp16q81-AR/image;s=780x0;q=60",
     price: 500,
     categoryId: 2,
     userId: "be19f20c-36aa-11ec-8d3d-0242ac130003",
+    createdAt: "2020-07-24T21:03:10.438Z",
   },
   {
     title: "Clases de Francés particulares y Traducciones",
@@ -47,6 +50,7 @@ const idiomas = [
     price: 500,
     categoryId: 2,
     userId: "4e21899e-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2021-01-09T14:32:38.409Z",
   },
   {
     title: "Clases de Portugues",
@@ -56,49 +60,40 @@ const idiomas = [
     price: 600,
     categoryId: 2,
     userId: "4e219056-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2021-10-07T20:23:20.559Z",
   },
 ];
 
 const informatica = [
   {
     title: "CLASES DE EXCEL ADMINISTRATIVO CONTABLES EN MICROCENTRO",
-    description: `CLASES ONLINE O PRESENCIALES
-
-    CECAH CAPACITACIÓN
-    
-    CONSULTORA EDUCATIVA Y LABORAL OFRECE CURSOS DE INFORMÁTICA CON ORIENTACIÓN LABORAL
-    
-    CURSO QUE DICTAMOS
-    
-    AUXILIAR CONTABLE CON EXCEL ADMINISTRATIVO CONTABLE - WORD Y ACCESS
-    
-    ASISTENTE PYMES CON EXCEL ADMINISTRATIVO - WORD ADMINISTRATIVO - TANGO GESTION
-    
-    CONTAMOS CON BOLSA DE TRABAJO`,
+    description:
+      "CLASES ONLINE O PRESENCIALES. CECAH CAPACITACIÓN. CONSULTORA EDUCATIVA Y LABORAL OFRECE CURSOS DE INFORMÁTICA CON ORIENTACIÓN LABORAL. CURSO QUE DICTAMOS. AUXILIAR CONTABLE CON EXCEL ADMINISTRATIVO CONTABLE - WORD Y ACCESS. ASISTENTE PYMES CON EXCEL ADMINISTRATIVO - WORD ADMINISTRATIVO - TANGO GESTION. CONTAMOS CON BOLSA DE TRABAJO",
     img: "https://apollo-virginia.akamaized.net/v1/files/8z8dw9y32w6u3-AR/image;s=780x0;q=60",
     price: 400,
     categoryId: 3,
     userId: "4e2195c4-36ad-11ec-8d3d-0242ac120003",
+    createdAt: "2021-01-09T14:32:38.409Z",
   },
   {
     title: "Clases de computación",
-    description: `Clases de computación a domicilio o a distancia.
-
-    Todas las edades.
-    
-    10 años de experiencia en el rubro`,
+    description:
+      "Clases de computación a domicilio o a distancia. Todas las edades. 10 años de experiencia en el rubro",
     img: "https://apollo-virginia.akamaized.net/v1/files/6f61c3t98oto2-AR/image;s=780x0;q=60",
     price: 400,
     categoryId: 3,
     userId: "4e219510-36ad-11ec-8d3d-0242ac110003",
+    createdAt: "2021-10-07T20:23:20.559Z",
   },
   {
     title: "Cursos de Tango Gestion",
-    description: `Cursos de Tango gestión - Excel - Word - Access - Asistente pymes - auxiliar contable`,
+    description:
+      "Cursos de Tango gestión - Excel - Word - Access - Asistente pymes - auxiliar contable",
     img: "https://apollo-virginia.akamaized.net/v1/files/wuhdowebkh5l-AR/image;s=780x0;q=60",
     price: 300,
     categoryId: 3,
     userId: "4e218e1c-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2020-03-30T03:56:53.611Z",
   },
 ];
 
@@ -118,6 +113,7 @@ const musica = [
     price: 400,
     categoryId: 4,
     userId: "4e218f98-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2020-09-13T08:34:54.602Z",
   },
   {
     title: "Curso de bongó nivel inicial, intermedio y avanzado",
@@ -172,6 +168,7 @@ const musica = [
     price: 1000,
     categoryId: 4,
     userId: "4e21929a-36ad-11ec-8d3d-0242ad130003",
+    createdAt: "2020-07-24T21:03:10.438Z",
   },
   {
     title: "Clases de Canto Popular Online",
@@ -182,6 +179,7 @@ const musica = [
     price: 1500,
     categoryId: 4,
     userId: "4e218d5e-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2021-01-09T14:32:38.409Z",
   },
 ];
 
@@ -194,6 +192,7 @@ const teatro = [
     price: 1500,
     categoryId: 6,
     userId: "4e2195c4-36ad-11ec-8d3d-0242ac120003",
+    createdAt: "2021-10-07T20:23:20.559Z",
   },
   {
     title: "Clases de teatro",
@@ -209,6 +208,7 @@ const teatro = [
     price: 200,
     categoryId: 6,
     userId: "be19f554-36aa-11ec-8d3d-0242ac130003",
+    createdAt: "2020-03-30T03:56:53.611Z",
   },
   {
     title: "Teatro",
@@ -224,6 +224,7 @@ const teatro = [
     price: 200,
     categoryId: 6,
     userId: "4e219678-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2020-10-18T22:28:19.044Z",
   },
 ];
 
@@ -252,6 +253,7 @@ const academia = [
     price: 3500,
     categoryId: 7,
     userId: "4e218642-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2020-10-18T22:28:19.044Z",
   },
   {
     title:
@@ -269,6 +271,7 @@ const academia = [
     price: 3500,
     categoryId: 7,
     userId: "4e218c00-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2021-07-09T16:02:43.095Z",
   },
   {
     title: "clases particulares de matemáticas",
@@ -277,6 +280,7 @@ const academia = [
     price: 500,
     categoryId: 7,
     userId: "4e2191dc-36ad-11ec-8d3d-0242ac230003",
+    createdAt: "2021-05-06T04:32:55.026Z",
   },
 ];
 
@@ -288,6 +292,7 @@ const otros = [
     price: 400,
     categoryId: 7,
     userId: "4e218e1c-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2021-05-06T04:32:55.026Z",
   },
   {
     title:
@@ -373,6 +378,7 @@ const otros = [
     price: 2000,
     categoryId: 7,
     userId: "4e219812-36ad-11ec-8d3d-0242ac139003",
+    createdAt: "2021-05-17T10:33:09.794Z",
   },
   {
     title: "CURSO ONLINE DE UÑAS ESCULPIDAS EN GEL",
@@ -381,6 +387,7 @@ const otros = [
     price: 499,
     categoryId: 7,
     userId: "4e218f98-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2021-05-04T13:44:37.766Z",
   },
 ];
 

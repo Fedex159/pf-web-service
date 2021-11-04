@@ -7,6 +7,7 @@ const freight = [
     price: 1500,
     categoryId: 27,
     userId: "4e21929a-36ad-11ec-8d3d-0242ad130003",
+    createdAt: "2021-05-11T10:00:56.826Z",
   },
   {
     title: "Fletes",
@@ -16,6 +17,7 @@ const freight = [
     price: 1000,
     categoryId: 27,
     userId: "4e218b24-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2020-12-06T09:21:53.535Z",
   },
   {
     title: "Remolque de Motos",
@@ -25,6 +27,7 @@ const freight = [
     price: 1200,
     categoryId: 27,
     userId: "4e218c00-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2020-08-31T03:18:33.852Z",
   },
 ];
 
@@ -36,6 +39,7 @@ const transport = [
     price: 3000,
     categoryId: 28,
     userId: "4e219812-36ad-11ec-8d3d-0242ac139003",
+    createdAt: "2020-09-01T23:46:02.474Z",
   },
   {
     title: "Te llevo al uruguay : Remis ",
@@ -45,6 +49,7 @@ const transport = [
     price: 30000,
     categoryId: 27,
     userId: "4e21899e-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2020-09-01T23:46:02.474Z",
   },
   {
     title: "Traslado de mascotas a todo el país.",
@@ -54,6 +59,7 @@ const transport = [
     price: 30,
     categoryId: 27,
     userId: "4e218f98-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2021-02-16T04:23:20.531Z",
   },
 ];
 const moving = [
@@ -65,6 +71,7 @@ const moving = [
     price: 500,
     categoryId: 28,
     userId: "4e21929a-36ad-11ec-8d3d-0242ac170003",
+    createdAt: "2021-02-16T04:23:20.531Z",
   },
   {
     title: "MINIFLETES ECONOMICOS ",
@@ -74,6 +81,7 @@ const moving = [
     price: 1200,
     categoryId: 28,
     userId: "4e21929a-36ad-11ec-8d3d-0242ad130003",
+    createdAt: "2020-03-10T05:42:59.530Z",
   },
   {
     title: "Flete o pequeña mudanza a Mar Del Plata.",
@@ -83,6 +91,7 @@ const moving = [
     price: 28000,
     categoryId: 28,
     userId: "4e219510-36ad-11ec-8d3d-0242ac110003",
+    createdAt: "2020-03-10T05:42:59.530Z",
   },
 ];
 
@@ -95,6 +104,7 @@ const other = [
     price: 4000,
     categoryId: 29,
     userId: "4e21899e-36ad-11ec-8d3d-0242ac130003",
+    createdAt: "2020-04-10T05:11:10.689Z",
   },
   {
     title: "Trailer gastronómico o bien para casa rodante",
@@ -104,6 +114,7 @@ const other = [
     price: 35000,
     categoryId: 29,
     userId: "4e219812-36ad-11ec-8d3d-0242ac139003",
+    createdAt: "2020-04-10T05:11:10.689Z",
   },
   {
     title: "Habilitación de taxi",
@@ -112,6 +123,7 @@ const other = [
     price: 1111111,
     categoryId: 29,
     userId: "4e219812-36ad-11ec-8d3d-0242ac139003",
+    createdAt: "2021-08-31T10:51:53.994Z",
   },
 ];
 module.exports = {
