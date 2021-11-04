@@ -279,7 +279,7 @@ const musica = [
     userId: '4e218d5e-36ad-11ec-8d3d-0242ac130003',
   },
   {
-    title: 'Clases de Guitarra en Ramos Mejia',
+    title: 'Clases de Guitarra',
     description: `Clases de guitarra
 
     (a partir de los 8 años)
