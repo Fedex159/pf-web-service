@@ -30,7 +30,7 @@ export default function DetailService({ id, closeModal }) {
 
   let history = useHistory();
   function updateService() {
-    axios(`http://localhost:3001/services/${id}`).then((response) => {
+    axios(`/services/${id}`).then((response) => {
       console.log("respuestaEnDetail", response);
       setService({ ...service, ...response.data });
     });
@@ -154,9 +154,7 @@ export default function DetailService({ id, closeModal }) {
                 onClick={handleFavs}
                 aria-label="add to favorites"
                 sx={
-                  cookie && cookie.split("=")[1] !== service.userId
-                    ? {}
-                    : { display: "none" }
+                  cookie && cookie !== service.userId ? {} : { display: "none" }
                 }
               >
                 <Favorite color={favState ? "error" : ""} />

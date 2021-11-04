@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PostAddIcon from "@mui/icons-material/PostAdd";
@@ -12,16 +11,39 @@ export default function YourAccount({
   viewServices,
   viewOrders,
   viewFavs,
+  viewAdmin,
   setViewFavs,
   setViewOrders,
   setViewservices,
+  setViewAdmin,
   openForm,
   modal,
   setOpenForm,
   setModal,
+  user,
 }) {
   return (
     <div className={s.botonera}>
+      {user.admin && (
+        <Button
+          variant={viewAdmin ? "contained" : "outlined"}
+          color={viewAdmin ? "secondary" : "primary"}
+          startIcon={<ShoppingBagIcon />}
+          onClick={() => {
+            setViewFavs(false);
+            setViewOrders(false);
+            setViewAdmin(!viewAdmin);
+            setViewservices(false);
+          }}
+          sx={{
+            marginRight: 1,
+            marginLeft: 1,
+            marginBottom: 1,
+          }}
+        >
+          Admin
+        </Button>
+      )}
       <Button
         variant={viewOrders ? "contained" : "outlined"}
         color={viewOrders ? "secondary" : "primary"}
@@ -30,6 +52,7 @@ export default function YourAccount({
           setViewFavs(false);
           setViewOrders(!viewOrders);
           setViewservices(false);
+          setViewAdmin(false);
         }}
         sx={{
           marginRight: 1,
@@ -47,6 +70,7 @@ export default function YourAccount({
           setViewFavs(!viewFavs);
           setViewOrders(false);
           setViewservices(false);
+          setViewAdmin(false);
         }}
         sx={{
           marginRight: 1,
@@ -64,6 +88,7 @@ export default function YourAccount({
           setViewFavs(false);
           setViewOrders(false);
           setViewservices(!viewServices);
+          setViewAdmin(false);
         }}
         sx={{
           marginRight: 1,
