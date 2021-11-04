@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import Home from "./components/Home/Home";
 import DetailService from "./components/DetailService/DetailService";
 import YourAccount from "./components/YourAccount/YourAccount";
-import Chat from "./components/chat/chat";
+import Chat from "./components/Chat/UserChat/Chat";
 import React from "react";
 import Landing from "./components/Landing/Landing";
 import { useDispatch, useSelector } from "react-redux";

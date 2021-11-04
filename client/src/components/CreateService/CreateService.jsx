@@ -126,7 +126,7 @@ function CreateService(props) {
     });
   }
 
-  //---------------------------------------------------------------submit
+  //--------------------------------------------------------------------submit
   function handleSubmit(e) {
     e.preventDefault();
     if (
@@ -190,10 +190,9 @@ function CreateService(props) {
     }
   };
   //---------------------------------------------------------------------------------validate
-  function isNumber(price) {
+ function isNumber(price) {
     return /^[+-]?\d*\.?\d+(?:[Ee][+-]?\d+)?$/.test(price);
   }
-
   function errorsValidate(inputs) {
     let errors = {};
     if (!inputs.title) {
@@ -208,7 +207,7 @@ function CreateService(props) {
 
     return errors;
   }
-  //-----------------------------------------------------
+  //-----------------------------------------------------------------------------------
 
   if (provinces && groups) {
     return (
