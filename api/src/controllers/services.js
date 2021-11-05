@@ -150,7 +150,6 @@ async function postServices(req, res, next) {
   const { userId } = req.cookies;
   const { title, img, description, price, categoryId, provinces, cities } =
     req.body;
-    console.log("llego")
   // si se pasaron todos los parametros
   if (
     title &&
