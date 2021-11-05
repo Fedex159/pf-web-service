@@ -19,8 +19,8 @@ const initialState = {
     type: "DESC",
     province: "",
     city: "",
-
   },
+  endPage: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -30,12 +30,22 @@ const rootReducer = (state = initialState, action) => {
     //usar importacion type que incluye las constantes para facilitarte,agregar constantes si es necesario en variables.js ""
 
     case type.GET_SERVICES:
-      // usar para testing no mas
-      // console.log("Payload en reducer", payload);
-
       return {
         ...state,
         services: payload,
+        endPage: false,
+      };
+
+    case type.SET_SERVICES_PAGE:
+      return {
+        ...state,
+        services: [...state.services, ...payload],
+      };
+
+    case type.SET_END_PAGE:
+      return {
+        ...state,
+        endPage: payload,
       };
 
     case type.CREATE_SERVICE:
@@ -57,6 +67,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: state.cart.filter((s) => s.id !== action.payload),
+      };
+    case type.SET_CART_STORAGE:
+      return {
+        ...state,
+        cart: payload,
       };
 
     case type.GET_USER_FAVS:
@@ -84,10 +99,10 @@ const rootReducer = (state = initialState, action) => {
         objGlobal: action.payload,
       };
 
-      case type.POST_PURCHASE:
-        return{
-          ...state,
-        }
+    case type.POST_PURCHASE:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

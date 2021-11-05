@@ -14,19 +14,22 @@ import CheckoutDetail from "./components/CheckoutDetail/CheckoutDetail";
 import axios from "axios";
 import CreateService from "./components/CreateService/CreateService";
 
+// MATERIAL UI
+import { ThemeProvider } from "@material-ui/core";
+import theme from "./utils/MuiTheme";
+
 function App() {
   // cargamos la cookie en el estado de redux
   // cada vez hau haya alguna modificaficion de algun componente
   const dispatch = useDispatch();
   const objGlobal = useSelector((state) => state.objGlobal);
-  const cookie = useSelector((state) => state.cookie);
 
   useEffect(() => {
     axios
       .get("/login")
       .then((response) => dispatch(setCookie(response.data.cookie)))
       .catch(() => dispatch(setCookie("")));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getServices(objGlobal));
@@ -37,29 +40,31 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="App">
-      <Route exact path="/" component={Landing} />
-      <Route exact path="/home" component={Home} />
-      <Route exact path="/chat" component={Chat} />
-      <Route
-        exact
-        path="/services/:id"
-        render={({ match }) => {
-          return <DetailService id={match.params.id} />;
-        }}
-      />
-      <Route exact path="/account" component={YourAccount} />
-      <Route
-        exact
-        path="/users/:id"
-        render={({ match }) => {
-          return <UserProfile id={match.params.id} />;
-        }}
-      />
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/home" component={Home} />
+        <Route exact path="/chat" component={Chat} />
+        <Route
+          exact
+          path="/services/:id"
+          render={({ match }) => {
+            return <DetailService id={match.params.id} />;
+          }}
+        />
+        <Route exact path="/account" component={YourAccount} />
+        <Route
+          exact
+          path="/users/:id"
+          render={({ match }) => {
+            return <UserProfile id={match.params.id} />;
+          }}
+        />
 
-      <Route exact path="/checkout" component={CheckoutDetail} />
-      <Route exact path='/createservice' component={CreateService} />
-    </div>
+        <Route exact path="/checkout" component={CheckoutDetail} />
+        <Route exact path="/createservice" component={CreateService} />
+      </div>
+    </ThemeProvider>
   );
 }
 
