@@ -74,6 +74,7 @@ export default function MiniDrawer() {
           variant="outlined"
           onClick={handleReset}
           sx={{ width: "20%", margin: "10px auto 10px auto" }}
+          color="secondary"
         >
           Reset
         </Button>
@@ -89,7 +90,6 @@ export default function MiniDrawer() {
           ))}
         </List>
       </Drawer>
-      <Divider />
     </Box>
   );
 }

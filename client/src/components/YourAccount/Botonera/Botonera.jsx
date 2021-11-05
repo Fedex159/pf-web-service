@@ -20,7 +20,6 @@ export default function YourAccount({
   setOpenForm,
   user,
 }) {
-
   const history = useHistory();
 
   const handleClickPostService = () => {

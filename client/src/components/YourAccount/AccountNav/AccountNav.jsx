@@ -23,14 +23,14 @@ export default function AccountNav() {
     <div>
       <div className={s.nav}>
         <IconButton color="secondary" component={Link} to="/home">
-          <HomeIcon />
+          <HomeIcon color="primary" />
         </IconButton>
         <p className={s.yourAccount}>Your Account</p>
 
         <div className={s.logOut}>
           <Button
             variant="outlined"
-            color="primary"
+            color="secondary"
             size="small"
             onClick={logOutClear}
           >
