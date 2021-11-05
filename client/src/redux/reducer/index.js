@@ -20,6 +20,9 @@ const initialState = {
     province: "",
     city: "",
   },
+  convertations: [],
+  contacts: [],
+  posts: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -82,6 +85,23 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         objGlobal: action.payload,
       };
+
+    case type.GET_CONTACTS:
+      return {
+        ...state,
+        contacts: action.payload,
+      };
+    case type.GET_CONVERTATIONS:
+      return {
+        ...state,
+        convertations: action.payload,
+      };
+    case type.GET_CONTACTS:
+      return {
+        ...state,
+        contacts: action.payload,
+      };
+
     default:
       return state;
   }
