@@ -80,6 +80,20 @@ export function createService(body) {
   };
 }
 
+export function setServicesPage(services) {
+  return {
+    type: type.SET_SERVICES_PAGE,
+    payload: services,
+  };
+}
+
+export function setEndPage(value) {
+  return {
+    type: type.SET_END_PAGE,
+    payload: value,
+  };
+}
+
 export function postCategory(category) {
   return {
     type: type.POST_CATEGORY,
@@ -151,15 +165,25 @@ export const getUserFavs = async () => {
 };
 
 //purchase
-export const postPurchase = async (array) => {
-  return async () => {
-    try {
-      return await axios.post(`/users/purchase`, array);
-    } catch (err) {
-      return new Error(err);
-    }
+// export const postPurchase = async (array) => {
+//   return async () => {
+//     try {
+//       return await axios.post(`/checkout`, array);
+//     } catch (err) {
+//       return new Error(err);
+//     }
+//   };
+// };
+export function postPurchase(body) {
+  return async function (dispatch) {
+    var json = await axios.post(`/checkout`, body);
+    window.location.replace(json.data);
+    return dispatch({
+      type: type.POST_PURCHASE,
+      payload: json.data,
+    });
   };
-};
+}
 
 //_____________________________________________________________________________________actions provinces
 
@@ -189,6 +213,13 @@ export function removeCart(idService) {
   return {
     type: type.REMOVE_CART,
     payload: idService,
+  };
+}
+
+export function setCartStorage(cart) {
+  return {
+    type: type.SET_CART_STORAGE,
+    payload: cart,
   };
 }
 
@@ -246,7 +277,7 @@ export async function getPots(idConv, offset) {
 export async function sendMessage(msn) {
   return function (dispath) {
     axios
-      .post(`chat${idConv}`, msn)
+      .post(`chat`, msn)
       .then((resp) => {
         console.log(resp);
       })

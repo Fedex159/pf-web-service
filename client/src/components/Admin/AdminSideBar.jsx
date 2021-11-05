@@ -63,6 +63,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function AdminSideBar() {
+  // eslint-disable-next-line
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
