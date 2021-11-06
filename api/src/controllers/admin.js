@@ -66,6 +66,7 @@ async function admin(req, res, next) {
     let bannedUsers = await Users.findAll({
       attributes: ["ban", [conn.fn("COUNT", conn.col("id")), "n_users"]],
       group: ["ban"],
+      where: { admin: false },
     });
 
     let newUsers = await Users.findAll({
@@ -83,6 +84,7 @@ async function admin(req, res, next) {
       attributes: ["userId", [conn.fn("COUNT", conn.col("id")), "n_services"]],
 
       group: ["userId"],
+      order: [[conn.literal("n_services"), "DESC"]],
     });
 
     const groupServices = async (groups) => {
@@ -141,6 +143,7 @@ async function admin(req, res, next) {
           attributes: [],
         },
       ],
+      order: [[conn.literal("n_services"), "DESC"]],
 
       raw: true,
     });
