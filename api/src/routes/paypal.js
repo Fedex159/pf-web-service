@@ -23,7 +23,7 @@ router.post("/", (req, res) => {
     // data.price = Math.round(data.price / 170)
     // data.price = prices
 
-    price = Math.round(price / 180)
+   
 
     var create_payment_json = {
         intent: "sale",
