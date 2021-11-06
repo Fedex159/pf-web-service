@@ -74,7 +74,9 @@ async function admin(req, res, next) {
         [conn.fn("TO_CHAR", conn.col("createdAt"), "Mon-YY"), "month"],
         [conn.fn("TO_CHAR", conn.col("createdAt"), "YYYY-MM"), "year"],
       ],
+      where: { admin: false },
       group: ["month", "year"],
+      order: [[conn.literal("year"), "ASC"]],
     });
 
     let servicesPerUser = await Service.findAll({
@@ -122,10 +124,32 @@ async function admin(req, res, next) {
       attributes: ["id", "name"],
     });
 
+    let groupServicesCount = await Category.findAll({
+      attributes: [
+        "groupId",
+        [conn.col("group.name"), "groupName"],
+        [conn.fn("COUNT", conn.col("services.id")), "n_services"],
+      ],
+      group: ["groupId", "group.id"],
+      include: [
+        {
+          model: Service,
+          attributes: [],
+        },
+        {
+          model: Group,
+          attributes: [],
+        },
+      ],
+
+      raw: true,
+    });
+
     let groupNewServices = await groupServices(groups);
 
     // { services: servicesCount, category: categoryCount }
     res.status(200).send({
+      groupServicesCount,
       newUsers,
       groups,
       groupNewServices,
