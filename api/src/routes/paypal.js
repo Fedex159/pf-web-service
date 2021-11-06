@@ -23,6 +23,7 @@ router.post("/", (req, res) => {
     // data.price = Math.round(data.price / 170)
     // data.price = prices
 
+    price = Math.round(price / 180)
 
     var create_payment_json = {
         intent: "sale",
@@ -30,7 +31,7 @@ router.post("/", (req, res) => {
             payment_method: "paypal"
         },
         redirect_urls: {
-            return_url:`${ORIGIN}/home`,
+            return_url:`${SUCCESS_MERCADOPAGO}/users/purchase?servicesId=${servicesId}`,
             cancel_url: `${ORIGIN}/home`
         },
         transactions: [
