@@ -10,6 +10,7 @@ const provinces = require("./provinces");
 const comment = require("./comment");
 const checkout = require("./checkout");
 const chat=require("./Chat");
+const admin = require("./admin");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -30,5 +31,6 @@ router.use("/provinces", provinces);
 router.use("/comment", comment);
 router.use("/checkout", checkout);
 router.use("/chat",chat)
+router.use("/admin", admin);
 
 module.exports = router;

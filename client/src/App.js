@@ -9,62 +9,88 @@ import Landing from "./components/Landing/Landing";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import UserProfile from "./components/UserProfile/UserProfile";
-import { setCookie, getServices, getGroups } from "./redux/actions";
+import {
+  setCookie,
+  getServices,
+  getGroups,
+  getUserInfo,
+} from "./redux/actions";
 import CheckoutDetail from "./components/CheckoutDetail/CheckoutDetail";
 import axios from "axios";
 import CreateService from "./components/CreateService/CreateService";
-
-// MATERIAL UI
-import { ThemeProvider } from "@material-ui/core";
-import theme from "./utils/MuiTheme";
+import Nav from "./components/Nav/Nav";
+import NavSpace from "./components/Nav/NavSpace";
 
 function App() {
-  // cargamos la cookie en el estado de redux
-  // cada vez hau haya alguna modificaficion de algun componente
   const dispatch = useDispatch();
   const objGlobal = useSelector((state) => state.objGlobal);
+  const cookie = useSelector((state) => state.cookie);
 
+  useEffect(() => {
+    if (cookie) {
+      getUserInfo().then((userInfo) => dispatch(userInfo));
+    }
+    // eslint-disable-next-line
+  }, [cookie]);
   useEffect(() => {
     axios
       .get("/login")
       .then((response) => dispatch(setCookie(response.data.cookie)))
       .catch(() => dispatch(setCookie("")));
-  }, [dispatch]);
+    dispatch(getGroups());
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     dispatch(getServices(objGlobal));
   }, [objGlobal, dispatch]);
 
-  useEffect(() => {
-    dispatch(getGroups());
-  }, [dispatch]);
-
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/chat" component={Chat} />
-        <Route
-          exact
-          path="/services/:id"
-          render={({ match }) => {
-            return <DetailService id={match.params.id} />;
-          }}
-        />
-        <Route exact path="/account" component={YourAccount} />
-        <Route
-          exact
-          path="/users/:id"
-          render={({ match }) => {
-            return <UserProfile id={match.params.id} />;
-          }}
-        />
+    <div className="App">
+      <Route exact path="/" component={Landing} />
+      <Route exact path="/home">
+        <Nav route={"home"} />
+        <Home />
+      </Route>
+      <Route exact path="/chat" component={Chat} />
+      <Route
+        exact
+        path="/services/:id"
+        render={({ match }) => {
+          return (
+            <div>
+              <Nav route={"servicesId"} />
+              <NavSpace />
+              <DetailService id={match.params.id} />
+            </div>
+          );
+        }}
+      />
+      <Route exact path="/account">
+        <Nav route={"account"} />
+        <NavSpace />
+        <YourAccount />
+      </Route>
+      <Route
+        exact
+        path="/users/:id"
+        render={({ match }) => {
+          return (
+            <div>
+              <Nav route={"users"} />
+              <UserProfile id={match.params.id} />
+            </div>
+          );
+        }}
+      />
 
-        <Route exact path="/checkout" component={CheckoutDetail} />
-        <Route exact path="/createservice" component={CreateService} />
-      </div>
-    </ThemeProvider>
+      <Route exact path="/checkout">
+        <Nav route={"checkout"} />
+        <NavSpace />
+        <CheckoutDetail />
+      </Route>
+      <Route exact path="/createservice" component={CreateService} />
+    </div>
   );
 }
 

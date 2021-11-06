@@ -1,4 +1,6 @@
 const { Users } = require('../db');
+require("dotenv").config();
+const { ORIGIN, SUCCESS_MERCADOPAGO } = process.env;
 
 var express = require('express');
 var router = express.Router();
@@ -20,20 +22,29 @@ router.post("/", async (req, res) => {
     console.log('totalPrice' ,req.body)
     const {userId} = req.cookies
     // var unit_price = totalPrice / quantity;
-
+  
+    let prices = 0
+    for (let i=0; i < totalPrice.length; i++){
+      prices = prices + totalPrice[i]
+    }
+    
+        console.log('totalPricessssssss',prices)
+    
     var preference = {
       items: [
         {
           title: title,
           quantity: quantity,
-          unit_price: totalPrice,
+          unit_price: prices,
           serviceId : servicesId
         },
       ],
       back_urls: {
-        success: `http://localhost:3001/users/purchase?state=success&servicesId=${servicesId}&userId=${userId}`,
-        failure: "http://localhost:3000/rechazo",
-        pending: "http://localhost:3000/home",
+
+        success: `${SUCCESS_MERCADOPAGO}/users/purchase?servicesId=${servicesId}`,
+
+        failure: `${ORIGIN}/home`,
+        pending: `${ORIGIN}/home`,
       },
       auto_return: "approved",
     };

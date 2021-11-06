@@ -3,10 +3,8 @@ import { getServicesPage } from "../../utils/servicesPage";
 import { setServicesPage, setEndPage } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
-import Fab from "@mui/material/Fab";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
 import SkeletonFooter from "./SkeletonFooter";
-import ScrollTop from "./ScrollTop";
 
 function Footer() {
   const dispatch = useDispatch();
@@ -53,15 +51,11 @@ function Footer() {
       <Button
         onClick={handleClick}
         variant="contained"
+        color="secondary"
         sx={endPage ? { display: "none" } : {}}
       >
         Load more
       </Button>
-      <ScrollTop>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </ScrollTop>
     </div>
   );
 }

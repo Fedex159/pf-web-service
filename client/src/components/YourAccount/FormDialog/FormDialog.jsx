@@ -8,7 +8,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { putUser } from "../../../redux/actions";
-import s from "./FormDialog.module.css";
 
 export function FormDialog({ openForm, setOpenForm }) {
   const dispatch = useDispatch();
@@ -45,12 +44,8 @@ export function FormDialog({ openForm, setOpenForm }) {
   };
 
   return (
-    <Dialog
-      open={openForm}
-      onClose={() => setOpenForm(false)}
-      className={s.form}
-    >
-      <form onSubmit={(e) => handleSubmit(e)} className={s.form}>
+    <Dialog open={openForm} onClose={() => setOpenForm(false)}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <DialogTitle>CHANGE YOUR DATA</DialogTitle>
         <DialogContent>
           <TextField
