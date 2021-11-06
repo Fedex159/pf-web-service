@@ -6,16 +6,16 @@ import LineChart from "./Charts/Line";
 import RadarChart from "./Charts/Radar";
 import Box from "@mui/material/Box";
 
-export default function Dashboard() {
+export default function Dashboard({
+  dateFilter,
+  setDateFilter,
+  groupFilter,
+  setGroupFilter,
+}) {
   let [newServicesMonthly, setNewServicesMonthly] = useState([]);
   let [newServicesGroup, setNewServicesGroup] = useState([]);
   let [groups, setGroups] = useState({ list: [], total: [] });
   let [users, setUsers] = useState([]);
-  let [dateFilter, setDateFilter] = useState({
-    start: "",
-    end: "",
-  });
-  let [groupFilter, setGroupFilter] = useState("");
 
   useEffect(() => {
     axios(`/admin`).then((response) => {
