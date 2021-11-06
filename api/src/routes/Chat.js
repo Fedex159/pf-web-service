@@ -11,8 +11,8 @@ const {
 
 
 router.post("/", sendMessage);
-router.get("/convertations/:id", getConvertations);
+router.get("/convertations", getConvertations);
 router.get("/posts", getPots);
-router.get("/contacts/:userId", getContacts);
+router.get("/contacts", getContacts);
 
 module.exports = router;

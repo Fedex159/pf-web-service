@@ -4,9 +4,9 @@ module.exports = (sequelize) => {
   sequelize.define(
     "convertations",
     {
-      userId: { type: STRING, alowNull: false },
+      userA: { type: STRING, alowNull: false },
 
-      sender: {
+      userB: {
         type: STRING,
         alowNull: false,
       },

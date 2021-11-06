@@ -121,16 +121,7 @@ export function putUser(newData) {
     }
   };
 }
-
-// export async function getUserInfo() {
-//   const response = await axios.get("/users");
-//   return {
-//     type: type.GET_USER_INFO,
-//     payload: response.data,
-//   };
-// }
-
-export async function getUserInfo() {
+export function getUserInfo() {
   return async function (dispatch) {
     const response = await axios.get("/users");
     dispatch({
@@ -231,53 +222,49 @@ export function setObjGlobal(obj) {
   };
 }
 //------------------------------------------------------------------------------------------------------actions chat
-export async function getConvertations(id) {
-  return function (dispath) {
-    axios
-      .get(`chat/convertations/${id}`)
-      .then((resp) => {
-        dispath({ type: type.GET_CONVERTATIONS, payload: resp.data });
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+export function getConvertations() {
+  return async function (dispatch) {
+    try {
+      var resp = await axios(`chat/convertations`);
+      return dispatch({ type: type.GET_CONVERTATIONS, payload: resp.data });
+    } catch (err) {
+      console.log(err);
+    }
   };
 }
+
 //----------------------------------------------------------------------------------
-export async function getContacts(id) {
-  return function (dispath) {
-    axios
-      .get(`chat/contacts/${id}`)
-      .then((resp) => {
-        dispath({ type: type.GET_CONTACTS, payload: resp.data });
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+export function getContacts(id) {
+  return async function (dispatch) {
+    try {
+      var resp = await axios(`chat/contacts`);
+      return dispatch({ type: type.GET_CONTACTS, payload: resp.data });
+    } catch (err) {
+      console.log(err);
+    }
   };
 }
 //------------------------------------------------------------------------------------
-export async function getPots(idConv, offset) {
+export function getPots(idConv, idConv2, offset) {
   if (!offset) {
     offset = 0;
   }
-  return function (dispath) {
-    axios
-      .get(`chat/posts?idConvertation${idConv}&offset=${offset}`)
-      .then((resp) => {
-        dispath({ type: type.GET_POSTS, payload: resp.data });
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+  return async function (dispatch) {
+    try {
+      var posts = await axios(
+        `chat/posts?idConvertation1=${idConv}&idConvertation2=${idConv2}&offset=${offset}`
+      );
+      return dispatch({ type: type.GET_POSTS, payload: posts.data });
+    } catch (err) {
+      console.log(err);
+    }
   };
 }
 
 //-----------------------------------------------------------------------------------------------
-export async function sendMessage(msn) {
-  return function (dispath) {
-    axios
-      .post(`chat`, msn)
+export function sendMessage(msn) {
+  return async function () {
+    await axios.post(`chat`, msn)
       .then((resp) => {
         console.log(resp);
       })

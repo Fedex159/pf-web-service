@@ -17,13 +17,17 @@ function serverchat(serverIO) {
 }
 //---------------------------------------------------------------------------------get messages
 function getPots(req, res, next) {
-  var { idConvertation, offset } = req.query;
+  var { idConvertation1, idConvertation2, offset } = req.query;
+console.log(idConvertation1, idConvertation2);
   if (!offset) {
     offset = 0;
   }
   Chat.findAll({
     where: {
-      convertationId: idConvertation,
+      [Op.or]: [
+        { convertationId: idConvertation1 },
+        { convertationId: idConvertation2 },
+      ],
     },
     order: [["createdAt", "ASC"]],
     offset,
@@ -38,11 +42,12 @@ function getPots(req, res, next) {
 }
 //----------------------------------------------------------------------------get id convertations
 function getConvertations(req, res, next) {
-  const { id } = req.params;
-  console.log(req.params)
+  const { userId } = req.cookies;
   Convertations.findAll({
-    where: { userId: id },
-    attributes: ["sender", "id"],
+    where: {
+      [Op.or]: [{ userA: userId }, { userB: userId }],
+    },
+    attributes: ["userA", "userB", "id"],
   })
     .then((members) => {
       res.status(200).send(members);
@@ -53,16 +58,14 @@ function getConvertations(req, res, next) {
 }
 //---------------------------------------------------------------------------send [{ userId: userId }, { sender: remit }],
 function sendMessage(req, res, next) {
-  var { userId, remit, message } = req.body;
+  var {remit, message } = req.body;
+  var {userId}=req.cookies;
   var user;
   Convertations.findOrCreate({
     where: {
-      [Op.or]: [
-        { [Op.and]: [{ userId: userId }, { sender: remit }] },
-        { [Op.and]: [{ userId: remit }, { sender: userId }] },
-      ],
+      [Op.and]: [{ userA: userId }, { userB: remit }],
     },
-    defaults: { userId, sender: remit },
+    defaults: { userA: userId, userB: remit },
   })
     .then(([convertation]) => {
       Users.findByPk(userId)
@@ -88,16 +91,26 @@ function sendMessage(req, res, next) {
 
 //---------------------------------------------------------------------------------get contact
 function getContacts(req, res, next) {
-  const { userId } = req.params;
+  const { userId } = req.cookies;
   Convertations.findAll({
-    where: { userId },
-    attributes: ["sender"],
+    where: { userA: userId },
+    attributes: ["userA", "userB"],
   })
     .then((contacts) => {
       return contacts.map((con) => {
+        const { userB } = con.dataValues;
         return Users.findOne({
-          where: { id: con.dataValues.sender },
-          attributes: ["userImg", "name", "lastname", "username", "email"],
+          where: {
+            id: userB,
+          },
+          attributes: [
+            "userImg",
+            "name",
+            "lastname",
+            "username",
+            "email",
+            "id",
+          ],
         });
       });
     })

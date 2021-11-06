@@ -112,10 +112,10 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         convertations: action.payload,
       };
-    case type.GET_CONTACTS:
+    case type.GET_POSTS:
       return {
         ...state,
-        contacts: action.payload,
+        posts: action.payload,
       };
 
     case type.POST_PURCHASE:
