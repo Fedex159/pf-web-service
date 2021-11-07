@@ -8,6 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Comments from "../Comments/Comments";
 import RelatedServices from "./RelatedServices/RelatedServices";
 import RightInfoBar from "./RightInfoBar/RightInfoBar";
+import Typography from "@mui/material/Typography";
 
 export default function DetailService({ id, closeModal }) {
   let [service, setService] = useState({ service: {}, user: {} });
@@ -59,9 +60,7 @@ export default function DetailService({ id, closeModal }) {
   }, [category, id]);
 
   useEffect(() => {
-    if (category) {
-      getRelatedServices();
-    }
+    getRelatedServices();
   }, [category, getRelatedServices, id]);
   //-------------------------------------------------------
 
@@ -118,7 +117,6 @@ export default function DetailService({ id, closeModal }) {
 
   return (
     <>
-      {/* <Nav /> */}
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
@@ -131,21 +129,34 @@ export default function DetailService({ id, closeModal }) {
         <Box
           gridColumn={{ xs: "span 12", sm: "span 12", md: "span 8" }}
           p={{ xs: 0, sm: 2 }}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
         >
           <CardMedia
             component="img"
             image={img ? img : IMG_TEMPLATE}
             height="400"
             alt={id}
-            sx={{ objectFit: "cover" }}
+            sx={{
+              objectFit: "cover",
+              mb: "auto",
+              pb: 5,
+            }}
           />
 
-          <Comments
-            updateService={updateService}
-            serviceId={id}
-            qualifications={qualifications}
-            cookie={cookie}
-          />
+          {qualifications && qualifications.length ? (
+            <Comments
+              updateService={updateService}
+              serviceId={id}
+              qualifications={qualifications}
+              cookie={cookie}
+            />
+          ) : (
+            <Box border="solid 1px lightgrey" p="20px">
+              <Typography variant="h5">No coments</Typography>
+            </Box>
+          )}
         </Box>
         {/* ----------------------------------------------------- */}
 

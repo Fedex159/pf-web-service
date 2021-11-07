@@ -243,7 +243,7 @@ export function getContacts(id) {
   };
 }
 //------------------------------------------------------------------------------------
-export function getPots(idConv, idConv2, offset) {
+export function getPots(idConv, offset) {
   if (!offset) {
     offset = 0;
   }
@@ -260,17 +260,30 @@ export function getPots(idConv, idConv2, offset) {
 }
 //---------------------------------------------------------------------------------delete convertation
 
-
 //-----------------------------------------------------------------------------------------new convertation
 //-----------------------------------------------------------------------------------------------
 export function sendMessage(msn) {
   return async function () {
-    await axios.post(`chat`, msn)
+    await axios
+      .post(`chat`, msn)
       .then((resp) => {
         console.log(resp);
       })
       .catch((err) => {
         throw new Error(err);
       });
+  };
+}
+
+export function paypal(body) {
+  console.log("body=>>> ", body);
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`/paypal`, body);
+      window.location.replace(response.data);
+      return dispatch({ type: type.PAYPAL, payload: response.data });
+    } catch (err) {
+      console.log(err);
+    }
   };
 }

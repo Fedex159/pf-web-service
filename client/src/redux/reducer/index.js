@@ -122,6 +122,13 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+      case type.PAYPAL:
+        return {
+          ...state
+        }
+
+        
     default:
       return state;
   }
