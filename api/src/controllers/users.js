@@ -183,7 +183,7 @@ async function postPurchase(req, res, next) {
       await user.setServicesBought(servicesId);
       res.redirect(`${ORIGIN}/home`);
     } else {
-      res.status(400).redirect(`${ORIGIN}/fail`);
+      res.status(400).redirect(`${ORIGIN}/home`);
     }
   } catch (e) {
     next(e);
