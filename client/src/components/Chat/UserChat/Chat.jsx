@@ -88,12 +88,12 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
   //------------------------------------------------------------------------------------------send msn
   function handleSubmit(e) {
     e.preventDefault();
-    socket.current.emit("sendMessage", {
+    socket.current.emit("sendMsn", {
       senderId: user.id,
       receiverId: contact.id,
       text: msg,
     });
-    //senderId,receiverId,text
+  
     dispatch(sendMessage({ remit: contact.id, message: msg }));
     setMsg("");
   }

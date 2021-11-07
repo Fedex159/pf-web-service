@@ -1,51 +1,55 @@
 const { Users, Chat, Convertations, ContactsOnline } = require("../db.js");
-
 const { Op } = require("sequelize");
+
+//-----------------------socket--------------------------------------function users online
+const addUsers = async (user, socket) => {
+  try {
+    await ContactsOnline.findOrCreate({
+      where: { userId: user, socketId: socket },
+    });
+  } catch (err) {}
+};
+//-----------------------------------------------------------------------------function remove user online
+const removeUser = async (socketId) => {
+  if (socketId) {
+    await ContactsOnline.destroy({ where: { socketId } });
+  }
+};
+//---------------------------------------------------------------------------------function get user
+const getUser = async (receiveId) => {
+  var user = await ContactsOnline.findAll({
+    where: {
+      userId: receiveId,
+    },
+  });
+  return user;
+};
 //----------------------------------------------------------------------------server IO
 function serverchat(serverIO) {
   serverIO.on("connection", (socketIO) => {
-    //-----------------------socket--------------------------------------function users online
-    function addUsers(user, socket) {
-      console.log("entre a adduse", socket);
-      ContactsOnline.findOrCreate({ where: { userId: user, socketId: socket } })
-        .then((obj) => {
-          console.log(obj);
-        })
-        .catch((e) => console.log(e));
-    }
     //-----------------------------------------------------------------------------add new User
-    socketIO.on("addUser", (userId) => {
-      console.log(userId, "<<<<<<<<<<<<<<<<");
+    socketIO.on("addUser", async (userId) => {
       addUsers(userId, socketIO.id);
+      serverIO.emit("getUsers", await ContactsOnline.findAll());
     });
-    //-----------------------------------------------------------------------------function remove user online
-    async function removeUser(socketId) {
-      if (socketId) {
-        await ContactsOnline.destroy({ where: { socketId } });
-      }
-    }
-    //---------------------------------------------------------------------------------function get user
-    async function getUser(receiveId) {
-      if (receiveId) {
-        await ContactsOnline.findByPk(receiveId);
-      }
-    }
     //-----------------------------------------------------------------------------disconect user
     socketIO.on("disconnect", async () => {
       removeUser(socketIO.id);
       serverIO.emit("getUsers", await ContactsOnline.findAll());
     });
     //------------------------------------------------------------------------------------send msn
-    socketIO.on("sendMessage", ({ senderId, receiverId, text }) => {
+
+    socketIO.on("sendMsn", ({ senderId, receiverId, text }) => {
+      console.log(senderId, "--", receiverId, "--", text);
       if (senderId && receiverId && text) {
         var user = getUser(receiverId);
-        console.log(user);
+        console.log(user, "el send");
         /* if (!user) {
-        serverIO.to(user.socketId).emit("getMessage", {
-          senderId,
-          text,
-        });
-      }*/
+                    serverIO.to(user.socketId).emit("getMessage", {
+                        senderId,
+                        text,
+                    });
+                }*/
       }
     });
   });
