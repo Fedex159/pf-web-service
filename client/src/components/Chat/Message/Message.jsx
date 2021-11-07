@@ -14,8 +14,6 @@ export default function Message({ user,contact,message }) {
     display: "flex",
     paddingRight: "2%",
   };
-
-  console.log(contact);
   return (
     <div style={boxMSN}>
       <Box name="msn" sx={msn}>

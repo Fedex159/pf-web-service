@@ -121,7 +121,6 @@ export function putUser(newData) {
     }
   };
 }
-
 export async function getUserInfo() {
   const response = await axios.get("/users");
   return {
@@ -129,20 +128,6 @@ export async function getUserInfo() {
     payload: response.data,
   };
 }
-
-// export function getUserInfo() {
-//   return function (dispatch) {
-//     axios
-//       .get("/users")
-//       .then((response) => response.data)
-//       .then((data) =>
-//         dispatch({
-//           type: type.GET_USER_INFO,
-//           payload: data,
-//         })
-//       );
-//   };
-// }
 
 export function banUser(id) {
   return async () => {

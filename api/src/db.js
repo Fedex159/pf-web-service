@@ -74,6 +74,8 @@ const {
 } = sequelize.models;
 // console.log("SEQUELIZE MODEL", sequelize.models);
 // Aca vendrian las relaciones
+
+console.log(sequelize.models);
 Service.belongsToMany(Users, {
   as: "servicesBought",
   through: "services_users_bought",

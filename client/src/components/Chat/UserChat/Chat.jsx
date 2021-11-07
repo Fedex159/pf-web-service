@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Conversations from "../Conversations/conversations.jsx";
 import { Box } from "@mui/system";
 import SendIcon from "@mui/icons-material/Send";
@@ -15,24 +15,55 @@ import {
   getPots,
   getUserInfo,
   sendMessage,
-} from "../../../redux/actions/index.js";
+} from "../../../redux/actions";
 dotenv.config();
-
-var clienteIO = io(process.env.REACT_APP_API); //conexion al servidor para bidireccional peticiones
 require("./Chat.css");
 
 function Chat({ cookie, convertations, contacts, posts, user }) {
   const [msg, setMsg] = useState("");
   const [contact, setContact] = useState();
   const [chating, setChating] = useState([]);
+  const socket = useRef(); //conexion al servidor para bidireccional peticiones
+  //const socket = useRef(io(process.env.REACT_APP_API));
   const dispatch = useDispatch();
 
-  //---------------------------------------------------------------------------get id all convertations
+  //----------------------------------------------------------------------------socket
+  useEffect(() => {
+    //client conection
+    socket.current = io("http://localhost:3001");
+    socket.current.on("getMessage", (data) => {
+      setChating((prev) => [
+        ...prev,
+        { remit: data.senderId, text: data.text, createAt: Date.now() },
+      ]);
+    });
+  }, []);
+
+  useEffect(() => {
+      if (cookie) {
+          socket.current.emit("addUser", user.id);
+          socket.current.on("getUsers", (users) => {
+          console.log(users);
+      });
+    }
+
+  }, [user]);
+
+  //----------------------------------------------------------------------------------chat with a user in online
+  useEffect(() => {
+    if (posts) {
+      setChating(posts);
+    }
+  }, [posts]);
+  //---------------------------------------------------------------------------get id all convertations and contacts
   useEffect(() => {
     if (cookie) {
       dispatch(getConvertations());
       dispatch(getContacts());
-      dispatch(getUserInfo());
+
+      if (cookie) {
+        getUserInfo().then((userInfo) => dispatch(userInfo));
+      }
     }
     // eslint-disable-next-line
   }, [cookie]);
@@ -40,12 +71,9 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
   //--------------------------------------------------------------------------------------------conversation of a contact
   function chatContact(idContact) {
     var conv = [];
-
     for (let i = 0; i < convertations.length; i++) {
-      if (
-        convertations[i].userA === idContact ||
-        convertations[i].userB === idContact
-      ) {
+      var { userA, userB } = convertations[i];
+      if (userA === idContact || userB === idContact) {
         conv.push(convertations[i].id);
       }
     }
@@ -57,19 +85,15 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
       ? dispatch(getPots(conv[0], conv[1]))
       : dispatch(getPots(conv[0], 0));
   }
-  //----------------------------------------------------------------------------------send post
-  function enviar() {
-    clienteIO.emit("sendMessage", {
-      ...msg,
-      userId: "5342afe4-d80a-4920-815c-7e3b75d246b0",
-      remit: "4e21899e-36ad-11ec-8d3d-0242ac130003",
-    });
-    setMsg("");
-  }
-
   //------------------------------------------------------------------------------------------send msn
   function handleSubmit(e) {
     e.preventDefault();
+    socket.current.emit("sendMessage", {
+      senderId: user.id,
+      receiverId: contact.id,
+      text: msg,
+    });
+    //senderId,receiverId,text
     dispatch(sendMessage({ remit: contact.id, message: msg }));
     setMsg("");
   }
@@ -101,7 +125,7 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
               sx={_style.menu_chating_wrapper}
             >
               {convertations &&
-                posts.map((msn) => (
+                chating.map((msn) => (
                   <Message
                     key={msn.id}
                     user={user}

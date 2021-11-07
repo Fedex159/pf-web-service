@@ -1,24 +1,58 @@
-//server envia a user >>>>   serverIO.emit("nombre del metodo que tiene el usuario "     ,    objeto que envia)
-//cliente envia a server(solo front)   >>>>   clienteIO.emit("nombre del metodo que tiene el servidor "    ,   objeto que envia )
-//server recibe de user serverIO.on("nombre metodo que el ser recibe"  ,  function (data)  )
-//cliente recibe de user clienteIO.on("nombre metodo que el ser recibe"  ,  function (data)  )
-const { Users, Chat, Convertations } = require("../db.js");
-const { Op } = require("sequelize");
-function serverchat(serverIO) {
-  serverIO.on("connection", (clienteIO) => {
-    //server en linea
+const { Users, Chat, Convertations, ContactsOnline } = require("../db.js");
 
-    console.log("chat servidor", "2");
-    //-----------------------------------------------------------------send message
-    clienteIO.on("sendMessage", (data) => {
-      serverIO.emit("responseMessage", `${data.message} `);
+const { Op } = require("sequelize");
+//----------------------------------------------------------------------------server IO
+function serverchat(serverIO) {
+  serverIO.on("connection", (socketIO) => {
+    //-----------------------socket--------------------------------------function users online
+    function addUsers(user, socket) {
+      console.log("entre a adduse", socket);
+      ContactsOnline.findOrCreate({ where: { userId: user, socketId: socket } })
+        .then((obj) => {
+          console.log(obj);
+        })
+        .catch((e) => console.log(e));
+    }
+    //-----------------------------------------------------------------------------add new User
+    socketIO.on("addUser", (userId) => {
+      console.log(userId, "<<<<<<<<<<<<<<<<");
+      addUsers(userId, socketIO.id);
+    });
+    //-----------------------------------------------------------------------------function remove user online
+    async function removeUser(socketId) {
+      if (socketId) {
+        await ContactsOnline.destroy({ where: { socketId } });
+      }
+    }
+    //---------------------------------------------------------------------------------function get user
+    async function getUser(receiveId) {
+      if (receiveId) {
+        await ContactsOnline.findByPk(receiveId);
+      }
+    }
+    //-----------------------------------------------------------------------------disconect user
+    socketIO.on("disconnect", async () => {
+      removeUser(socketIO.id);
+      serverIO.emit("getUsers", await ContactsOnline.findAll());
+    });
+    //------------------------------------------------------------------------------------send msn
+    socketIO.on("sendMessage", ({ senderId, receiverId, text }) => {
+      if (senderId && receiverId && text) {
+        var user = getUser(receiverId);
+        console.log(user);
+        /* if (!user) {
+        serverIO.to(user.socketId).emit("getMessage", {
+          senderId,
+          text,
+        });
+      }*/
+      }
     });
   });
-}
+} //server id
 //---------------------------------------------------------------------------------get messages
 function getPots(req, res, next) {
   var { idConvertation1, idConvertation2, offset } = req.query;
-console.log(idConvertation1, idConvertation2);
   if (!offset) {
     offset = 0;
   }
@@ -58,16 +92,19 @@ function getConvertations(req, res, next) {
 }
 //---------------------------------------------------------------------------send [{ userId: userId }, { sender: remit }],
 function sendMessage(req, res, next) {
-  var {remit, message } = req.body;
-  var {userId}=req.cookies;
+  var { remit, message } = req.body;
+  var { userId } = req.cookies;
   var user;
   Convertations.findOrCreate({
     where: {
-      [Op.and]: [{ userA: userId }, { userB: remit }],
+      [Op.or]: [
+        { [Op.and]: [{ userA: userId }, { userB: remit }] },
+        { [Op.and]: [{ userA: remit }, { userB: userId }] },
+      ],
     },
     defaults: { userA: userId, userB: remit },
   })
-    .then(([convertation]) => {
+    .then(([convertation, flat]) => {
       Users.findByPk(userId)
         .then((userBd) => {
           user = userBd;
@@ -93,12 +130,15 @@ function sendMessage(req, res, next) {
 function getContacts(req, res, next) {
   const { userId } = req.cookies;
   Convertations.findAll({
-    where: { userA: userId },
+    where: { [Op.or]: [{ userA: userId }, { userB: userId }] },
     attributes: ["userA", "userB"],
   })
     .then((contacts) => {
       return contacts.map((con) => {
-        const { userB } = con.dataValues;
+        var { userA, userB } = con.dataValues;
+        if (userB === userId) {
+          userB = userA;
+        }
         return Users.findOne({
           where: {
             id: userB,
