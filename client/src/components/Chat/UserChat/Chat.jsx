@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import { connect, useDispatch } from "react-redux";
 import dotenv from "dotenv";
 import Message from "../Message/message.jsx";
+
 import {
   getContacts,
   getConvertations,
@@ -21,8 +22,10 @@ require("./Chat.css");
 
 function Chat({ cookie, convertations, contacts, posts, user }) {
   const [msg, setMsg] = useState("");
-  const [contact, setContact] = useState();
+  const [contact, setContact] = useState(null);
   const [chating, setChating] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  var scrollRef = useRef();
   const socket = useRef(); //conexion al servidor para bidireccional peticiones
   //const socket = useRef(io(process.env.REACT_APP_API));
   const dispatch = useDispatch();
@@ -32,22 +35,34 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
     //client conection
     socket.current = io("http://localhost:3001");
     socket.current.on("getMessage", (data) => {
-      setChating((prev) => [
-        ...prev,
-        { remit: data.senderId, text: data.text, createAt: Date.now() },
-      ]);
+      setArrivalMessage({
+        userId: data.senderId,
+        remit: data.remit,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+      // }
     });
   }, []);
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [chating]);
 
   useEffect(() => {
-      if (cookie) {
-          socket.current.emit("addUser", user.id);
-          socket.current.on("getUsers", (users) => {
-          console.log(users);
-      });
+    if (cookie) {
+      socket.current.emit("addUser", user.id);
     }
-
   }, [user]);
+
+  useEffect(() => {
+    console.log(contact ? true : false);
+    if (contact) {
+      contact.id === arrivalMessage.userId &&
+        setChating([...chating, arrivalMessage]);
+    }
+  }, [arrivalMessage]);
 
   //----------------------------------------------------------------------------------chat with a user in online
   useEffect(() => {
@@ -73,7 +88,10 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
     var conv = [];
     for (let i = 0; i < convertations.length; i++) {
       var { userA, userB } = convertations[i];
-      if (userA === idContact || userB === idContact) {
+      if (
+        (userA === idContact && userB === user.id) ||
+        (userA === user.id && userB === idContact)
+      ) {
         conv.push(convertations[i].id);
       }
     }
@@ -81,21 +99,29 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
       return contacts.id === idContact;
     });
     setContact(contact);
-    conv.length > 1
-      ? dispatch(getPots(conv[0], conv[1]))
-      : dispatch(getPots(conv[0], 0));
+    dispatch(getPots(conv[0]));
   }
   //------------------------------------------------------------------------------------------send msn
   function handleSubmit(e) {
     e.preventDefault();
-    socket.current.emit("sendMsn", {
-      senderId: user.id,
-      receiverId: contact.id,
-      text: msg,
-    });
-  
-    dispatch(sendMessage({ remit: contact.id, message: msg }));
-    setMsg("");
+    if (user && contact) {
+      socket.current.emit("sendMsn", {
+        senderId: user.id,
+        receiverId: contact.id,
+        text: msg,
+      });
+
+      setChating((prev) => [
+        ...prev,
+        {
+          userId: user.id,
+          remit: contact.id,
+          text: msg,
+        },
+      ]);
+      dispatch(sendMessage({ remit: contact.id, message: msg }));
+      setMsg("");
+    }
   }
   //------------------------------------------------------------------------------------------
   return (
@@ -118,44 +144,50 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
       </Box>
       <div style={{ flex: "5.5" }}>
         {posts.length ? (
-          <Box name="conversations" sx={_style.box_conversations_b}>
+          <div name="conversations" style={_style.box_conversations_b}>
             <Box
               name="menu-chating-wrapper"
               name="message"
               sx={_style.menu_chating_wrapper}
             >
               {convertations &&
-                chating.map((msn) => (
+                chating.map((msn, i) => (
                   <Message
-                    key={msn.id}
+                    scrollRef={scrollRef}
+                    key={i}
                     user={user}
                     contact={contact}
                     message={msn}
                   />
                 ))}
             </Box>
-          </Box>
+          </div>
         ) : (
           <span>Open a convertation to start a chat</span>
         )}
         <form onSubmit={(e) => handleSubmit(e)}>
-          <Box
-            sx={{
-              display: "flex",
-              maxWidth: "100%",
-              flex: "row",
-            }}
-          >
-            <TextField
-              fullWidth
-              size="small"
-              value={msg}
-              onChange={(e) => setMsg(e.target.value)}
-            />
-            <Button variant="contained" type="submit" endIcon={<SendIcon />}>
-              ENVIAR
-            </Button>
-          </Box>
+          {posts.length ? (
+            <Box
+              sx={{
+                display: "flex",
+                maxWidth: "100%",
+                flex: "row",
+              }}
+            >
+              <TextField
+                fullWidth
+                size="small"
+                value={msg}
+                onChange={(e) => setMsg(e.target.value)}
+              />
+              <Button variant="contained" type="submit" endIcon={<SendIcon />}>
+                {" "}
+                ENVIAR
+              </Button>
+            </Box>
+          ) : (
+            <></>
+          )}
         </form>
       </div>
       <Box name="contacts-online" sx={_style.box_contactsStates_c}>

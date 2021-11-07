@@ -30,6 +30,7 @@ const _style = {
     flex: "5.5",
     height: "90%",
     overflowY: "scroll",
+    scrollBehavior : "smooth"
   },
   //box conversatios wrapper
   menu_chating_wrapper: {

@@ -1,11 +1,9 @@
 import { Avatar, Box } from "@material-ui/core";
 import React from "react";
-export default function Message({ user,contact,message }) {
+export default function Message({ user, contact, message, scrollRef }) {
   var boxMSN = {
-    background: message.remit === user.id ? "#1e7ee5" : "#1eeee5",
-    borderTopLeftRadius: "3em",
-    borderTopRightRadius: "0.6em",
-    borderBottomRightRadius: "0.6em",
+    background: message.userId === user.id ? "#1e7ee5" : "#1eeee5",
+    borderRadius: "6em",
     marginTop: "4.5%",
     minHeigth: "80%",
     maxWidth: "80%",
@@ -16,7 +14,7 @@ export default function Message({ user,contact,message }) {
   };
   return (
     <div style={boxMSN}>
-      <Box name="msn" sx={msn}>
+      <Box ref={scrollRef} name="msn" sx={msn}>
         <Avatar
           src={
             message.remit === user.id
@@ -25,15 +23,21 @@ export default function Message({ user,contact,message }) {
           }
           sx={{ width: "54px", height: 54 }}
         />
-        <p style={{ textAlign: "justify", color: "white" }}>{message.text}</p>
+        <p
+          style={{
+            textAlign: "justify",
+            color: message.userId === user.id ?"white" : " black",
+          }}
+        >
+          {message.text}
+        </p>
       </Box>
       <div
         style={{
           color: "#ffff",
         }}
-      >
-        <h5>hora 1:33</h5>
-      </div>
+      ></div>
+      <h5>{message.createdAt}</h5>
     </div>
   );
 }

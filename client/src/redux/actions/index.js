@@ -250,7 +250,7 @@ export function getPots(idConv, idConv2, offset) {
   return async function (dispatch) {
     try {
       var posts = await axios(
-        `chat/posts?idConvertation1=${idConv}&idConvertation2=${idConv2}&offset=${offset}`
+        `chat/posts?idConvertation1=${idConv}&offset=${offset}`
       );
       return dispatch({ type: type.GET_POSTS, payload: posts.data });
     } catch (err) {
@@ -258,7 +258,10 @@ export function getPots(idConv, idConv2, offset) {
     }
   };
 }
+//---------------------------------------------------------------------------------delete convertation
 
+
+//-----------------------------------------------------------------------------------------new convertation
 //-----------------------------------------------------------------------------------------------
 export function sendMessage(msn) {
   return async function () {
