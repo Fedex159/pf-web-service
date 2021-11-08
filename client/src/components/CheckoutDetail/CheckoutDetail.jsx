@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 import CheckoutCard from '../CheckoutDetail/CheckoutCard/CheckoutCard';
-import { postPurchase, removeCart} from '../../redux/actions';
-import {paypal} from '../../redux/actions/index'
+import { postPurchase, removeCart } from '../../redux/actions';
+import { paypal } from '../../redux/actions/index';
 import { useSelector, useDispatch } from 'react-redux';
 import s from './CheckoutPopOver/checkoutDetail.module.css';
 
@@ -18,28 +18,25 @@ export default function CheckoutDetail() {
 
   const total = [];
 
-
   const handleBuyPaypal = () => {
-    let prices = []
+    let prices = [];
     cart.map(async (c) => {
-      prices.push(c.price)
+      prices.push(c.price);
       dispatch(
-        await paypal({
+         paypal({
           servicesId: [c.id],
           prices: prices,
           name: c.title,
           quantity: 1,
         })
       );
-      dispatch(await removeCart(c.id));
+      dispatch(removeCart(c.id));
     });
- 
-
-  }
+  };
   const handleBuyClick = () => {
-    let prices = []
+    let prices = [];
     cart.map(async (c) => {
-      prices.push(c.price)
+      prices.push(c.price);
       dispatch(
         await postPurchase({
           servicesId: [c.id],
@@ -78,7 +75,6 @@ export default function CheckoutDetail() {
           <Grid item xs={12} sm container>
             <Grid
               container
-              xs
               direction="column"
               spacing={1}
               alignItems="flex-end"
@@ -98,7 +94,7 @@ export default function CheckoutDetail() {
                     alignItems: 'flex-start',
                   }}
                 >
-                  {cart.length > 0 ? (
+                  {/* {cart.length > 0 ? ( */}
                     <Typography
                       variant="h5"
                       color="text.primary"
@@ -111,11 +107,21 @@ export default function CheckoutDetail() {
                         </Typography>
                       )}
                     </Typography>
-                  ) : (
-                    <div className={s.spinner}></div>
-                  )}
+                
+                   {/* : ( */}
+                    {/* <div className={s.spinner}></div> */}
+                  {/* )} */}
                 </Grid>
-                <Grid item>
+                <Grid
+                  item
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gridGap: '1rem',
+                  }}
+                >
                   {total.length > 0 ? (
                     <Button
                       color="secondary"
@@ -130,12 +136,13 @@ export default function CheckoutDetail() {
                       BUY WITH MERCADO PAGO
                     </Button>
                   )}
-                        {total.length > 0 ? (
+                  {total.length > 0 ? (
                     <Button
                       color="secondary"
                       variant="contained"
                       size="large"
                       onClick={handleBuyPaypal}
+                      fullWidth
                     >
                       BUY WITH PAYPAL
                     </Button>
