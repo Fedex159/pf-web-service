@@ -154,7 +154,7 @@ async function userBanned(req, res, next) {
 async function postPurchase(req, res, next) {
   //necesitamos estos datos para asociar el servicio comprado a la categoría
 
-  const { servicesId, collection_status} = req.query
+  const { servicesId, collection_status, status} = req.query
    const { userId } = req.cookies;
 
   console.log('idEnPruchase', req.cookies)
@@ -163,7 +163,7 @@ async function postPurchase(req, res, next) {
  
 
   try {
-    if (collection_status == 'approved'){
+    if (collection_status == 'approved' || status){
     console.log('POSTPURCHASEID', userId)
     console.log('SERVICEIDPURCHASE', servicesId)
 
