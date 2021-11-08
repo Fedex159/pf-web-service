@@ -4,6 +4,7 @@ const {
   checkUnique,
   validateUserEdit,
   validatePurchase,
+  validateAdmin,
 } = require("../utils/validUser");
 require("dotenv").config();
 const { ORIGIN } = process.env;
@@ -34,11 +35,12 @@ async function userCreated(req, res, next) {
 
 async function userEdit(req, res, next) {
   const { userId } = req.cookies;
-
+  const userIdQuery = req.query.id;
   try {
-    const user = await Users.findByPk(userId);
+    const user = await Users.findByPk(userIdQuery || userId);
 
-    const { name, lastname, userImg, password } = req.body;
+    const { name, lastname, userImg, password, email, ban, username } =
+      req.body;
     const errors = validateUserEdit(req.body);
     if (name || lastname || userImg || password) {
       if (!Object.keys(errors).length) {
@@ -47,6 +49,9 @@ async function userEdit(req, res, next) {
         user.lastname = lastname ? lastname : user.lastname;
         user.userImg = userImg ? userImg : user.userImg;
         user.password = password ? password : user.password;
+        user.username = username ? username : user.username;
+        user.email = email ? email : user.email;
+        user.ban = ban;
 
         await user.save();
         res.json({ data: "User edited" });
@@ -193,80 +198,89 @@ async function postPurchase(req, res, next) {
 async function getUserAdminSearch(req, res, next) {
   try {
     const { search } = req.query;
+    const { userId } = req.cookies;
 
-    const user = await Users.findAll({
-      attributes: [
-        "id",
-        "userImg",
-        "name",
-        "lastname",
-        "username",
-        "email",
-        "admin",
-        "ban",
-      ],
-      where: {
-        [Op.or]: {
-          id: conn.where(conn.fn("TEXT", conn.col("users.id")), "LIKE", search),
-          name: conn.where(
-            conn.fn("LOWER", conn.col("name")),
-            "LIKE",
-            search + "%"
-          ),
-          lastname: conn.where(
-            conn.fn("LOWER", conn.col("lastname")),
-            "LIKE",
-            search + "%"
-          ),
-          email: conn.where(
-            conn.fn("LOWER", conn.col("email")),
-            "LIKE",
-            search
-          ),
-          username: conn.where(
-            conn.fn("LOWER", conn.col("username")),
-            "LIKE",
-            search + "%"
-          ),
-        },
-      },
+    let validAdmin = await validateAdmin(userId);
 
-      include: [
-        {
-          model: Service,
-          as: "servicesOwn",
-          attributes: ["id", "title", "img", "price", "userId"],
-          include: {
-            model: Qualification,
-            attributes: ["score"],
+    const user =
+      validAdmin &&
+      (await Users.findAll({
+        attributes: [
+          "id",
+          "userImg",
+          "name",
+          "lastname",
+          "username",
+          "email",
+          "admin",
+          "ban",
+        ],
+        where: {
+          [Op.or]: {
+            id: conn.where(
+              conn.fn("TEXT", conn.col("users.id")),
+              "LIKE",
+              search
+            ),
+            name: conn.where(
+              conn.fn("LOWER", conn.col("name")),
+              "LIKE",
+              search + "%"
+            ),
+            lastname: conn.where(
+              conn.fn("LOWER", conn.col("lastname")),
+              "LIKE",
+              search + "%"
+            ),
+            email: conn.where(
+              conn.fn("LOWER", conn.col("email")),
+              "LIKE",
+              search
+            ),
+            username: conn.where(
+              conn.fn("LOWER", conn.col("username")),
+              "LIKE",
+              search + "%"
+            ),
           },
         },
-        {
-          model: Service,
-          as: "servicesFavs",
-          attributes: ["id", "title", "img", "price", "userId"],
-          through: {
-            attributes: [],
+
+        include: [
+          {
+            model: Service,
+            as: "servicesOwn",
+            attributes: ["id", "title", "img", "price", "userId"],
+            include: {
+              model: Qualification,
+              attributes: ["score"],
+            },
           },
-          include: {
-            model: Qualification,
-            attributes: ["score"],
+          {
+            model: Service,
+            as: "servicesFavs",
+            attributes: ["id", "title", "img", "price", "userId"],
+            through: {
+              attributes: [],
+            },
+            include: {
+              model: Qualification,
+              attributes: ["score"],
+            },
           },
-        },
-        {
-          model: Service,
-          as: "servicesBought",
-          attributes: ["id", "title", "img", "price", "userId"],
-          through: {
-            attributes: [],
+          {
+            model: Service,
+            as: "servicesBought",
+            attributes: ["id", "title", "img", "price", "userId"],
+            through: {
+              attributes: [],
+            },
+            include: {
+              model: Qualification,
+              attributes: ["score"],
+            },
           },
-          include: {
-            model: Qualification,
-            attributes: ["score"],
-          },
-        },
-      ],
-    });
+        ],
+      }));
 
     user ? res.json(user) : res.status(404).json({ message: "User not found" });
   } catch (e) {
