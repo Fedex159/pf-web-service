@@ -3,7 +3,6 @@ const { Op } = require("sequelize");
 var users = [];
 //-----------------------socket--------------------------------------function users online
 const addUsers = async (userId, socketid) => {
-  var n = [];
   var flat = true;
   for (let i = 0; i < users.length; i++) {
     if (users[i].user === userId) {
@@ -35,20 +34,19 @@ function serverchat(serverIO) {
   serverIO.on("connection", (socketIO) => {
     console.log("user " + socketIO.id + " connect");
     //-----------------------------------------------------------------------------add new User
-    socketIO.on("addUser", async (userId) => {
+    socketIO.on("addUser", (userId) => {
       addUsers(userId, socketIO.id);
       console.log(users);
       return serverIO.emit("getUsers", users);
     });
     //-----------------------------------------------------------------------------disconect user
-    socketIO.on("disconnect", async () => {
+    socketIO.on("disconnect",() => {
       removeUser(socketIO.id);
-      console.log(users);
       serverIO.emit("getUsers", users);
     });
     //------------------------------------------------------------------------------------send msn
 
-    socketIO.on("sendMsn", async ({ senderId, receiverId, text }) => {
+    socketIO.on("sendMsn",({ senderId, receiverId, text }) => {
       if (senderId && receiverId && text) {
         var user = getUser(receiverId);
         if (Object.values(user).length) {

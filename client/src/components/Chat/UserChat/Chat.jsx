@@ -15,6 +15,7 @@ import {
   getConvertations,
   getPots,
   getUserInfo,
+  newConvertation,
   sendMessage,
 } from "../../../redux/actions";
 dotenv.config();
@@ -22,7 +23,6 @@ require("./Chat.css");
 
 function Chat(props) {
   const { cookie, convertations, contacts, posts, user, id } = props;
-
   const [msg, setMsg] = useState("");
   const [currentContact, setCurrentContact] = useState(null);
   const [chating, setChating] = useState([]);
@@ -32,6 +32,7 @@ function Chat(props) {
   const socket = useRef(); //conexion al servidor para bidireccional peticiones
   //const socket = useRef(io(process.env.REACT_APP_API));
   //----------------------------------------------------------------------------socket
+  console.log(chating.length ? true : false);
   useEffect(() => {
     //client conection
     socket.current = io("http://localhost:3001");
@@ -40,24 +41,24 @@ function Chat(props) {
         userId: data.senderId,
         remit: data.remit,
         text: data.text,
-        createAt: Date.now(),
+        createdAt: Date.now(),
       });
       // }
     });
   }, []);
   //----------------------------------------------------------add user socket
-    useEffect(() => {
-      if (cookie) {
-        socket.current.emit("addUser", user.id);
-      }
-    }, [user]);
+  useEffect(() => {
+    if (cookie) {
+      socket.current.emit("addUser", user.id);
+    }
+  }, [user]);
   //----------------------------------------------------------------scroll
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chating]);
-//-----------------------------------------------------------------------------new msg receive
+  //-----------------------------------------------------------------------------new msg receive
   useEffect(() => {
     if (currentContact) {
       currentContact.id === arrivalMessage.userId &&
@@ -74,16 +75,28 @@ function Chat(props) {
   }, [posts]);
   //---------------------------------------------------------------------------get id all convertations and contacts
   useEffect(() => {
-    if (cookie) {
-      dispatch(getConvertations());
-      dispatch(getContacts());
-
-      if (cookie) {
-        getUserInfo().then((userInfo) => dispatch(userInfo));
-      }
-    }
+    convertationsAnccontacts();
     // eslint-disable-next-line
   }, []);
+  //-------------------------------------------------------------------------------------------------
+  function convertationsAnccontacts() {
+    if (!user) {
+      getUserInfo().then((userInfo) => dispatch(userInfo));
+      return;
+    }
+
+    if (user && id) {
+      console.log("entre a user+id");
+      dispatch(newConvertation(id));
+      dispatch(getContacts());
+      dispatch(getConvertations());
+      return;
+    }
+    if (user) {
+      dispatch(getConvertations());
+      dispatch(getContacts());
+    }
+  }
 
   //--------------------------------------------------------------------------------------------conversation of a contact
   function chatContact(idContact) {
@@ -120,6 +133,7 @@ function Chat(props) {
           userId: user.id,
           remit: currentContact.id,
           text: msg,
+          createdAt: Date.now(),
         },
       ]);
       dispatch(sendMessage({ remit: currentContact.id, message: msg }));
@@ -127,73 +141,83 @@ function Chat(props) {
     }
   }
   //------------------------------------------------------------------------------------------
-  return (
-    <Box sx={_style.box_messanger_father} name="box-father">
-      <Box name="contacts" sx={_style.box_contacts_a}>
-        <Box name="menu-contacts-wrapper" sx={_style.menu_contacts_wrapper}>
-          <Input name="inputSearch"></Input>
-          {contacts &&
-            contacts.map((con) => (
+  if (user) {
+    return (
+      <Box sx={_style.box_messanger_father} name="box-father">
+        <Box name="contacts" sx={_style.box_contacts_a}>
+          <Box name="menu-contacts-wrapper" sx={_style.menu_contacts_wrapper}>
+            <Input name="inputSearch"></Input>
+            {contacts &&
+              contacts.map((con) => (
+                <Box
+                  key={con.email}
+                  onClick={() => {
+                    chatContact(con.id);
+                  }}
+                >
+                  <Conversations key={con.email} contacts={con} />
+                </Box>
+              ))}
+          </Box>
+        </Box>
+        <div style={{ flex: "5.5" }}>
+          {chating.length ? (
+            <div name="conversations" style={_style.box_conversations_b}>
+              <Box name="message" sx={_style.menu_chating_wrapper}>
+                {convertations &&
+                  chating.map((msn, i) => (
+                    <Message
+                      scrollRef={scrollRef}
+                      key={i}
+                      user={user}
+                      contact={currentContact}
+                      message={msn}
+                    />
+                  ))}
+              </Box>
+            </div>
+          ) : (
+            <span>Open a convertation to start a chat</span>
+          )}
+          {chating.length && (
+            <form onSubmit={(e) => handleSubmit(e)}>
               <Box
-                key={con.email}
-                onClick={() => {
-                  chatContact(con.id);
+                sx={{
+                  display: "flex",
+                  maxWidth: "100%",
+                  flex: "row",
                 }}
               >
-                <Conversations key={con.email} contacts={con} />
+                <TextField
+                  fullWidth
+                  size="small"
+                  value={msg}
+                  onChange={(e) => setMsg(e.target.value)}
+                />
+                <Button
+                  variant="contained"
+                  type="submit"
+                  endIcon={<SendIcon />}
+                >
+                  ENVIAR
+                </Button>
               </Box>
-            ))}
-        </Box>
-      </Box>
-      <div style={{ flex: "5.5" }}>
-        {posts.length ? (
-          <div name="conversations" style={_style.box_conversations_b}>
-            <Box name="message" sx={_style.menu_chating_wrapper}>
-              {convertations &&
-                chating.map((msn, i) => (
-                  <Message
-                    scrollRef={scrollRef}
-                    key={i}
-                    user={user}
-                    contact={currentContact}
-                    message={msn}
-                  />
-                ))}
-            </Box>
-          </div>
-        ) : (
-          <span>Open a convertation to start a chat</span>
-        )}
-        <form onSubmit={(e) => handleSubmit(e)}>
+            </form>
+          )}
+        </div>
+        <Box name="contacts-online" sx={_style.box_contactsStates_c}>
           <Box
-            sx={{
-              display: "flex",
-              maxWidth: "100%",
-              flex: "row",
-            }}
+            name="menu-contactsOnline-wrapper"
+            sx={_style.menu_contactsOnline_wrapper}
           >
-            <TextField
-              fullWidth
-              size="small"
-              value={msg}
-              onChange={(e) => setMsg(e.target.value)}
-            />
-            <Button variant="contained" type="submit" endIcon={<SendIcon />}>
-              ENVIAR
-            </Button>
+            online
           </Box>
-        </form>
-      </div>
-      <Box name="contacts-online" sx={_style.box_contactsStates_c}>
-        <Box
-          name="menu-contactsOnline-wrapper"
-          sx={_style.menu_contactsOnline_wrapper}
-        >
-          online
         </Box>
       </Box>
-    </Box>
-  );
+    );
+  } else {
+    return <h3>cargando</h3>;
+  }
 }
 
 function mapStateToProps(state) {
