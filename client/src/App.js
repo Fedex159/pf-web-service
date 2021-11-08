@@ -19,7 +19,7 @@ import {
   getGroups,
   getUserInfo,
 } from "./redux/actions";
-import Chat from "../src/components/chat/UserChat/Chat";
+import Chat from "../src/components/Chat/UserChat/Chat";
 
 function App() {
   const dispatch = useDispatch();
