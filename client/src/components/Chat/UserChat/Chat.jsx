@@ -32,7 +32,6 @@ function Chat(props) {
   const socket = useRef(); //conexion al servidor para bidireccional peticiones
   //const socket = useRef(io(process.env.REACT_APP_API));
   //----------------------------------------------------------------------------socket
-  console.log(chating.length ? true : false);
   useEffect(() => {
     //client conection
     socket.current = io(process.env.REACT_APP_API || "http://localhost:3001");
