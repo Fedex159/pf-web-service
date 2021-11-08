@@ -19,7 +19,7 @@ import {
   getGroups,
   getUserInfo,
 } from "./redux/actions";
-import Chat from "./components/Chat/UserChat/Chat.jsx";
+import Chat from "../src/components/chat/UserChat/Chat";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,7 +60,8 @@ function App() {
         <Route
           exact
           path="/chat/:id"
-          render={({ match }) => <Chat id={match.params.id} />}
+          render={({ match }) => <Chat
+           id={match.params.id} />}
         />
 
         <Route

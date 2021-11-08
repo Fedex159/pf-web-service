@@ -85,15 +85,15 @@ function Chat(props) {
       return;
     }
 
-    if (user && id) {
+    if (user && id ) {
       console.log("entre a user+id");
       dispatch(getConvertations());
       dispatch(getContacts());
-      dispatch(newConvertation(id));
+      setCurrentContact(id)
       return;
     } else {
       console.log("entre a user solo");
-      if (user) {
+      if (!user) {
         dispatch(getConvertations());
         dispatch(getContacts());
       }
