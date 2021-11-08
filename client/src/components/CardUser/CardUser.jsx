@@ -56,7 +56,7 @@ export default function CardUser({ user }) {
               objectFit: "cover",
               borderRadius: "50%",
               height: "150px",
-              width: "auto",
+              width: "150px",
               m: "auto 0px auto 3px",
               alignSelf: "center",
             }}
@@ -97,13 +97,15 @@ export default function CardUser({ user }) {
             gridColumn="span 12"
             display="flex"
             flexDirection="row"
-            flexWrap="wrap"
             gap="10px"
             pr="15px"
             width="100%"
           >
             {/* chat */}
+
             <CardActionArea
+              component={Link}
+              to={`/chat/${id}`}
               sx={{
                 width: "80px",
                 mt: "auto",
@@ -113,6 +115,7 @@ export default function CardUser({ user }) {
               }}
             >
               <ChatIcon />
+
               <Typography variant="caption">Chat</Typography>
             </CardActionArea>
 
