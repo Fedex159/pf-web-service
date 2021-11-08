@@ -23,10 +23,7 @@ export default function Users() {
         setOpen={setOpen}
         selected={selected}
         setSelected={setSelected}
-<<<<<<< HEAD
         setOptions={setOptions}
-=======
->>>>>>> f9045d7c57e59818dd801c42a269360be78a90b6
       />
       {selected.map((user) => (
         <h1>{user.name}</h1>

@@ -68,27 +68,27 @@ export default function Results({
     }
   };
 
-  const handleSave = (event, id) => {
-    let { name, lastname, username, email, password, ban } = edit[id];
+  const handleSave = async (event, option) => {
+    let { name, lastname, username, email, password, ban } = edit[option.id];
 
-    axios
-      .put(`/users?id=${id}`, {
-        name,
-        lastname,
-        username,
-        email,
-        password,
-        ban,
-      })
-      .then((response) => {
-        if (search === "") {
-          setOptions([]);
-        } else {
-          axios
-            .get(`/users/search?search=${search}`)
-            .then((response) => setOptions(response.data));
-        }
-      });
+    await axios.put(`/users?id=${option.id}`, {
+      name,
+      lastname,
+      username,
+      email,
+      password,
+      ban,
+    });
+
+    if (search === "") {
+      setOptions([]);
+    } else {
+      await axios
+        .get(`/users/search?search=${search}`)
+        .then((response) => setOptions(response.data));
+    }
+
+    setEdit(event, option);
   };
 
   const handleStatusChange = (event, id) => {
@@ -269,7 +269,7 @@ export default function Results({
                         <ClearIcon />
                       </IconButton>
                       <IconButton>
-                        <SaveIcon onClick={(e) => handleSave(e, o.id)} />
+                        <SaveIcon onClick={(e) => handleSave(e, o)} />
                       </IconButton>
                     </>
                   ) : (
