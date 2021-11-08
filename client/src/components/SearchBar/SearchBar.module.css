@@ -1,6 +1,6 @@
 .searchBox {
-  position: absolute;
-  left: 20%;
+  position: relative;
+  left: 10%;
   /* position: relative; */
   align-items: center;
   margin-top: 35px;
