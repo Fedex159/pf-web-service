@@ -3,15 +3,18 @@ var router = express.Router();
 const {
   getMermers,
   sendMessage,
-  newConvertation,
   getConvertations,
   getPots,
   getContacts,
+  deleteConvertation,
+  newConvertation,
 } = require("../controllers/chat");
 
 
 router.post("/", sendMessage);
 router.get("/convertations", getConvertations);
+router.post("/convertations/:id", newConvertation);
+router.delete("/convertations/:id", deleteConvertation);
 router.get("/posts", getPots);
 router.get("/contacts", getContacts);
 

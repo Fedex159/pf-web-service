@@ -33,7 +33,7 @@ const getUser = (receiveId) => {
 //----------------------------------------------------------------------------server IO
 function serverchat(serverIO) {
   serverIO.on("connection", (socketIO) => {
-    console.log("user " + socketIO.id + " conectado");
+    console.log("user " + socketIO.id + " connect");
     //-----------------------------------------------------------------------------add new User
     socketIO.on("addUser", async (userId) => {
       addUsers(userId, socketIO.id);
@@ -99,19 +99,20 @@ function getConvertations(req, res, next) {
 }
 //-----------------------------------------------------------------------------------------new convertation  ****************************falta****************************
 function newConvertation(req, res, next) {
-  var { remit } = req.body;
+
+  var {id}  = req.params;
   var { userId } = req.cookies;
   Convertations.findOrCreate({
     where: {
       [Op.or]: [
-        { [Op.and]: [{ userA: userId }, { userB: remit }] },
-        { [Op.and]: [{ userA: remit }, { userB: userId }] },
+        { [Op.and]: [{ userA: userId }, { userB: id }] },
+        { [Op.and]: [{ userA: id }, { userB: userId }] },
       ],
     },
-    defaults: { userA: userId, userB: remit },
+    defaults: { userA: userId, userB: id },
   })
     .then(() => {
-      return req.status(200).send("New convertation created");
+      return res.status(200).send("New convertation created");
     })
     .catch((err) => {
       next(err);
@@ -120,18 +121,19 @@ function newConvertation(req, res, next) {
 
 //--------------------------------------------------------------------------------------------------------------delete convertation   *******************falta**********************
 function deleteConvertation(req, res, next) {
-  var { remit } = req.body;
+  var { id } = req.params;
   var { userId } = req.cookies;
-  Convertations.findOne({
+  Convertations.destroy({
     where: {
-      [Op.or]: [
-        { [Op.and]: [{ userA: userId }, { userB: remit }] },
-        { [Op.and]: [{ userA: remit }, { userB: userId }] },
-      ],
+      id: id,
     },
-  }).then((convertation) => {
-    console.log(convertation);
-  });
+  })
+    .then(() => {
+      return res.status(200).send("delete convertation");
+    })
+    .catch((err) => {
+      next(err);
+    });
 }
 //---------------------------------------------------------------------------send [{ userId: userId }, { sender: remit }],
 function sendMessage(req, res, next) {
@@ -172,15 +174,20 @@ function sendMessage(req, res, next) {
 //---------------------------------------------------------------------------------get contact
 function getContacts(req, res, next) {
   const { userId } = req.cookies;
-  Convertations.findAll({
+  console.log(userId);
+ Convertations.findAll({
     where: { [Op.or]: [{ userA: userId }, { userB: userId }] },
     attributes: ["userA", "userB"],
   })
     .then((contacts) => {
+
       return contacts.map((con) => {
         var { userA, userB } = con.dataValues;
         if (userB === userId) {
           userB = userA;
+        }
+        if(!userA|| !userB){
+            return res.status(500).send("invalid params")
         }
         return Users.findOne({
           where: {
@@ -214,4 +221,6 @@ module.exports = {
   sendMessage,
   getPots,
   getContacts,
+  deleteConvertation,
+  newConvertation,
 };

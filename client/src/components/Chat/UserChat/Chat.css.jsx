@@ -1,12 +1,13 @@
-import { colors } from "@material-ui/core";
+
 const backGround = "#1e88e5";
 
 const _style = {
   ////box wrapper chat////////////////////////////////////
   box_messanger_father: {
     display: "flex",
-    height: "100%",
-    overflowY: "hidden",
+    maxHeight: "935px",
+    minHeight:"935px",
+    overflow: "hidden",
   },
   //---------------------------------------------------------------------box contacts
   box_contacts_a: {

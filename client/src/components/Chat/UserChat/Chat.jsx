@@ -20,16 +20,17 @@ import {
 dotenv.config();
 require("./Chat.css");
 
-function Chat({ cookie, convertations, contacts, posts, user }) {
+function Chat(props) {
+  const { cookie, convertations, contacts, posts, user, id } = props;
+
   const [msg, setMsg] = useState("");
-  const [contact, setContact] = useState(null);
+  const [currentContact, setCurrentContact] = useState(null);
   const [chating, setChating] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const dispatch = useDispatch();
   var scrollRef = useRef();
   const socket = useRef(); //conexion al servidor para bidireccional peticiones
   //const socket = useRef(io(process.env.REACT_APP_API));
-  const dispatch = useDispatch();
-
   //----------------------------------------------------------------------------socket
   useEffect(() => {
     //client conection
@@ -39,29 +40,30 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
         userId: data.senderId,
         remit: data.remit,
         text: data.text,
-        createdAt: Date.now(),
+        createAt: Date.now(),
       });
       // }
     });
   }, []);
+  //----------------------------------------------------------add user socket
+    useEffect(() => {
+      if (cookie) {
+        socket.current.emit("addUser", user.id);
+      }
+    }, [user]);
+  //----------------------------------------------------------------scroll
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chating]);
-
+//-----------------------------------------------------------------------------new msg receive
   useEffect(() => {
-    if (cookie) {
-      socket.current.emit("addUser", user.id);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    console.log(contact ? true : false);
-    if (contact) {
-      contact.id === arrivalMessage.userId &&
+    if (currentContact) {
+      currentContact.id === arrivalMessage.userId &&
         setChating([...chating, arrivalMessage]);
     }
+    // eslint-disable-next-line
   }, [arrivalMessage]);
 
   //----------------------------------------------------------------------------------chat with a user in online
@@ -81,7 +83,7 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
       }
     }
     // eslint-disable-next-line
-  }, [cookie]);
+  }, []);
 
   //--------------------------------------------------------------------------------------------conversation of a contact
   function chatContact(idContact) {
@@ -98,16 +100,17 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
     var [contact] = contacts.filter((contacts) => {
       return contacts.id === idContact;
     });
-    setContact(contact);
+    setCurrentContact(contact);
+
     dispatch(getPots(conv[0]));
   }
   //------------------------------------------------------------------------------------------send msn
   function handleSubmit(e) {
     e.preventDefault();
-    if (user && contact) {
+    if (user && currentContact) {
       socket.current.emit("sendMsn", {
         senderId: user.id,
-        receiverId: contact.id,
+        receiverId: currentContact.id,
         text: msg,
       });
 
@@ -115,17 +118,17 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
         ...prev,
         {
           userId: user.id,
-          remit: contact.id,
+          remit: currentContact.id,
           text: msg,
         },
       ]);
-      dispatch(sendMessage({ remit: contact.id, message: msg }));
+      dispatch(sendMessage({ remit: currentContact.id, message: msg }));
       setMsg("");
     }
   }
   //------------------------------------------------------------------------------------------
   return (
-    <Box sx={_style.box_messanger_father}>
+    <Box sx={_style.box_messanger_father} name="box-father">
       <Box name="contacts" sx={_style.box_contacts_a}>
         <Box name="menu-contacts-wrapper" sx={_style.menu_contacts_wrapper}>
           <Input name="inputSearch"></Input>
@@ -145,18 +148,14 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
       <div style={{ flex: "5.5" }}>
         {posts.length ? (
           <div name="conversations" style={_style.box_conversations_b}>
-            <Box
-              name="menu-chating-wrapper"
-              name="message"
-              sx={_style.menu_chating_wrapper}
-            >
+            <Box name="message" sx={_style.menu_chating_wrapper}>
               {convertations &&
                 chating.map((msn, i) => (
                   <Message
                     scrollRef={scrollRef}
                     key={i}
                     user={user}
-                    contact={contact}
+                    contact={currentContact}
                     message={msn}
                   />
                 ))}
@@ -166,28 +165,23 @@ function Chat({ cookie, convertations, contacts, posts, user }) {
           <span>Open a convertation to start a chat</span>
         )}
         <form onSubmit={(e) => handleSubmit(e)}>
-          {posts.length ? (
-            <Box
-              sx={{
-                display: "flex",
-                maxWidth: "100%",
-                flex: "row",
-              }}
-            >
-              <TextField
-                fullWidth
-                size="small"
-                value={msg}
-                onChange={(e) => setMsg(e.target.value)}
-              />
-              <Button variant="contained" type="submit" endIcon={<SendIcon />}>
-                {" "}
-                ENVIAR
-              </Button>
-            </Box>
-          ) : (
-            <></>
-          )}
+          <Box
+            sx={{
+              display: "flex",
+              maxWidth: "100%",
+              flex: "row",
+            }}
+          >
+            <TextField
+              fullWidth
+              size="small"
+              value={msg}
+              onChange={(e) => setMsg(e.target.value)}
+            />
+            <Button variant="contained" type="submit" endIcon={<SendIcon />}>
+              ENVIAR
+            </Button>
+          </Box>
         </form>
       </div>
       <Box name="contacts-online" sx={_style.box_contactsStates_c}>
@@ -206,7 +200,6 @@ function mapStateToProps(state) {
   return {
     convertations: state.convertations,
     contacts: state.contacts,
-    posts: state.posts,
     cookie: state.cookie,
     posts: state.posts,
     user: state.user,

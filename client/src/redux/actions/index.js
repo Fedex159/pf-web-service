@@ -232,7 +232,7 @@ export function getConvertations() {
 }
 
 //----------------------------------------------------------------------------------
-export function getContacts(id) {
+export function getContacts() {
   return async function (dispatch) {
     try {
       var resp = await axios(`chat/contacts`);
@@ -259,9 +259,26 @@ export function getPots(idConv, offset) {
   };
 }
 //---------------------------------------------------------------------------------delete convertation
-
+export function deleteConvertation(idconvertation) {
+  return async () => {
+    try {
+      return await axios.delete(`chat/convertations/${idconvertation}`);
+    } catch (err) {
+      return new Error(err);
+    }
+  };
+}
 //-----------------------------------------------------------------------------------------new convertation
-//-----------------------------------------------------------------------------------------------
+export function newConvertation(contact) {
+  return async function () {
+    try {
+      return await axios.post(`chat/convertations/${contact}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+//-----------------------------------------------------------------------------------------------send message
 export function sendMessage(msn) {
   return async function () {
     await axios
@@ -274,7 +291,7 @@ export function sendMessage(msn) {
       });
   };
 }
-
+//--------------------------------------------------------------------------------------
 export function paypal(body) {
   console.log("body=>>> ", body);
   return async function (dispatch) {
