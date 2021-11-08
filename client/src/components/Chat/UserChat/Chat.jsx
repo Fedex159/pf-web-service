@@ -182,7 +182,7 @@ function Chat(props) {
           ) : (
             <h3>Open a convertation to start a chat</h3>
           )}
-          {currentContact && chating.length  &&(
+          {currentContact &&(
             <form onSubmit={(e) => handleSubmit(e)}>
               <Box
                 sx={{
