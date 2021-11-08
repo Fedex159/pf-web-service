@@ -35,7 +35,7 @@ const _style = {
   },
   //box conversatios wrapper
   menu_chating_wrapper: {
-    height: "80%",
+    height: "100%",
     padding: "1%",
   },
 
