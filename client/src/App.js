@@ -42,10 +42,13 @@ function App() {
     // eslint-disable-next-line
   }, [cookie]);
   useEffect(() => {
-    axios
-      .get('/login')
-      .then((response) => dispatch(setCookie(response.data.cookie)))
-      .catch(() => dispatch(setCookie('')));
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+    // hay token en localStorage
+    if (token && userId) {
+      axios.defaults.headers.common['authorization'] = 'Bearer ' + token;
+      dispatch(setCookie(userId));
+    }
     dispatch(getGroups());
 
     //seteando dark theme según local storage
