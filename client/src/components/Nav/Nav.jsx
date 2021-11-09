@@ -22,6 +22,8 @@ import { Button, makeStyles } from '@material-ui/core';
 import { brown, lime } from '@mui/material/colors';
 import clsx from 'clsx';
 
+import DarkMode from './DarkMode';
+
 const useStyles = makeStyles({
   default: {
     borderRadius: 0,
@@ -83,13 +85,19 @@ export default function Nav({ route, check, change }) {
             gap: '5px',
           }}
         >
-          <Box mr="auto">
+          <Box mr="auto" display="flex" alignItems="center">
             {route === 'home' ? (
-              <SideBar check={check} change={change} />
+              <>
+                <SideBar check={check} change={change} />
+                <DarkMode />
+              </>
             ) : (
-              <IconButton color="inherit" component={Link} to="/home">
-                <HomeIcon />
-              </IconButton>
+              <>
+                <IconButton color="inherit" component={Link} to="/home">
+                  <HomeIcon />
+                </IconButton>
+                <DarkMode />
+              </>
             )}
           </Box>
           <Box

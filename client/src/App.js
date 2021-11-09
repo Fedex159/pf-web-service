@@ -22,6 +22,7 @@ import {
 import Chat from './components/Chat/UserChat/Chat';
 
 //DARK-MODE
+import { putDark } from './redux/actions';
 import { lightTheme, darkTheme } from './utils/MuiTheme';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
@@ -30,6 +31,7 @@ function App() {
   const dispatch = useDispatch();
   const objGlobal = useSelector((state) => state.objGlobal);
   const cookie = useSelector((state) => state.cookie);
+  const darkGlobal = useSelector((state) => state.darkTheme);
 
   useEffect(() => {
     if (cookie) {
@@ -45,6 +47,13 @@ function App() {
       .then((response) => dispatch(setCookie(response.data.cookie)))
       .catch(() => dispatch(setCookie('')));
     dispatch(getGroups());
+
+    //seteando dark theme según local storage
+    const darkLocal = localStorage.getItem('darkMode');
+
+    if (darkLocal === 'true') {
+      dispatch(putDark(true));
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -52,22 +61,14 @@ function App() {
     dispatch(getServices(objGlobal));
   }, [objGlobal, dispatch]);
 
-  //DARK-THEME
-  const [darkMode, setDarkMode] = useState(false);
-
-  //
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+    <ThemeProvider theme={darkGlobal ? darkTheme : lightTheme}>
       <CssBaseline />
       <div className="App">
         <Route exact path="/" component={Landing} />
 
         <Route exact path="/home">
-          <Nav
-            route={'home'}
-            check={darkMode}
-            change={() => setDarkMode(!darkMode)}
-          />
+          <Nav route={'home'} />
           <Home />
         </Route>
 
