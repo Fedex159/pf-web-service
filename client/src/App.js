@@ -21,8 +21,8 @@ import {
 } from './redux/actions';
 import Chat from './components/Chat/UserChat/Chat';
 
-import { createTheme } from '@mui/material';
-import { brown, amber, lime, deepOrange, green } from '@mui/material/colors';
+//DARK-MODE
+import { lightTheme, darkTheme } from './utils/MuiTheme';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
@@ -52,36 +52,10 @@ function App() {
     dispatch(getServices(objGlobal));
   }, [objGlobal, dispatch]);
 
+  //DARK-THEME
   const [darkMode, setDarkMode] = useState(false);
 
-  const lightTheme = createTheme({
-    palette: {
-      primary: {
-        main: '#B5C0C5',
-        contrastText: brown[500],
-      },
-      secondary: {
-        main: lime[500],
-        contrastText: brown[500],
-      },
-      error: deepOrange,
-      warning: amber,
-      succcess: green,
-    },
-  });
-
-  const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-      primary: {
-        main: '#FBBBD9',
-      },
-      secondary: {
-        main: '#FF0060',
-      },
-    },
-  });
-
+  //
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
