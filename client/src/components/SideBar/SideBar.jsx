@@ -18,19 +18,22 @@ import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
+import { Switch } from '@mui/material';
 
 import { setObjGlobal } from '../../redux/actions/index';
 import { useDispatch } from 'react-redux';
 //maneja el ancho de la expansión al tocar el hamburguer button
 const drawerWidth = 350;
 
-export default function MiniDrawer() {
+export default function SideBar({ check, change }) {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleDrawer = () => {
     setOpen((prev) => !prev);
   };
+
+  console.log(check, change);
 
   const handleReset = () => {
     const obj = {
@@ -59,6 +62,13 @@ export default function MiniDrawer() {
       >
         <SortIcon />
       </IconButton>
+      <Switch
+        defaultChecked
+        color="default"
+        onChange={change}
+        checked={check}
+      />
+
       <Drawer
         open={open}
         sx={{ width: drawerWidth, opacity: 0.96 }}
