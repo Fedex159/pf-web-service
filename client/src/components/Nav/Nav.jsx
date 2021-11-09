@@ -27,12 +27,12 @@ const useStyles = makeStyles({
     borderRadius: 0,
     textTransfrom: 'none',
   },
-  primary: {
-    '&:hover': {
-      backgroundColor: lime[600],
-      color: brown[500],
-    },
-  },
+  // primary: {
+  //   '&:hover': {
+  //     backgroundColor: lime[600],
+  //     color: brown[500],
+  //   },
+  // },
   secondary: {
     main: lime[600],
     contrastText: brown[500],
@@ -74,10 +74,7 @@ export default function Nav({ route, check, change }) {
 
   return (
     <Box sx={{ flexGrow: 1, width: '101%' }} id="back-to-top-anchor">
-      <AppBar
-        position="fixed"
-        sx={{ zIndex: '1201', backgroundColor: '#cfd8dc' }}
-      >
+      <AppBar position="fixed" sx={{ zIndex: '1201' }}>
         <Toolbar
           sx={{
             display: 'flex',

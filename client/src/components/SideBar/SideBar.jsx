@@ -62,12 +62,7 @@ export default function SideBar({ check, change }) {
       >
         <SortIcon />
       </IconButton>
-      <Switch
-        defaultChecked
-        color="default"
-        onChange={change}
-        checked={check}
-      />
+      <Switch color="default" onChange={change} checked={check} />
 
       <Drawer
         open={open}

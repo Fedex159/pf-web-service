@@ -23,9 +23,8 @@ import Chat from './components/Chat/UserChat/Chat';
 
 import { createTheme } from '@mui/material';
 import { brown, amber, lime, deepOrange, green } from '@mui/material/colors';
-import Paper from '@mui/material/Paper';
 import { ThemeProvider } from '@mui/material/styles';
-// import { putDark } from '../../redux/actions/index';
+import { CssBaseline } from '@mui/material';
 
 function App() {
   const dispatch = useDispatch();
@@ -55,11 +54,10 @@ function App() {
 
   const [darkMode, setDarkMode] = useState(false);
 
-  const theme = createTheme({
+  const lightTheme = createTheme({
     palette: {
-      type: darkMode ? 'dark' : 'light',
       primary: {
-        main: '#4F6D7A',
+        main: '#B5C0C5',
         contrastText: brown[500],
       },
       secondary: {
@@ -72,8 +70,21 @@ function App() {
     },
   });
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#FBBBD9',
+      },
+      secondary: {
+        main: '#FF0060',
+      },
+    },
+  });
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <CssBaseline />
       <div className="App">
         <Route exact path="/" component={Landing} />
 

@@ -304,11 +304,3 @@ export function paypal(body) {
     }
   };
 }
-
-//-------------DARK MODE----------------
-export function putDark(style) {
-  return {
-    type: type.PUT_DARK,
-    payload: style,
-  };
-}
