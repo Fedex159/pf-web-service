@@ -34,7 +34,7 @@ async function userCreated(req, res, next) {
 }
 
 async function userEdit(req, res, next) {
-  const { userId } = req.cookies;
+  const userId = req.user;
   const userIdQuery = req.query.id;
   try {
     const user = await Users.findByPk(userIdQuery || userId);
@@ -51,7 +51,7 @@ async function userEdit(req, res, next) {
         user.password = password ? password : user.password;
         user.username = username ? username : user.username;
         user.email = email ? email : user.email;
-        user.ban = ban;
+        userIdQuery ? (user.ban = ban) : null;
 
         await user.save();
         res.json({ data: "User edited" });
@@ -71,7 +71,8 @@ async function userEdit(req, res, next) {
 async function getUserInfo(req, res, next) {
   try {
     const userIdQuery = req.query.id;
-    const { userId } = req.cookies;
+    const userId = req.user;
+
     const user = await Users.findOne({
       attributes: [
         "id",
@@ -169,14 +170,14 @@ async function postPurchase(req, res, next) {
 
   try {
     if (collection_status == "approved" || status) {
-      console.log("POSTPURCHASEID", userId);
-      console.log("SERVICEIDPURCHASE", servicesId);
+      //console.log("POSTPURCHASEID", userId);
+      //console.log("SERVICEIDPURCHASE", servicesId);
 
       // validamos que sea un arreglo de servicios y
       // que el esos servicios no pertenezcan al usuario
 
-      console.log("USERID", userId);
-      console.log("SERVICESID", servicesId);
+     // console.log("USERID", userId);
+      //console.log("SERVICESID", servicesId);
 
       const user = await Users.findOne({
         where: {
@@ -184,9 +185,12 @@ async function postPurchase(req, res, next) {
         },
       });
       // console.log para ver los metodos disponibles
-      // console.log(Object.keys(user.__proto__));
-      console.log("USERenPurchase", user);
-      await user.setServicesBought(servicesId);
+   
+      //console.log("USERenPurchase", user);
+      
+      await user.addServicesBought(servicesId.split(","));
+
+
       res.redirect(`${ORIGIN}/home`);
     } else {
       res.status(400).redirect(`${ORIGIN}/home`);
@@ -199,7 +203,7 @@ async function postPurchase(req, res, next) {
 async function getUserAdminSearch(req, res, next) {
   try {
     const { search } = req.query;
-    const { userId } = req.cookies;
+    const userId = req.user;
 
     let validAdmin = await validateAdmin(userId);
 
