@@ -36,12 +36,13 @@ function serverchat(serverIO) {
     //-----------------------------------------------------------------------------add new User
     socketIO.on("addUser", (userId) => {
       addUsers(userId, socketIO.id);
-      console.log(users);
+      console.log("users add",users);
       return serverIO.emit("getUsers", users);
     });
     //-----------------------------------------------------------------------------disconect user
     socketIO.on("disconnect",() => {
       removeUser(socketIO.id);
+      console.log("disconected",users);
       serverIO.emit("getUsers", users);
     });
     //------------------------------------------------------------------------------------send msn

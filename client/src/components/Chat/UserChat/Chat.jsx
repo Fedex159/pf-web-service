@@ -18,6 +18,7 @@ import {
   newConvertation,
   sendMessage,
 } from "../../../redux/actions";
+import Nav from "../../Nav/Nav.jsx";
 dotenv.config();
 require("./Chat.css");
 
@@ -30,8 +31,10 @@ function Chat(props) {
   const dispatch = useDispatch();
   var scrollRef = useRef();
   const socket = useRef(); //conexion al servidor para bidireccional peticiones
-  //const socket = useRef(io(process.env.REACT_APP_API));
+
   //----------------------------------------------------------------------------socket
+
+  console.log(props);
   useEffect(() => {
     //client conection
     socket.current = io(process.env.REACT_APP_API || "http://localhost:3001");
@@ -44,6 +47,12 @@ function Chat(props) {
       });
       // }
     });
+    return () => {
+      setChating([]);
+      setArrivalMessage(null);
+      setCurrentContact(null);
+      setMsg("");
+    };
   }, []);
   //----------------------------------------------------------add user socket
   useEffect(() => {
@@ -85,11 +94,11 @@ function Chat(props) {
       return;
     }
 
-    if (user && id ) {
+    if (user && id) {
       console.log("entre a user+id");
       dispatch(getConvertations());
       dispatch(getContacts());
-      setCurrentContact(id)
+      setCurrentContact(id);
       return;
     } else {
       console.log("entre a user solo");
@@ -146,6 +155,7 @@ function Chat(props) {
   if (user) {
     return (
       <Box sx={_style.box_messanger_father} name="box-father">
+      {/*  <Nav /> */}
         <Box name="contacts" sx={_style.box_contacts_a}>
           <Box name="menu-contacts-wrapper" sx={_style.menu_contacts_wrapper}>
             <Input name="inputSearch"></Input>
@@ -182,7 +192,7 @@ function Chat(props) {
           ) : (
             <h3>Open a convertation to start a chat</h3>
           )}
-          {currentContact &&(
+          {currentContact && (
             <form onSubmit={(e) => handleSubmit(e)}>
               <Box
                 sx={{

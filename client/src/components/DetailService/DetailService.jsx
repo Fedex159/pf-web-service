@@ -53,7 +53,7 @@ export default function DetailService({ id, closeModal }) {
 
   //----------- SERVICIOS RELACIONADOS ------------------------
   const getRelatedServices = useCallback(() => {
-    axios(`/services?category=${category}`).then((response) => {
+    axios(`/services?category=${category ? category :""}`).then((response) => {
       let NumberId = Number(id);
       setRelated(response.data.filter((s) => s.id !== NumberId).slice(0, 4));
     });
