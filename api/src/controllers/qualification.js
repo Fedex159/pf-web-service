@@ -48,7 +48,7 @@ async function deleteComment(req, res, next) {
       where: { id: id },
     });
     if (commentInDb === null) {
-      res.json({ respones: "comment not founded" });
+      res.json({ response: "comment not found" });
     } else {
       await Qualification.destroy({
         // si existe lo deleteo
