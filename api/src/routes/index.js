@@ -11,6 +11,7 @@ const chat = require("./Chat");
 const admin = require("./admin");
 const paypal = require("./paypal");
 const auth = require("./auth");
+const { verifyToken } = require("../controllers/authentication");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -29,7 +30,7 @@ router.use("/auth", auth);
 router.use("/provinces", provinces);
 router.use("/comment", comment);
 router.use("/checkout", checkout);
-router.use("/chat", chat);
+router.use("/chat",verifyToken, chat);
 router.use("/admin", admin);
 router.use("/paypal", paypal);
 

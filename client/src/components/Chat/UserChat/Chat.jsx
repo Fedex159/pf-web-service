@@ -11,7 +11,9 @@ import dotenv from "dotenv";
 import Message from "../Message/Message";
 
 import {
+  clearChatInfo,
   getContacts,
+  getContactsBougth,
   getConvertations,
   getPots,
   getUserInfo,
@@ -23,7 +25,8 @@ dotenv.config();
 require("./Chat.css");
 
 function Chat(props) {
-  const { cookie, convertations, contacts, posts, user, id } = props;
+  const { cookie, convertations, contacts, posts, user, id, contactsBougth } =
+    props;
   const [msg, setMsg] = useState("");
   const [currentContact, setCurrentContact] = useState(null);
   const [chating, setChating] = useState([]);
@@ -33,30 +36,30 @@ function Chat(props) {
   const socket = useRef(); //conexion al servidor para bidireccional peticiones
 
   //----------------------------------------------------------------------------socket
-
-  console.log(props);
   useEffect(() => {
     //client conection
     socket.current = io(process.env.REACT_APP_API || "http://localhost:3001");
     socket.current.on("getMessage", (data) => {
+      console.log("new post");
       setArrivalMessage({
         userId: data.senderId,
         remit: data.remit,
         text: data.text,
         createdAt: Date.now(),
       });
-      // }
     });
+
     return () => {
       setChating([]);
       setArrivalMessage(null);
       setCurrentContact(null);
       setMsg("");
+      dispatch(clearChatInfo());
     };
   }, []);
   //----------------------------------------------------------add user socket
   useEffect(() => {
-    if (cookie) {
+    if (user) {
       socket.current.emit("addUser", user.id);
     }
     // eslint-disable-next-line
@@ -68,6 +71,8 @@ function Chat(props) {
     }
   }, [chating]);
   //-----------------------------------------------------------------------------new msg receive
+
+
   useEffect(() => {
     if (currentContact) {
       currentContact.id === arrivalMessage.userId &&
@@ -98,6 +103,7 @@ function Chat(props) {
       console.log("entre a user+id");
       dispatch(getConvertations());
       dispatch(getContacts());
+      dispatch(getContactsBougth())
       setCurrentContact(id);
       return;
     } else {
@@ -155,7 +161,7 @@ function Chat(props) {
   if (user) {
     return (
       <Box sx={_style.box_messanger_father} name="box-father">
-      {/*  <Nav /> */}
+        {/*  <Nav /> */}
         <Box name="contacts" sx={_style.box_contacts_a}>
           <Box name="menu-contacts-wrapper" sx={_style.menu_contacts_wrapper}>
             <Input name="inputSearch"></Input>
@@ -223,7 +229,16 @@ function Chat(props) {
             name="menu-contactsOnline-wrapper"
             sx={_style.menu_contactsOnline_wrapper}
           >
-            online
+            {contactsBougth.map((con) => (
+              <Box
+                key={con.id}
+                onClick={() => {
+                  chatContact(con.id);
+                }}
+              >
+                <Conversations key={con.id} contacts={con} />
+              </Box>
+            ))}
           </Box>
         </Box>
       </Box>
@@ -240,6 +255,7 @@ function mapStateToProps(state) {
     cookie: state.cookie,
     posts: state.posts,
     user: state.user,
+    contactsBougth: state.contactsBougth,
   };
 }
 
