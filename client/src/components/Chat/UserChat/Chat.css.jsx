@@ -9,7 +9,7 @@ const _style = {
     maxHeight: "935px",
     minHeight: "935px",
     overflow: "hidden",
-    backgroundColor: amber[100],
+    backgroundColor: "whitesmoke",
     color: brown[600],
   },
   //---------------------------------------------------------------------box contacts
