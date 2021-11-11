@@ -221,16 +221,15 @@ function Chat(props) {
                       chatContact(con.id);
                     }}
                   >
+                    <Button
+                      onClick={() => {
+                        deleteConvert(con);
+                      }}
+                    >
+                      X
+                    </Button>
                     <Conversations key={con.id} contacts={con} />
                   </Box>
-
-                  <Button
-                    onClick={() => {
-                      deleteConvert(con);
-                    }}
-                  >
-                    X
-                  </Button>
                 </Box>
               ))}
           </Box>
