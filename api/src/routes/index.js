@@ -12,6 +12,7 @@ const checkout = require("./checkout");
 const chat=require("./Chat");
 const admin = require("./admin");
 const paypal = require("./paypal")
+const forgotPassword = require("./forgotPassword")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -33,6 +34,7 @@ router.use("/comment", comment);
 router.use("/checkout", checkout);
 router.use("/chat",chat)
 router.use("/admin", admin);
-router.use("/paypal", paypal)
+router.use("/paypal", paypal);
+router.use("/forgotPassword", forgotPassword)
 
 module.exports = router;
