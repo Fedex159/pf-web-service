@@ -1,6 +1,6 @@
-form {
+/* form {
   padding: 50px;
-}
+} */
 
 .div {
   display: flex;
@@ -9,8 +9,10 @@ form {
 }
 
 .changeData {
+  padding: 0;
   text-align: center;
-  display: 'flex';
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: auto;

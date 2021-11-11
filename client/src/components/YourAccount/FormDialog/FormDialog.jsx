@@ -46,7 +46,7 @@ export function FormDialog({ openForm, setOpenForm }) {
   };
 
   return (
-    <Dialog open={openForm} onClose={() => setOpenForm(false)}>
+    <Dialog open={openForm} onClose={() => setOpenForm(false)} fullWidth>
       <form onSubmit={(e) => handleSubmit(e)} className={s.changeData}>
         <DialogTitle>CHANGE YOUR DATA</DialogTitle>
         <DialogContent>
@@ -55,7 +55,12 @@ export function FormDialog({ openForm, setOpenForm }) {
             variant="filled"
             onChange={(e) => handleInputChange(e)}
             name="name"
-            sx={{ display: 'block', marginTop: 2, marginBottom: 2 }}
+            sx={{
+              display: 'block',
+              marginTop: 2,
+              marginBottom: 2,
+              width: '100%',
+            }}
           />
           <TextField
             label="New LastName"
