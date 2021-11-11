@@ -19,7 +19,10 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import IconButton from "@mui/material/IconButton";
 import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
 import { useHistory } from "react-router";
-import { Skeleton } from "@mui/material";
+import Skeleton from "@mui/material/Skeleton";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Popover from "@mui/material/Popover";
 
 function CreateService(props) {
   const history = useHistory();
@@ -35,13 +38,10 @@ function CreateService(props) {
   const [skeleton, setSkeleton] = useState(false);
 
   const handleSkeleton = () => {
-    setSkeleton(true)
-  }
-
+    setSkeleton(true);
+  };
 
   //----------------------------
-
-
 
   const { provinces, groups } = props;
 
@@ -130,9 +130,27 @@ function CreateService(props) {
   };
   //-----------------HANDLE SELECT ALL --------------------------------
 
+  const [selectAll, setSelectAll] = useState(false);
+
   const handleSelectAll = () => {
     let idCities = provinces[index.indexProv].cities.map((c) => c.id);
     setInputs({ ...inputs, cities: idCities });
+    if (!selectAll) {
+      setAnchorEl(buttonRef.current);
+    }
+    setSelectAll(!selectAll);
+  };
+
+  //----------------- SELECT ALL POPOVER --------------------------
+  const [anchorEl, setAnchorEl] = useState(null);
+  const buttonRef = useRef();
+
+  const openPopover = Boolean(anchorEl);
+
+  const idPopover = openPopover ? "simple-popover" : undefined;
+
+  const handleClosePopover = () => {
+    setAnchorEl(null);
   };
 
   //-----------------------------------------------------------------handleinput
@@ -219,7 +237,7 @@ function CreateService(props) {
     }
   };
   //---------------------------------------------------------------------------------validate
- function isNumber(price) {
+  function isNumber(price) {
     return /^[+-]?\d*\.?\d+(?:[Ee][+-]?\d+)?$/.test(price);
   }
   function errorsValidate(inputs) {
@@ -242,174 +260,209 @@ function CreateService(props) {
   const fileInput = useRef();
   //---------------------------------
 
+  const selecStyle = {
+    marginTop: 2,
+  };
+
+  const imgContainerShow = {
+    width: "345px",
+    height: "194px",
+  };
+
+  const imgContainerNone = {
+    display: "none",
+    width: "345px",
+    height: "194px",
+  };
+
   if (provinces && groups) {
     return (
-      <>
-        <div className={s.arrow}>
+      <Box sx={{ marginLeft: "10%" }}>
+        <Box
+          display="grid"
+          justifyContent="flex-start"
+          sx={{ marginLeft: 2, marginTop: 2 }}
+        >
           <IconButton color="primary" onClick={() => history.push("/account")}>
             <ArrowBackIcon />
           </IconButton>
-        </div>
+        </Box>
 
-        <div className={s.container}>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <div className={s.group}>
-              <div className={s.category}>
-                {/* SELECT DE CATEGORIA */}
-                <div>
-                  <Box sx={{ width: 350 }}>
-                    <FormControl fullWidth>
-                      <InputLabel>Category</InputLabel>
-                      <Select
-                        value={inputs.categoryId}
-                        label="Category"
-                        onChange={(e) => handleCategory(e.target.value)}
-                      >
-                        {groups &&
-                          groups.map((el) => (
-                            <MenuItem key={el.name} value={el.id}>
-                              {el.name}
-                            </MenuItem>
-                          ))}
-                      </Select>
-                    </FormControl>
-                  </Box>
-                </div>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <Grid container justifyContent="center" spacing={2}>
+            <Grid container item spacing={2}>
+              <Grid item xs={12} md={5}>
+                {/*-------- SELECT DE CATEGORIA ----------- */}
 
-                {/* SELECT DE SUBCATEGORIA */}
+                <FormControl fullWidth>
+                  <InputLabel sx={selecStyle}>Category</InputLabel>
+                  <Select
+                    sx={selecStyle}
+                    value={inputs.categoryId}
+                    label="Category"
+                    onChange={(e) => handleCategory(e.target.value)}
+                  >
+                    {groups &&
+                      groups.map((el) => (
+                        <MenuItem key={el.name} value={el.id}>
+                          {el.name}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+
+                {/*--------------- SELECT DE SUBCATEGORIA -------------*/}
                 {inputs.categoryId && (
-                  <div className={s.type}>
-                    <Box sx={{ width: 350 }}>
-                      <FormControl fullWidth>
-                        <InputLabel>Type</InputLabel>
-                        <Select
-                          label="Type"
-                          value={inputs.subCategory}
-                          onChange={(e) => handleSubCategory(e.target.value)}
-                          defaultValue=""
-                        >
-                          {groups[index.indexCat].categories.map((el) => (
-                            <MenuItem key={el.name} value={el.id}>
-                              {el.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Box>
-                  </div>
+                  <FormControl fullWidth>
+                    <InputLabel sx={selecStyle}>Type</InputLabel>
+                    <Select
+                      sx={selecStyle}
+                      label="Type"
+                      value={inputs.subCategory}
+                      onChange={(e) => handleSubCategory(e.target.value)}
+                      defaultValue=""
+                    >
+                      {groups[index.indexCat].categories.map((el) => (
+                        <MenuItem key={el.name} value={el.id}>
+                          {el.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 )}
-              </div>
+              </Grid>
 
-              <div className={s.province}>
-                {/* SELECT DE PROVINCIA */}
-                <div>
+              <Grid item xs={12} md={5}>
+                {/*------------- SELECT DE PROVINCIA ---------------------*/}
+                <Autocomplete
+                  sx={selecStyle}
+                  fullwidth="true"
+                  options={provinces}
+                  getOptionLabel={(option) => option.name}
+                  onChange={(e, value) => handleProvince(value)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label={"Provinces"}
+                      placeholder="Search"
+                    />
+                  )}
+                />
+
+                {/*--------------- SELECT DE CIUDAD -----------------------*/}
+                {inputs.provinces && (
                   <Autocomplete
-                    style={{ width: 350 }}
-                    options={provinces}
+                    sx={selecStyle}
+                    fullwidth="true"
+                    disabled={selectAll ? true : false}
+                    multiple
+                    limitTags={2}
+                    options={provinces[index.indexProv].cities}
+                    onChange={(e, value) => handleCity(value)}
+                    disableCloseOnSelect
                     getOptionLabel={(option) => option.name}
-                    onChange={(e, value) => handleProvince(value)}
+                    renderOption={(props, option, { selected }) => (
+                      <li {...props}>
+                        <Checkbox
+                          icon={icon}
+                          checkedIcon={checkedIcon}
+                          checked={selected}
+                        />
+                        {option.name}
+                      </li>
+                    )}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label={"Provinces"}
+                        label="Cities"
                         placeholder="Search"
                       />
                     )}
                   />
-                </div>
-
-                {/* SELECT DE CIUDAD */}
-                {inputs.provinces && (
-                  <div className={s.city}>
-                    <Autocomplete
-                      style={{ width: 350 }}
-                      multiple
-                      limitTags={2}
-                      options={provinces[index.indexProv].cities}
-                      onChange={(e, value) => handleCity(value)}
-                      disableCloseOnSelect
-                      getOptionLabel={(option) => option.name}
-                      renderOption={(props, option, { selected }) => (
-                        <li {...props}>
-                          <Checkbox
-                            icon={icon}
-                            checkedIcon={checkedIcon}
-                            checked={selected}
-                          />
-                          {option.name}
-                        </li>
-                      )}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Cities"
-                          placeholder="Search"
-                        />
-                      )}
-                    />
-                  </div>
                 )}
-                {/* --------------------------------- */}
-              </div>
+                {/* ------------------------------------------ */}
+
+                {/* --------SELECT ALL BUTTON -------------------- */}
+              </Grid>
               {inputs.provinces && (
-                <div className={s.selectAllButton}>
+                <Grid item xs={12} md={2} alignSelf="flex-end">
                   <Button
+                    ref={buttonRef}
                     variant="outlined"
+                    color="secondary"
                     size="small"
                     onClick={handleSelectAll}
                   >
-                    select all
+                    {selectAll ? "deselect all" : "select all"}
                   </Button>
-                </div>
+                </Grid>
               )}
-            </div>
+            </Grid>
+            {/* ----------------------------------------- */}
 
-            <div className={s.serviceInfo}>
-              <div className={s.inputsContainer}>
-                <TextField
-                  name="title"
-                  placeholder="Title"
-                  value={inputs.title}
-                  onChange={handleInput}
-                  error={errors.title ? true : false}
-                  helperText={errors.title}
-                  label="Title"
-                  variant="outlined"
-                  required
-                  fullWidth
-                ></TextField>
-              </div>
+            {/* ---------------SELECT ALL POPOVER ------------*/}
+            <Popover
+              id={idPopover}
+              open={openPopover}
+              anchorEl={anchorEl}
+              onClose={handleClosePopover}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+            >
+              <Typography sx={{ p: 2 }}>You selected all cities!</Typography>
+            </Popover>
+            {/* ----------------------------------------------- */}
 
-              <div className={s.inputsContainer}>
-                <TextField
-                  name="description"
-                  placeholder="Description"
-                  value={inputs.description}
-                  onChange={handleInput}
-                  error={errors.description ? true : false}
-                  helperText={errors.description}
-                  label="Description"
-                  variant="outlined"
-                  required
-                  fullWidth
-                ></TextField>
-              </div>
+            <Grid item xs={12} md={12}>
+              <TextField
+                name="title"
+                placeholder="Title"
+                value={inputs.title}
+                onChange={handleInput}
+                error={errors.title ? true : false}
+                helperText={errors.title}
+                label="Title"
+                variant="outlined"
+                required
+                fullWidth
+              ></TextField>
+            </Grid>
 
-              <div className={s.inputsContainer}>
-                <TextField
-                  name="price"
-                  placeholder="Price"
-                  value={inputs.price}
-                  onChange={handleInput}
-                  error={errors.price ? true : false}
-                  helperText={errors.price}
-                  label="Price"
-                  variant="outlined"
-                  required
-                  fullWidth
-                ></TextField>
-              </div>
-            </div>
+            <Grid item xs={12} md={12}>
+              <TextField
+                name="description"
+                placeholder="Description"
+                value={inputs.description}
+                onChange={handleInput}
+                error={errors.description ? true : false}
+                helperText={errors.description}
+                label="Description"
+                variant="outlined"
+                required
+                fullWidth
+              ></TextField>
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              <TextField
+                name="price"
+                placeholder="Price"
+                value={inputs.price}
+                onChange={handleInput}
+                error={errors.price ? true : false}
+                helperText={errors.price}
+                label="Price"
+                variant="outlined"
+                required
+                fullWidth
+              ></TextField>
+            </Grid>
 
             <div className={s.file}>
               <TextField
@@ -421,7 +474,7 @@ function CreateService(props) {
               />
             </div>
 
-            <div className={s.selectfile}>
+            <Grid item xs={12} md={12}>
               <Button
                 variant="outlined"
                 startIcon={<PhotoSizeSelectActualIcon />}
@@ -434,27 +487,38 @@ function CreateService(props) {
               >
                 Select File
               </Button>
-            </div>
+            </Grid>
 
             {skeleton && (
-              <Skeleton variant="rectangular" width={345} height={194} className={s.imgRender} />
+              <Grid item md={12}>
+                <Skeleton variant="rectangular" width={345} height={194} />
+              </Grid>
             )}
 
-            <div className={inputs.img ? s.imgContainer : s.imgContainer2}>
-              <img className={s.imgRender} id="imgBox" src="hola" alt=""></img>
-            </div>
+            <Grid
+              item
+              md={3}
+              sx={inputs.img ? imgContainerShow : imgContainerNone}
+            >
+              <img
+                className={s.imgRender}
+                id="imgBox"
+                src="serviceImage"
+                alt=""
+              ></img>
+            </Grid>
 
             {!errors.title &&
             !errors.description &&
             !errors.price &&
             inputs.img ? (
-              <div className={s.submitButton}>
+              <Grid item xs={12} md={12}>
                 <Button type="submit" variant="contained" fullWidth={true}>
                   Create Service
                 </Button>
-              </div>
+              </Grid>
             ) : (
-              <div className={s.submitButton}>
+              <Grid item xs={12} md={12}>
                 <Button
                   disabled
                   type="submit"
@@ -463,17 +527,17 @@ function CreateService(props) {
                 >
                   Create Service
                 </Button>
-              </div>
+              </Grid>
             )}
-          </form>
+          </Grid>
+        </form>
 
-          <ModalService
-            modal={modal}
-            setModal={setModal}
-            message={"Service created successfully!"}
-          />
-        </div>
-      </>
+        <ModalService
+          modal={modal}
+          setModal={setModal}
+          message={"Service created successfully!"}
+        />
+      </Box>
     );
   } else {
     return <label>cargando</label>;

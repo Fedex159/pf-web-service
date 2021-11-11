@@ -1,4 +1,4 @@
-import { type } from "../actions/variables";
+import { type } from '../actions/variables';
 
 const initialState = {
   services: [],
@@ -8,22 +8,25 @@ const initialState = {
   favs: [],
   cart: [],
   categories: [],
-  cookie: "",
+  cookie: '',
   objGlobal: {
-    startRange: "",
-    endRange: "",
+    startRange: '',
+    endRange: '',
     category: [],
-    page: "0",
-    pageSize: "20",
-    order: "rating",
-    type: "DESC",
-    province: "",
-    city: "",
+    page: '0',
+    pageSize: '20',
+    order: 'rating',
+    type: 'DESC',
+    province: '',
+    city: '',
   },
   convertations: [],
   contacts: [],
+  contactsBougth: [],
   posts: [],
   endPage: false,
+  darkTheme: false,
+  order: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -40,9 +43,13 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case type.SET_SERVICES_PAGE:
+      // cheat for pages bug
+      const pages = payload.filter(
+        (s) => state.services.findIndex((e) => e.id === s.id) === -1
+      );
       return {
         ...state,
-        services: [...state.services, ...payload],
+        services: [...state.services, ...pages],
       };
 
     case type.SET_END_PAGE:
@@ -77,6 +84,12 @@ const rootReducer = (state = initialState, action) => {
         cart: payload,
       };
 
+    case type.SET_STATUS_ORDER:
+      return {
+        ...state,
+        order: payload,
+      };
+
     case type.GET_USER_FAVS:
       return {
         ...state,
@@ -107,6 +120,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         contacts: action.payload,
       };
+    case type.GET_CONTACTS_BOUGTH:
+      return {
+        ...state,
+        contactsBougth: action.payload,
+      };
     case type.GET_CONVERTATIONS:
       return {
         ...state,
@@ -117,18 +135,30 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         posts: action.payload,
       };
+    case type.CLEAR:
+      return {
+        ...state,
+        convertations: [],
+        contacts: [],
+        posts: [],
+      };
 
     case type.POST_PURCHASE:
       return {
         ...state,
       };
 
-      case type.PAYPAL:
-        return {
-          ...state
-        }
+    case type.PAYPAL:
+      return {
+        ...state,
+      };
 
-        
+    case type.PUT_DARK:
+      return {
+        ...state,
+        darkTheme: action.payload,
+      };
+
     default:
       return state;
   }
