@@ -1,9 +1,17 @@
-form{
-    padding: 50px;
+form {
+  padding: 50px;
 }
 
-.div{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.changeData {
+  text-align: center;
+  display: 'flex';
+  justify-content: center;
+  align-items: center;
+  width: auto;
 }
