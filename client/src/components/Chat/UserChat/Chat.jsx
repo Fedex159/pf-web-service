@@ -4,7 +4,7 @@ import Conversations from "../Conversations/conversations.jsx";
 import { Box } from "@mui/system";
 import SendIcon from "@mui/icons-material/Send";
 import _style from "./Chat.css.jsx";
-import { Button, Input } from "@material-ui/core";
+import { Button, Input, makeStyles } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
 import { connect, useDispatch } from "react-redux";
 import dotenv from "dotenv";
@@ -21,8 +21,20 @@ import {
   sendMessage,
   deleteConvertation,
 } from "../../../redux/actions";
+
+// Material UI for SEND BTN
+import { brown } from "@material-ui/core/colors";
 dotenv.config();
 require("./Chat.css");
+
+// Material UI for SEND BTN
+const useStyles = makeStyles({
+  btn: {
+    borderRadius: 0,
+    textTransfrom: "none",
+    color: brown[500],
+  },
+});
 
 function Chat(props) {
   var { cookie, convertations, contacts, posts, user, id, contactsBougth } =
@@ -35,7 +47,8 @@ function Chat(props) {
   const dispatch = useDispatch();
   var scrollRef = useRef();
   const socket = useRef(); //conexion al servidor para bidireccional peticiones
-
+  // Material UI for SEND BTN
+  const classes = useStyles();
   //----------------------------------------------------------------------------socket
   useEffect(() => {
     //client conection
@@ -195,7 +208,11 @@ function Chat(props) {
         {/*  <Nav /> */}
         <Box name="contacts" sx={_style.box_contacts_a}>
           <Box name="menu-contacts-wrapper" sx={_style.menu_contacts_wrapper}>
-            <Input name="inputSearch"></Input>
+            <Input
+              type="text"
+              name="inputSearch"
+              placeholder="search contact!"
+            ></Input>
             {contactsConv.length &&
               contactsConv.map((con) => (
                 <Box key={con.id}>
@@ -235,7 +252,7 @@ function Chat(props) {
               </Box>
             </div>
           ) : (
-            <h3>Open a convertation to start a chat</h3>
+            <h3>Click a contact to start a chat</h3>
           )}
 
           {currentContact.length ? (
@@ -256,9 +273,11 @@ function Chat(props) {
                 <Button
                   variant="contained"
                   type="submit"
+                  size="small"
+                  className={classes.btn}
                   endIcon={<SendIcon />}
                 >
-                  ENVIAR
+                  send
                 </Button>
               </Box>
             </form>
