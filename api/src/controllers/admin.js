@@ -21,6 +21,11 @@ const dicc = {
 
 async function admin(req, res, next) {
   try {
+    let totalServices = await Service.findAll({
+      attributes: [[conn.fn("COUNT", conn.col("id")), "totalServices"]],
+    });
+    totalServices = totalServices[0].dataValues.totalServices;
+
     let newServices = await Service.findAll({
       attributes: [
         [conn.fn("TO_CHAR", conn.col("createdAt"), "Mon-YY"), "month"],
@@ -152,6 +157,7 @@ async function admin(req, res, next) {
 
     // { services: servicesCount, category: categoryCount }
     res.status(200).send({
+      totalServices,
       groupServicesCount,
       newUsers,
       groups,
