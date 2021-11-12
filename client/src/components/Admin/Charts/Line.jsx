@@ -3,12 +3,18 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { useSelector } from "react-redux";
+import { styles } from "./chartStyles";
 
 export default function Chart(info, x, yDomain, date, title) {
+  const darkGlobal = useSelector((state) => state.darkTheme);
+
+  let darkLight = darkGlobal ? "dark" : "light";
+
   return (
     <Box
       sx={{
-        backgroundColor: "#5c6bc0",
+        ...styles[darkLight].box,
         width: "min-content",
       }}
     >
@@ -28,21 +34,24 @@ export default function Chart(info, x, yDomain, date, title) {
         margin={{ top: 5, right: 50, left: 0, bottom: 5 }}
       >
         {/* <CartesianGrid strokeDasharray="3 3" /> */}
-        <XAxis dataKey={x} stroke="#FFFFFF" />
+        <XAxis
+          dataKey={x}
+          stroke={darkGlobal ? "rgb(251, 187, 217)" : "rgb(110, 117, 120)"}
+        />
         <YAxis
           interval="preserveEnd"
           domain={[0, Math.max(...info.map((i) => i[yDomain])) + 1]}
-          stroke="#FFFFFF"
+          stroke={darkGlobal ? "rgb(251, 187, 217)" : "rgb(110, 117, 120)"}
           margin={{ left: 0 }}
         />
         <Tooltip
-          cursor={{ stroke: "red", strokeWidth: 2 }}
+          cursor={styles[darkGlobal ? "dark" : "light"].tooltip.cursor}
           content={({ active, payload, label }) => {
             if (active && payload && payload.length) {
               return (
                 <Chip
-                  color="success"
-                  label={`${label} : ${payload[0].value}`}
+                  sx={styles[darkLight].tooltip.chip}
+                  label={`${label} : ${payload[0].value} ${title}`}
                 />
               );
             }
@@ -58,7 +67,7 @@ export default function Chart(info, x, yDomain, date, title) {
         <Line
           type="monotone"
           dataKey={yDomain}
-          stroke="#FFFFFF"
+          stroke={darkGlobal ? "rgb(255, 0, 96)" : "rgb(205, 220, 57)"}
           strokeWidth={3}
         />
       </LineChart>

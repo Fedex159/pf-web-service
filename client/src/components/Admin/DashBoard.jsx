@@ -53,7 +53,6 @@ export default function Dashboard({
 
   return (
     <>
-      <h1>Dashboard</h1>
       <Box display="flex" flexDirection="row">
         {(newServicesGroup || newServicesMonthly) &&
           LineChart(
