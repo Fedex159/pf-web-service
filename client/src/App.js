@@ -124,7 +124,10 @@ function App() {
       <CssBaseline />
       <div className='App'>
         <Route exact path='/' component={Landing} />
-        <Route exact path='/resetPassword' component={ResetPassword} />
+        <Route exact
+         path='/resetPassword/:id' 
+         render={({ match }) => <ResetPassword resetPassword={match.params.id} />}
+        />
 
 
         <Route exact path='/home'>
