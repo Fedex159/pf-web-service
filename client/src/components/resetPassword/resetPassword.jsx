@@ -1,12 +1,19 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+
 import { useState } from "react";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
 import {ressetPassword } from '../../redux/actions/index'
- 
+import Modal from "@mui/material/Modal";
+import { useHistory } from "react-router";
+
+
+
+
+
 
 const style = {
     position: "absolute",
@@ -22,9 +29,11 @@ const style = {
     p: 6,
 };
 
+
 export default function ResetPassword({resetPassword}) {
     const dispatch = useDispatch()
     console.log('resetPassword Front', resetPassword)
+
 
 
 
@@ -48,7 +57,8 @@ export default function ResetPassword({resetPassword}) {
         else if (!password.confirmPassword) {
             errors.confirmPassword = 'You must to confirm your password'
         }
-        else if (password.password !== password.confirmPassword) {
+
+        else if (password.password != password.confirmPassword) {
             errors.confirmPassword = "Passwords do not match"
         }
 
@@ -97,11 +107,13 @@ export default function ResetPassword({resetPassword}) {
     }
 
 
+
     function handleSend(){
        
         dispatch(ressetPassword({newPass : password.password, resetPassword : resetPassword}))
     
     }
+
 
 
     return (
@@ -112,6 +124,7 @@ export default function ResetPassword({resetPassword}) {
                     Change your password
                 </Typography>
                 <TextField
+
                     type='password'
                     required
                     fullWidth
@@ -145,12 +158,16 @@ export default function ResetPassword({resetPassword}) {
                     variant="contained"
                     color="secondary"
                     fullWidth={true}
+
                     onClick={handleSend}
+
                     sx={{
                         marginTop: 3
                     }}
                 >
+
                     Update Password
+
                 </Button>
             </Box>
         </div>

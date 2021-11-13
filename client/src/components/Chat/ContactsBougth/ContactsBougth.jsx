@@ -2,20 +2,17 @@ import { Avatar } from "@material-ui/core";
 import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { Stack } from "@mui/material";
-require("./Conversations.css");
-export default function Conversations({ contacts }) {
-  useEffect(() => {});
+import useStylesBougth from "./ContactsStyled";
+export default function Contactsbougth({ contacts, contactsOnline }) {
+  var classes = useStylesBougth();
   if (contacts) {
     return (
       <Box
-        sx={{
-          height: 86,
-          display: "flex",
-          padding: "2%",
-          cursor: "pointer",
-          margin: "2%",
-        }}
-      >
+        className={
+          contactsOnline.some((e) => e.user === contacts.id)
+            ? classes.boxBoughtOnline
+            : classes.boxBoughtOffline
+        }>
         <Stack direction="row" spacing={5}>
           <Avatar
             src={contacts.userImg}

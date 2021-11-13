@@ -11,7 +11,6 @@ const chat = require('./Chat');
 const admin = require('./admin');
 const forgotPassword = require('./forgotPassword');
 const resetPassword = require('./resetPassword')
-
 const paypal = require('./paypal');
 const auth = require('./auth');
 const { verifyToken } = require('../controllers/authentication');
