@@ -1,16 +1,22 @@
 import { Avatar } from "@material-ui/core";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
+import React from "react";
 import { Stack } from "@mui/material";
-require("../ContactsBougth/ContactsBougth.css");
-export default function Contactsbougth({ contacts, contactsOnline }) {
+import useStylesBougth from "./ContactsStyled";
+export default function Contactsbougth({
+  contacts,
+  contactsOnline,
+  darkTheme,
+}) {
+  //darkTheme boolean global state
+  var classes = useStylesBougth(darkTheme)();
   if (contacts) {
     return (
-      <div
+      <Box
         className={
           contactsOnline.some((e) => e.user === contacts.id)
-            ? "boxBoughtOnline"
-            : "boxBoughtOffline"
+            ? classes.boxBoughtOnline
+            : classes.boxBoughtOffline
         }
       >
         <Stack direction="row" spacing={5}>
@@ -20,7 +26,7 @@ export default function Contactsbougth({ contacts, contactsOnline }) {
           />
           {contacts.name}
         </Stack>
-      </div>
+      </Box>
     );
   } else {
     return <></>;

@@ -1,16 +1,15 @@
 import { io } from "socket.io-client";
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
 import Conversations from "../Convertations/convertations.jsx";
 import { Box } from "@mui/system";
 import SendIcon from "@mui/icons-material/Send";
-import { Button, Input, makeStyles } from "@material-ui/core";
+import { Button, Input } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import dotenv from "dotenv";
 import Message from "../Message/Message";
-import { brown } from "@material-ui/core/colors";
 import Contactsbougth from "../ContactsBougth/ContactsBougth.jsx";
+import useStylesChat from "./ChatStyled";
 import {
   getContacts,
   getContactsBougth,
@@ -20,20 +19,11 @@ import {
   sendMessage,
   deleteConvertation,
 } from "./StateLocal.jsx";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 dotenv.config();
-require("../UserChat/Chat.css");
-
-// Material UI for SEND BTN
-const useStyles = makeStyles({
-  btn: {
-    borderRadius: 0,
-    textTransfrom: "none",
-    color: brown[500],
-  },
-});
-
-function Chat({ user }) {
+function Chat({ user, darkTheme }) {
   const [UsersOnlines, setUsersOnlines] = useState([]); //1
   const [text, setText] = useState(""); //2
   const [textReceive, setTextReceive] = useState(""); //3
@@ -44,12 +34,11 @@ function Chat({ user }) {
     contactsBoungth: [],
     convertations: [],
   }); //4
-  const dispatch = useDispatch();
   var scrollRef = useRef();
   const socket = useRef(); //conexion al servidor para bidireccional peticiones
-  const classes = useStyles(); // Material UI for SEND BTN
-
-  //const history=useHistory();
+  const classes = useStylesChat(darkTheme)();
+  // useStylesChat es una funcion que recive el valor booleano
+  // del darkTheme estado global y retorna un makeStyles
 
   //----------------------------------------------------------------------------socket
   useEffect(() => {
@@ -105,14 +94,35 @@ function Chat({ user }) {
 
   //-----------------------------------------------------------------------------new msg receive
   useEffect(() => {
-    if (textReceive && chat.currentCont) {
-      chat.currentCont.id === textReceive.userId &&
-        setChat({
-          ...chat,
-          chatting: chat.chatting.concat(textReceive),
-        });
-    }
-
+    (async () => {
+      if (textReceive && chat.currentCont) {
+        chat.currentCont.id === textReceive.userId &&
+          setChat({
+            ...chat,
+            chatting: chat.chatting.concat(textReceive),
+          });
+      }
+      var contac = chat.contactsConv.filter((con) => {
+        return con.id === textReceive.id;
+      });
+      //new msj new contact add contacs array and convertations
+      if (contac.length === 0) {
+        var convertition;
+        getConvertations()
+          .then((conv) => {
+            convertition = conv;
+            return getContacts();
+          })
+          .then((contact) => {
+            setChat({
+              ...chat,
+              contactsConv: contact.data,
+              convertations: convertition.data,
+            });
+          })
+          .catch((err) => console.log(err));
+      }
+    })();
     // eslint-disable-next-line
   }, [textReceive]);
   //-------------------------------------------------------------------------------------------------------------new convertations
@@ -202,6 +212,7 @@ function Chat({ user }) {
           createdAt: Date.now(),
         }),
       });
+      // eslint-disable-next-line
       var send = await sendMessage({
         //send BD
         remit: chat.currentCont.id,
@@ -213,10 +224,13 @@ function Chat({ user }) {
   //---------------------------------------component chat----------------------------------------------------------------------------------------------
   if (user) {
     return (
-      <div className="box_messanger_father" name="box-father">
+      <Box name="box-father" className={classes.box_messanger_father}>
         {/* conversation list */}
-        <div name="contacts" className="box_contacts_a">
-          <div name="menu-contacts-wrapper" className="menu_contacts_wrapper">
+        <Box name="contacts" className={classes.box_contacts_a}>
+          <Box
+            name="menu-contacts-wrapper"
+            className={classes.menu_Contacts_Wrapper}
+          >
             <Input
               type="text"
               name="inputSearch"
@@ -224,34 +238,39 @@ function Chat({ user }) {
             ></Input>
             {chat.contactsConv.length &&
               chat.contactsConv.map((con) => (
-                <Box key={con.id}>
+                <Box className={classes.containerConvertation} key={con.id}>
                   <Box
+                    className={classes.box_avatar_And_X}
                     onClick={() => {
                       chatContact(con.id);
                     }}
                   >
+                    {" "}
                     <Conversations
                       key={con.id}
                       contacts={con}
                       contactsOnline={UsersOnlines}
-                    />
+                      darkTheme={darkTheme}
+                    />{" "}
                   </Box>
-                  <Button
+                  <IconButton
                     onClick={() => {
                       deleteConvert(con);
                     }}
+                    className={classes.btn_x}
+                    size="small"
                   >
-                    X
-                  </Button>
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
                 </Box>
               ))}
-          </div>
-        </div>
+          </Box>
+        </Box>
         {/*message list*/}
         <div style={{ flex: "5.5" }}>
           {chat.currentCont ? (
-            <div name="conversations" className="box_conversations_b">
-              <div name="message" className="menu_chating_wrapper">
+            <Box name="conversations" className={classes.box_conversations_b}>
+              <Box name="message" className={classes.menu_chating_wrapper}>
                 {chat.chatting.map((msn, i) => (
                   <Message
                     scrollRef={scrollRef}
@@ -259,10 +278,11 @@ function Chat({ user }) {
                     user={user}
                     contact={chat.currentCont}
                     message={msn}
+                    darkTheme={darkTheme}
                   />
                 ))}
-              </div>
-            </div>
+              </Box>
+            </Box>
           ) : (
             <h3 className="startchat">Click a contact to start a chat</h3>
           )}
@@ -298,10 +318,10 @@ function Chat({ user }) {
           )}
         </div>
         {/*contact list of purchased services */}
-        <div name="contacts-online" className="box_contactsStates_c">
-          <div
+        <Box name="contacts-online" className={classes.box_contactsStates_c}>
+          <Box
             name="menu-contactsOnline-wrapper"
-            className="menu_contactsOnline_wrapper"
+            className={classes.menu_contactsOnline_wrapper}
           >
             contacts bougth
             {chat.contactsBoungth.length &&
@@ -316,12 +336,13 @@ function Chat({ user }) {
                     key={contac.id}
                     contacts={contac}
                     contactsOnline={UsersOnlines}
+                    darkTheme={darkTheme}
                   />
                 </Box>
               ))}
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
     );
   } else {
     return <h3>cargando</h3>;
@@ -331,6 +352,7 @@ function Chat({ user }) {
 function mapStateToProps(state) {
   return {
     user: state.user,
+    darkTheme: state.darkTheme,
   };
 }
 
