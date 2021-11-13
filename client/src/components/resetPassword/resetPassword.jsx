@@ -12,79 +12,45 @@ import { useHistory } from "react-router";
 
 
 
-
-
-
 const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "50%",
-    height: "50%",
-    bgcolor: "background.paper",
-    borderRadius: 2,
-    boxShadow: 24,
-    textAlign: 'center',
-    p: 6,
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "50%",
+  height: "50%",
+  bgcolor: "background.paper",
+  borderRadius: 2,
+  boxShadow: 24,
+  textAlign: "center",
+  p: 6,
 };
 
 
-export default function ResetPassword({resetPassword}) {
-    const dispatch = useDispatch()
-    console.log('resetPassword Front', resetPassword)
 
 
+export default function ResetPassword() {
+  const dispatch = useDispatch();
 
 
-    const [errors, setErrors] = useState({
-    })
+  const [errors, setErrors] = useState({});
 
-    const [password, setPassword] = useState({
-        password: '',
-        confirmPassword: ''
-    });
+  const [password, setPassword] = useState({
+    password: "",
+    confirmPassword: "",
+  });
 
+  function validateErrors(password) {
+    let errors = {};
 
-
-
-    function validateErrors(password) {
-        let errors = {}
-
-        if (!password.password) {
-            errors.password = 'Password ir required'
-        }
-        else if (!password.confirmPassword) {
-            errors.confirmPassword = 'You must to confirm your password'
-        }
-
-        else if (password.password != password.confirmPassword) {
-            errors.confirmPassword = "Passwords do not match"
-        }
-
-
-        return errors;
+    if (!password.password) {
+      errors.password = "Password ir required";
+    } else if (!password.confirmPassword) {
+      errors.confirmPassword = "You must to confirm your password";
+    } else if (password.password != password.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
     }
 
-    function handleChange(e) {
-        setPassword((prev) => {
-            //guard el input modificado
-            const input1 = {
-                ...prev,
-                password: e.target.value,
-            };
-            setErrors(() => {
-                return validateErrors({
-                    ...password,
-                    [e.target.name]: e.target.value
-                });
-            });
-            return input1;
-        })
-
-
-
-    }
 
     function handleConfirmPassword(e) {
         setPassword((prev) => {
@@ -110,7 +76,7 @@ export default function ResetPassword({resetPassword}) {
 
     function handleSend(){
        
-        dispatch(ressetPassword({newPass : password.password, resetPassword : resetPassword}))
+        dispatch(ressetPassword({newPassword : password.password, resetPassword : resetPassword}))
     
     }
 
@@ -172,5 +138,7 @@ export default function ResetPassword({resetPassword}) {
             </Box>
         </div>
     );
-}
 
+  }
+
+  

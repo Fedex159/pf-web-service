@@ -1,11 +1,10 @@
 import { Avatar } from "@material-ui/core";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
-import { Stack } from "@mui/material";
+import React from "react";
 import useStylesConvertations from "./ConvertationsStyled";
-export default function Conversations({ contacts, contactsOnline }) {
-
-    var classes = useStylesConvertations();
+export default function Conversations({ contacts, contactsOnline, darkTheme }) {
+  //darkTheme boolean global state
+  var classes = useStylesConvertations(darkTheme)();
 
   if (contacts) {
     return (
@@ -14,16 +13,14 @@ export default function Conversations({ contacts, contactsOnline }) {
           contactsOnline.some((e) => e.user === contacts.id)
             ? classes.boxConvOnline
             : classes.boxConvOffline
-
         }
       >
-        <Stack direction="row" spacing={5}>
-          <Avatar
-            src={contacts.userImg}
-            sx={{ width: "54px", height: 54, cursor: "pointer" }}
-          />
-          {contacts.name}
-        </Stack>
+        <Avatar
+          size="small"
+          src={contacts.userImg}
+          className={classes.avatar}
+        />
+        {contacts.name}
       </Box>
     );
   } else {
