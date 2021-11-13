@@ -23,8 +23,12 @@ const style = {
 };
 
 export default function ResetPassword({resetPassword}) {
+    console.log('resetPassword en front', resetPassword)
   const dispatch = useDispatch();
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    //   password : '',
+    //   confirmPassword : ''
+  });
 
   const [password, setPassword] = useState({
     password: "",
@@ -41,6 +45,7 @@ export default function ResetPassword({resetPassword}) {
     } else if (password.password !== password.confirmPassword) {
       errors.confirmPassword = "Passwords do not match";
     }
+    return errors;
   }
 
   function handleChange(e) {
