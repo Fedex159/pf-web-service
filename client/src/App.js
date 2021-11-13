@@ -13,6 +13,7 @@ import CheckoutDetail from './components/CheckoutDetail/CheckoutDetail';
 import CreateService from './components/CreateService/CreateService';
 import Nav from './components/Nav/Nav';
 import NavSpace from './components/Nav/NavSpace';
+import ResetPassword from './components/resetPassword/resetPassword'
 import {
   setCookie,
   getServices,
@@ -40,7 +41,7 @@ function App() {
   // ------------------ Cuando tiene cookie(logueado) ------------//
   useEffect(() => {
     if (cookie) {
-      // ---------------------- Info del user ----------------------- //
+      // --------------------- Info del usuario ---------------------- //
       getUserInfo()
         .then((userInfo) => dispatch(userInfo))
         .catch(() => console.log('Error getUserInfo'));
@@ -48,9 +49,9 @@ function App() {
       // ------------- Manejo de la orden del carrito -------------- //
       getOrder()
         .then((data) => {
-          // Tenia orden, y agrego cosas deslogueado
           if (!order) {
             const cart = JSON.parse(localStorage.getItem('state'));
+            // Tenia orden, y agrego cosas deslogueado
             if (Array.isArray(cart) && cart.length > 0) {
               const filter = [...cart];
               data.forEach((element) => {
@@ -65,6 +66,7 @@ function App() {
 
               dispatch(setCartStorage(filter));
               dispatch(setStatusOrder(true));
+              // Tenia orden, y localStorage vacio
             } else {
               dispatch(setCartStorage(data));
               dispatch(setStatusOrder(true));
@@ -122,6 +124,8 @@ function App() {
       <CssBaseline />
       <div className='App'>
         <Route exact path='/' component={Landing} />
+        <Route exact path='/resetPassword' component={ResetPassword} />
+
 
         <Route exact path='/home'>
           <Nav route={'home'} />

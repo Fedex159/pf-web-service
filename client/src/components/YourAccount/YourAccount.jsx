@@ -14,8 +14,8 @@ import Botonera from './Botonera/Botonera';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Admin from '../Admin/Admin';
 import { FormDialog } from './FormDialog/FormDialog';
-import Orders from './Orders/Orders';
-import Box from '@mui/material/Box';
+import OrderTable from './OrderTable';
+import CollapsibleTable from './CollapsibleTable';
 
 export default function YourAccount({
   userProfile,
@@ -54,7 +54,15 @@ export default function YourAccount({
   };
 
   return (
-    <div>
+    <div
+    // style={{
+    //   display: 'flex',
+    //   flexDirection: 'column',
+    //   justifyContent: 'center',
+    //   alignItems: 'center',
+
+    // }}
+    >
       <UserInfo
         userProfile={userProfile}
         profileInfo={profileInfo}
@@ -85,7 +93,12 @@ export default function YourAccount({
           (userData.servicesFavs.length > 0 ? (
             <Container>
               <div className={s.servicesShown}>
-                <Grid container justifyContent="flex-start" spacing={3}>
+                <Grid
+                  container
+                  justifyContent='flex-start'
+                  spacing={3}
+                  margin='0'
+                >
                   {userData.servicesFavs.map((s) => (
                     <Grid item key={s.id}>
                       <CardService service={s} />
@@ -108,7 +121,33 @@ export default function YourAccount({
           ))}
         {/* ------------------------------------------------ */}
         {/* ------------------ORDERS---------------------------- */}
+        {/* 
+        Como vienen las ordenes.
+        userData.orders es un array de objs, cada obj viene asi:
+        {
+          id: 2                     // id de orden unico
+          status: 'success          // estado de la orden
+          services: [1, 2]          // Array con los ids de servicios que compro en esa orden
+          createdAt                 // Fecha creacion
+          updatedAt                 // Fecha modificacion
+        }
+        
+        */}
         {viewOrders &&
+          (userData.orders && userData.orders.length > 0 ? (
+            <Container>
+              <CollapsibleTable rows={userData.orders} />
+            </Container>
+          ) : (
+            <div className={s.addFavContainer}>
+              <h3>You haven't bought any services yet</h3>
+              <div className={s.addToFav}>
+                <p>When you acquire a service it will show here.</p>
+              </div>
+            </div>
+          ))}
+
+        {/* {viewOrders &&
           (userData.servicesBought && userData.servicesBought.length > 0 ? (
             <div className={s.servicesShown}>
               <Container>
@@ -126,14 +165,19 @@ export default function YourAccount({
                 <p>When you acquire a service it will show here.</p>
               </div>
             </div>
-          ))}
+          ))} */}
         {/* ----------------------------------------------------- */}
         {/* -------------------SERVICES-------------------------- */}
         {viewServices &&
           (userData.servicesOwn && userData.servicesOwn.length > 0 ? (
             <div className={s.servicesShown}>
               <Container>
-                <Grid container justifyContent="flex-start" spacing={3}>
+                <Grid
+                  container
+                  justifyContent='flex-start'
+                  spacing={3}
+                  margin='0'
+                >
                   {userData.servicesOwn.map((s) => (
                     <Grid item key={s.id}>
                       <CardService service={s} />

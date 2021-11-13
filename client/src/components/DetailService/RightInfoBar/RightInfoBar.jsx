@@ -24,13 +24,15 @@ export default function RightInfoBar({
     <Box
       gridColumn={{ xs: 'span 12', sm: 'span 12', md: 'span 4' }}
       m={{ xs: 0, sm: 2 }}
-      p={{ xs: 0, sm: 0, md: 2 }}
+      p={{ xs: 1, sm: 0, md: 2 }}
       border="solid 1px lightgrey"
+      borderRadius="4px"
       display="flex"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
       sx={query ? { gridArea: '1' } : {}}
+      textAlign="center"
     >
       {/* ---- BOTONES FAV SHARE --------------------------- */}
       <Box
@@ -107,6 +109,14 @@ export default function RightInfoBar({
             {`$${price ? price : 0}`}{' '}
           </Typography>
           {cookie && cookie !== userId ? (
+            <IconButton
+              onClick={handleClick}
+              color={!added ? 'primary' : 'success'}
+              aria-label="add to shopping cart"
+            >
+              <AddShoppingCart />
+            </IconButton>
+          ) : !cookie ? (
             <IconButton
               onClick={handleClick}
               color={!added ? 'primary' : 'success'}

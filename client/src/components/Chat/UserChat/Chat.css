@@ -1,22 +1,22 @@
+/*box wrapper chat*/
 .box_messanger_father {
   display: flex;
   max-height: 935px;
   min-height: 935px;
   overflow: hidden;
+  background-color: rgb(231, 238, 238);
+  color: rgb(165, 42, 42);
 }
-
+/*---------------------------------------------------------------------box contacts*/
 .box_contacts_a {
-  flex: "2.0";
+  flex: 2;
 }
 /*box-contacts-menu*/
 .menu_contacts_wrapper {
-  padding: "1%";
-  height: "100%";
-  border: "none";
-  background: red;
-}
-.menu_contacts_wrapper:hover {
-  background: "#1e88e5";
+  padding: 1%;
+  height: 100%;
+  border: none;
+  background: rgb(176, 199, 199);
 }
 /*input search*/
 .searchContact {
@@ -25,14 +25,14 @@
 /*---------------------------------------------------------------box conversations*/
 .box_conversations_b {
   flex: 5.5;
-  height: "90%";
+  height: 90%;
   overflow-y: scroll;
-  scroll-behavior: smooth;
 }
 /*box conversatios wrapper*/
 .menu_chating_wrapper {
-  height: "100%";
-  padding: "1%";
+  height: 100%;
+  padding: 1%;
+  color: rgb(167, 32, 32);
 }
 
 /*----------------------------------------------------------------box contacts online-offline*/
@@ -42,7 +42,10 @@
 
 /*box contactsOnline wrapper*/
 .menu_contactsOnline_wrapper {
-  padding: "1%";
-  height: "100%";
-  background: white;
+  padding: 1%;
+  height: 100%;
+  background-color: rgb(176, 199, 199);
+}
+.startchat{
+    size: 3em;
 }

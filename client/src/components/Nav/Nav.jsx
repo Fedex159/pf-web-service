@@ -1,50 +1,49 @@
-import React, { useState } from 'react';
-import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
-import Modal from '@mui/material/Modal';
-import SearchBar from '../SearchBar/SearchBar';
-import Cart from '../Cart/Cart';
-import SideBar from '../SideBar/SideBar';
-import UserMenu from './UserMenu';
-import Login from '../Login/Login';
-import Register from '../Register/Register';
-import IconButton from '@mui/material/IconButton';
-import HomeIcon from '@mui/icons-material/Home';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import Fab from '@mui/material/Fab';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import ScrollTop from './ScrollTop';
+import React, { useState } from "react";
+import Toolbar from "@mui/material/Toolbar";
+import Box from "@mui/material/Box";
+import AppBar from "@mui/material/AppBar";
+import Modal from "@mui/material/Modal";
+import SearchBar from "../SearchBar/SearchBar";
+import Cart from "../Cart/Cart";
+import SideBar from "../SideBar/SideBar";
+import UserMenu from "./UserMenu";
+import Login from "../Login/Login";
+import Register from "../Register/Register";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import HomeIcon from "@mui/icons-material/Home";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Fab from "@mui/material/Fab";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import ScrollTop from "./ScrollTop";
+import { makeStyles } from "@material-ui/core";
+import { brown, lime } from "@mui/material/colors";
+// import clsx from "clsx";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-// MATERIAL UI
-import { Button, makeStyles } from '@material-ui/core';
-import { brown, lime } from '@mui/material/colors';
-import clsx from 'clsx';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import DarkMode from "./DarkMode";
 
-import DarkMode from './DarkMode';
-
-const useStyles = makeStyles({
-  default: {
-    borderRadius: 0,
-    textTransfrom: 'none',
-  },
-  secondary: {
-    main: lime[600],
-    contrastText: brown[500],
-  },
-});
+// const useStyles = makeStyles({
+//   default: {
+//     borderRadius: 0,
+//     textTransfrom: "none",
+//   },
+//   secondary: {
+//     main: lime[600],
+//     contrastText: brown[500],
+//   },
+// });
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   maxWidth: 600,
-  width: '70%',
-  bgcolor: 'background.paper',
-  borderRadius: '10px',
+  width: "70%",
+  bgcolor: "background.paper",
+  borderRadius: "10px",
   boxShadow: 24,
 };
 
@@ -53,9 +52,9 @@ export default function Nav({ route, check, change }) {
   const [loginModal, setLoginModal] = useState(false);
   const cookie = useSelector((state) => state.cookie);
   const { userImg, name } = useSelector((state) => state.user);
-  const query = useMediaQuery('(max-width: 820px)');
+  const query = useMediaQuery("(max-width: 820px)");
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const handleLogin = () => {
     setLoginModal((prev) => !prev);
@@ -68,73 +67,94 @@ export default function Nav({ route, check, change }) {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, width: '101%' }} id='back-to-top-anchor'>
-      <AppBar position='fixed' sx={{ zIndex: '1201' }}>
+    <Box sx={{ flexGrow: 1, width: "101%" }} id="back-to-top-anchor">
+      <AppBar position="fixed" sx={{ zIndex: "1201" }}>
         <Toolbar
           sx={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 9fr 2fr',
-            gridTemplateRows: query && route === 'home' ? '80px 80px' : '',
+            display: "grid",
+            gridTemplateColumns: "1fr 9fr 2fr",
+            gridTemplateRows: query && route === "home" ? "80px 80px" : "",
           }}
         >
-          <Box mr='auto' display='flex' alignItems='center'>
-            {route === 'home' ? (
+          <Box mr="auto" display="flex" alignItems="center">
+            {route === "home" ? (
               <>
                 <SideBar />
                 <DarkMode />
               </>
             ) : (
               <>
-                <IconButton color='inherit' component={Link} to='/home'>
+                <IconButton color="inherit" component={Link} to="/home">
                   <HomeIcon />
                 </IconButton>
                 <DarkMode />
               </>
             )}
           </Box>
+
+          {/* --------------- SEARCH BAR---------------------- */}
           <Box
             sx={
-              route === 'home'
+              route === "home"
                 ? {
-                    width: '100%',
-                    maxWidth: '920px',
-                    ml: 'auto',
-                    mr: 'auto',
-                    gridColumnStart: query ? '1' : '',
-                    gridColumnEnd: query ? '4' : '',
+                    width: "100%",
+                    maxWidth: "920px",
+                    ml: "auto",
+                    mr: "auto",
+                    gridColumnStart: query ? "1" : "",
+                    gridColumnEnd: query ? "4" : "",
                   }
-                : { display: 'none' }
+                : { display: "none" }
             }
           >
-            {route === 'home' ? <SearchBar /> : null}
+            {route === "home" ? <SearchBar /> : null}
           </Box>
+          {/* ---------------------------------------- */}
 
           <Box
-            display='flex'
-            gap='5px'
-            p='5px'
-            ml='auto'
+            display="flex"
+            gap="5px"
+            p="5px"
+            ml="auto"
             sx={{
-              gridColumnStart: '3',
-              gridRowStart: '1',
+              gridColumnStart: "3",
+              gridRowStart: "1",
             }}
           >
             {/* Register */}
-            {cookie || route === 'checkout' ? null : (
+            {cookie || route === "checkout" ? null : (
               <Button
-                variant='contained'
-                size='medium'
-                className={clsx(classes.default, classes.primary)}
+                variant="contained"
+                size="medium"
+                color="secondary"
+                size='small'
+                disableElevation
                 onClick={handleRegister}
               >
                 REGISTER
               </Button>
             )}
+
+            {!cookie && route !== "checkout" ? (
+              <Button
+                variant="contained"
+                size="medium"
+                color="secondary"
+                size='small'
+                disableElevation
+                onClick={handleLogin}
+              >
+                Login
+              </Button>
+            ) : null}
+            {/* ------------------------------------------ */}
+
+            {/* ----------- REGISTER MODAL ------------------ */}
             <Modal
               open={registerModal}
               onClose={handleRegister}
-              aria-labelledby='modal-modal-title'
-              aria-describedby='modal-modal-description'
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
                 <Register
@@ -144,21 +164,12 @@ export default function Nav({ route, check, change }) {
               </Box>
             </Modal>
 
-            {!cookie && route !== 'checkout' ? (
-              <Button
-                variant='contained'
-                size='medium'
-                className={clsx(classes.default, classes.primary)}
-                onClick={handleLogin}
-              >
-                Login
-              </Button>
-            ) : null}
+            {/* ----------------- LOGIN MODAL -------------------------- */}
             <Modal
               open={loginModal}
               onClose={handleLogin}
-              aria-labelledby='modal-modal-title'
-              aria-describedby='modal-modal-description'
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
                 <Login
@@ -167,16 +178,18 @@ export default function Nav({ route, check, change }) {
                 />
               </Box>
             </Modal>
+            {/* ------------------------------------------------ */}
 
-            {route === 'checkout' ? null : <Cart route={route} />}
+            {route === "checkout" ? null : <Cart route={route} />}
             {cookie ? (
               <UserMenu route={route} userImg={userImg} name={name} />
             ) : null}
           </Box>
         </Toolbar>
       </AppBar>
+
       <ScrollTop>
-        <Fab color='secondary' size='small' aria-label='scroll back to top'>
+        <Fab color="secondary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
