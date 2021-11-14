@@ -97,11 +97,6 @@ export default function YourAccount({
           color={viewOrders ? "secondary" : "primary"}
           startIcon={<ChatIcon />}
           onClick={() => {
-            // setViewFavs(false);
-            // setViewOrders(!viewOrders);
-            // setViewservices(false);
-            // setViewAdmin(false);
-            // scroll.scrollToBottom();
             goMessages();
           }}
           className={classes.buttonStyle}
