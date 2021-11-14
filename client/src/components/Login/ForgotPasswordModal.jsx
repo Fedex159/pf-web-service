@@ -116,7 +116,7 @@ export default function ForgotPasswordModal({ modal, setModal, message }) {
                             width: 'fit-content',
                             marginLeft: '95%',
                             alignSelf: 'flex-end',
-                            marginBottom:'10%'
+                            marginBottom: '10%'
 
                         }}>
 
