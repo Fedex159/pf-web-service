@@ -36,11 +36,7 @@ function Chat({ user, darkTheme }) {
   }); //4
   var scrollRef = useRef();
   const socket = useRef(); //conexion al servidor para bidireccional peticiones
-  const classes = useStylesChat(
-    darkTheme,
-    UsersOnlines,
-    chat.contactsConv
-  )();
+  const classes = useStylesChat(darkTheme, UsersOnlines, chat.contactsConv)();
   // useStylesChat es una funcion que recive el valor booleano
   // del darkTheme estado global y retorna un makeStyles
 
@@ -281,7 +277,9 @@ function Chat({ user, darkTheme }) {
               ))}
             </Box>
           ) : (
-            <Box className={classes.startchat}>Click a contact to start a chat</Box>
+            <Box className={classes.startchat}>
+              Click a contact to start a chat
+            </Box>
           )}
 
           {chat.currentCont ? (
