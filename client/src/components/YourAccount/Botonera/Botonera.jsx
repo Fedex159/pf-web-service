@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
+    color: "#78909c",
   },
   divider: {
     [theme.breakpoints.down("xs")]: {

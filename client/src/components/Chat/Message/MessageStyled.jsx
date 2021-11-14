@@ -50,6 +50,8 @@ export default function useStylesMessage(darkTheme, message, user) {
       height: "100%",
       boxShadow: `0.3em 0.3em 0.2em  ${darkTheme ? grey[800] : grey[600]}`,
     },
-    message: {},
+    message: {
+      padding: "1em",
+    },
   }));
 }

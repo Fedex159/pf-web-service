@@ -315,8 +315,7 @@ function Chat({ user, darkTheme }) {
         </Box>
         {/*contact list of purchased services */}
         <Box name="contacts-online" className={classes.box_contactsStates_c}>
-          <Box>your</Box>
-          <h3>contacts bougth</h3>
+          <h3>Contacts</h3>
           <Box
             name="menu-contactsOnline-wrapper"
             className={classes.box_contactsOnline_wrapper}
