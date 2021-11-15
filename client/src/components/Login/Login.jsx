@@ -12,6 +12,8 @@ import Box from "@mui/material/Box";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 import Typography from "@mui/material/Typography";
 
+import Swal from "sweetalert2";
+
 function Login({ setLogin, setLoginModal, setRegisterModal }) {
   const dispatch = useDispatch();
   const [start, setStart] = useState(true);
@@ -51,6 +53,13 @@ function Login({ setLogin, setLoginModal, setRegisterModal }) {
         password: "",
       });
       setLoginModal(() => false);
+      Swal.fire({
+        title: "Logged in!",
+        icon: "success",
+        confirmButtonText: "OK",
+        timer: 3500,
+        confirmButtonColor: "green",
+      });
       // guardo token en localStorage
       localStorage.setItem("token", token);
       localStorage.setItem("userId", id);
@@ -149,27 +158,27 @@ function Login({ setLogin, setLoginModal, setRegisterModal }) {
           >
             Sing in
           </Button>
-
-          <Button
-            type="submit"
-            color="primary"
-            onClick={handleForgotPassword}
-            underline="always"
-            size="small"
-            sx={{ marginTop: "2%" }}
-          >
-            Forgot your password?
-          </Button>
-
-          <ForgotPasswordModal
-            modal={modal}
-            setModal={setModal}
-            message={
-              "Enter the email address associated with your WebService account"
-            }
-          />
         </form>
       </Box>
+
+      <Button
+        type="submit"
+        color="primary"
+        onClick={handleForgotPassword}
+        underline="always"
+        size="small"
+        sx={{ marginTop: "2%" }}
+      >
+        Forgot your password?
+      </Button>
+
+      <ForgotPasswordModal
+        modal={modal}
+        setModal={setModal}
+        message={
+          "Enter the email address associated with your WebService account"
+        }
+      />
 
       <Divider
         sx={{
