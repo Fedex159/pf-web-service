@@ -267,9 +267,22 @@ export function forgotPassword(body) {
   return async function (dispatch) {
     try {
       const response = await axios.put(`/forgotPassword`, body);
+      window.location.replace('https://pf-web-service.vercel.app/home');
       return dispatch({ type: type.FORGOT_PASSWORD, payload: response.data });
     } catch (err) {
       console.log(err);
     }
+  };
+}
+
+export function ressetPassword(body) {
+  return async function (dispatch) {
+    var json = await axios.put(`/resetPassword`, body);
+    console.log('response resetPassword action', json.data )
+    window.location.replace('https://pf-web-service.vercel.app/home');
+    return dispatch({
+      type: type.RESET_PASSWORD,
+      payload: json.data,
+    });
   };
 }

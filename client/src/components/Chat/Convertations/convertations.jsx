@@ -1,20 +1,15 @@
-import { Avatar } from "@material-ui/core";
-import { Box } from "@mui/system";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
 import React from "react";
 import useStylesConvertations from "./ConvertationsStyled";
 export default function Conversations({ contacts, contactsOnline, darkTheme }) {
   //darkTheme boolean global state
-  var classes = useStylesConvertations(darkTheme)();
+  var statusUser = contactsOnline.some((e) => e.user === contacts.id);
+  var classes = useStylesConvertations(darkTheme, statusUser)();
 
   if (contacts) {
     return (
-      <Box
-        className={
-          contactsOnline.some((e) => e.user === contacts.id)
-            ? classes.boxConvOnline
-            : classes.boxConvOffline
-        }
-      >
+      <Box className={classes.boxConvInline}>
         <Avatar
           size="small"
           src={contacts.userImg}
