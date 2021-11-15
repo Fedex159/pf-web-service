@@ -2,27 +2,36 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { useSelector } from "react-redux";
-import { styles } from "./chartStyles";
+import { styles } from "../AdminStyles";
 
-export default function Chart(info, x, yDomain, date, title) {
+export default function Chart({ info, x, yDomain, date, title }) {
   const darkGlobal = useSelector((state) => state.darkTheme);
 
   let darkLight = darkGlobal ? "dark" : "light";
-
+  console.log(title, info);
   return (
     <Box
       sx={{
         ...styles[darkLight].box,
         width: "min-content",
+        m: "10px 10px",
       }}
     >
       <LineChart
         width={400}
         height={250}
         data={
-          date.start || date.end
+          date && (date.start || date.end)
             ? info.filter((i) => {
                 let monthMs = new Date(i.year).getTime();
                 let startMonth = new Date(date.start).getTime();
@@ -40,7 +49,12 @@ export default function Chart(info, x, yDomain, date, title) {
         />
         <YAxis
           interval="preserveEnd"
-          domain={[0, Math.max(...info.map((i) => i[yDomain])) + 1]}
+          domain={[
+            0,
+            info.length > 0
+              ? Math.max(...info.map((i) => i[yDomain])) + 1
+              : "dataMax",
+          ]}
           stroke={darkGlobal ? "rgb(251, 187, 217)" : "rgb(110, 117, 120)"}
           margin={{ left: 0 }}
         />

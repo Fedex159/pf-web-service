@@ -8,19 +8,22 @@ import {
   Radar,
   Tooltip,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
-import { styles } from "./chartStyles";
+import { styles } from "../AdminStyles";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 
-export default function Chart(data, categoryKey, valueKey, name) {
-  data = data.map((d) => ({ ...d, groupName: d.groupName.split("-")[0] }));
+export default function Chart({ data, categoryKey, valueKey, name }) {
+  data =
+    Array.isArray(data) &&
+    data.map((d) => ({ ...d, groupName: d.groupName.split("-")[0] }));
   const darkGlobal = useSelector((state) => state.darkTheme);
   let darkLight = darkGlobal ? "dark" : "light";
 
   return (
-    <Box sx={styles[darkLight].box}>
+    <Box sx={{ ...styles[darkLight].box, m: "10px 10px" }}>
       <RadarChart width={400} height={250} data={data}>
         <PolarGrid />
         <PolarAngleAxis
