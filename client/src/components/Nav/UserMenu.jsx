@@ -47,7 +47,7 @@ export default function UserMenu({ route, userImg, name }) {
       icon: 'success',
       confirmButtonText: 'OK',
       iconColor: 'red',
-      timer: 4000,
+      timer: 3500,
       confirmButtonColor: 'red',
     });
 

@@ -57,7 +57,7 @@ function Login({ setLogin, setLoginModal, setRegisterModal }) {
         title: 'Logged in!',
         icon: 'success',
         confirmButtonText: 'OK',
-        timer: 4000,
+        timer: 3500,
         confirmButtonColor: 'green',
       });
       // guardo token en localStorage
