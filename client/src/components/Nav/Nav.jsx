@@ -71,7 +71,11 @@ export default function Nav({ route, check, change }) {
           sx={{
             display: 'grid',
             gridTemplateColumns: '1fr 9fr 2fr',
+<<<<<<< HEAD
             gridTemplateRows: query && route === 'home' ? '80px 80px' : '',
+=======
+            gridTemplateRows: query && route === 'home' ? '72px 80px' : '',
+>>>>>>> 4ebc8e6f5f2194732d9be5ab7cbf7e907bef7da8
           }}
         >
           <Box mr="auto" display="flex" alignItems="center">
