@@ -8,6 +8,9 @@ import { AddShoppingCart, Favorite, Share } from "@mui/icons-material";
 import CardUser from "../../CardUser/CardUser";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MapDetail from "./MapDetail";
+import { useState } from "react";
+import ShareServiceModal from '../../CardService/ShareServiceModal';
+
 
 export default function RightInfoBar({
   cookie,
@@ -17,9 +20,10 @@ export default function RightInfoBar({
   handleClick,
   added,
 }) {
-  let { title, price, description, rating, qualifications, userId, city } =
+  let { title, price, description, rating, qualifications, userId, city, id } =
     service.service;
   const query = useMediaQuery("(max-width: 890px)");
+  const [modal, setModal] = useState(false)
 
   return (
     <Box
@@ -55,7 +59,9 @@ export default function RightInfoBar({
               <Favorite color={favState ? "error" : ""} />
             </IconButton>
           ) : null}
-          <IconButton aria-label="share">
+          <IconButton aria-label="share"
+         onClick={() => setModal(true)}
+         >
             <Share />
           </IconButton>
         </Box>
@@ -173,6 +179,7 @@ export default function RightInfoBar({
         />
       </Box>
       {/* -------------------------------------- */}
+      <ShareServiceModal modal={modal} setModal={setModal} serviceId={id} />
     </Box>
   );
 }

@@ -48,7 +48,7 @@ export default function ResetPassword({resetPassword}) {
     } else if (password.password !== password.confirmPassword) {
       errors.confirmPassword = "Passwords do not match";
     }
-    else if ( /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password.password || password.confirmPassword)){
+    else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password.password || password.confirmPassword)){
         errors.password = "At least 8 characters, it must contain 1 letter and 1 number"
         errors.confirmPassword = "At least 8 characters, it must contain 1 letter and 1 number"
     }
