@@ -101,7 +101,6 @@ export default function CheckoutDetail() {
             })}
       </Box>
       
-      {/* {loading && <div className={s.spinner}></div>} */}
     {!loading?
       <Paper
         sx={{ p: 2, margin: 'auto', maxWidth: 1000, flexGrow: 1, mb: 2, mt: 2 }}
