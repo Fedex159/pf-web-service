@@ -186,7 +186,10 @@ export default function SingleComment({ qualification, cookie }) {
                   aria-label="share"
                   sx={{ mr: '0px auto 0px auto', p: '0px' }}
                 >
-                  <Typography variant="caption" sx={{ p: '0px' }}>
+                  <Typography
+                    variant="caption"
+                    sx={{ p: '0px', color: 'violet' }}
+                  >
                     {updated.comment?.length < 90 || comment.length < 90
                       ? ''
                       : wrap
