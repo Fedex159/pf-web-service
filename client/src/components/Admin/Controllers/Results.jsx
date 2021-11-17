@@ -26,7 +26,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   showDialog: {
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       display: 'none !important',
     },
   },
@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       display: 'none !important',
     },
+  },
+
+  dialog: {
+    backgroundColor: 'theme.palette.primary !important',
   },
 }));
 
@@ -279,7 +283,11 @@ export default function Results({
                     )}
                   </Box>
 
-                  <Box gridColumn="span 1" display="flex">
+                  <Box
+                    gridColumn="span 1"
+                    display="flex"
+                    className={classes.showDataXs}
+                  >
                     {edit[o.id] && edit[o.id].editing ? (
                       inputComponents.select(o, ['Active', 'Banned'])
                     ) : (
@@ -327,18 +335,35 @@ export default function Results({
                     open={edit.edit}
                     className={classes.showDialog}
                   >
-                    <AppBar sx={{ position: 'relative' }}>
+                    <AppBar
+                      sx={{
+                        position: 'relative',
+                      }}
+                      className={classes.dialog}
+                    >
                       <Toolbar>
                         {inputComponents.iconButton('clear', handleEdit, o)}
                         {inputComponents.iconButton('save', handleSave, o)}
                       </Toolbar>
                     </AppBar>
-                    {inputComponents.textInput(o.name, o.id, 'name')}{' '}
-                    {inputComponents.textInput(o.lastname, o.id, 'lastname')}
-                    {inputComponents.textInput(o.username, o.id, 'username')}
-                    {inputComponents.textInput(o.email, o.id, 'email')}
-                    {inputComponents.select(o, ['Active', 'Banned'])}
-                    {inputComponents.textInput('password', o.id, 'password')}
+                    <Box
+                      margin="1rem"
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        marginTop: '10rem',
+                      }}
+                    >
+                      {inputComponents.textInput(o.name, o.id, 'name')}{' '}
+                      {inputComponents.textInput(o.lastname, o.id, 'lastname')}
+                      {inputComponents.textInput(o.username, o.id, 'username')}
+                      {inputComponents.textInput(o.email, o.id, 'email')}
+                      {inputComponents.select(o, ['Active', 'Banned'])}
+                      {inputComponents.textInput('password', o.id, 'password')}
+                    </Box>
                   </Dialog>
                 )}
               </>
