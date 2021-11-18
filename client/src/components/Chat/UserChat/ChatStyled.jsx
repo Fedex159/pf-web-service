@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { grey, blueGrey } from "@mui/material/colors";
 
-export default function useStylesChat(darkTheme, selectCurrentChat) {
+export default function useStylesChat(darkTheme ) {
   //darkTheme booleano del estado global
   return makeStyles((theme) => ({
     //darkTheme prop global
@@ -168,25 +168,3 @@ export default function useStylesChat(darkTheme, selectCurrentChat) {
     },
   }));
 }
-/*
-animacion msj nuevo
-div {
-  width: 100px;
-  height: 100px;
-  background-color: red;
-  position: relative;
-  animation-name: example;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-}
-
-@keyframes example {
-  0%   {left:0px; top:0px;}
-  25%  { left:10px; top:0px;}
-  50%  {left:0px; top:0px;}
-  75%  { left:10px; top:0px;}
-  100% { left:0px; top:0px;}
-}
-
-
-*/
