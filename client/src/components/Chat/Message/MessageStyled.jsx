@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { grey, blueGrey ,amber} from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 
 export default function useStylesMessage(darkTheme, message, user) {
   //darkTheme prop global
