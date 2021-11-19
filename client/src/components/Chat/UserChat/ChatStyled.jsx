@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { grey, blueGrey } from "@mui/material/colors";
+import { grey, blueGrey ,amber} from "@mui/material/colors";
 
 export default function useStylesChat(darkTheme ) {
   //darkTheme booleano del estado global
@@ -7,29 +7,51 @@ export default function useStylesChat(darkTheme ) {
     //darkTheme prop global
     inputForm: {
       display: "flex",
+      position:"relative",
+      bottom:"3px",
       width: "100%",
-      height: "5%",
+      height: "110px",
       alignItems: "center",
-      marginBottom: "1%",
-      marginTop: "1%",
+      paddingLeft: "10px",
     },
     inputSend: {
-      display: "flex",
       background: darkTheme ? grey[900] : blueGrey[100],
       borderRadius: "0.2em",
       height: "100%",
-      minHeight: "100%",
       marginLeft: "2%",
-
-      "& input": {
-        color: darkTheme ? grey[400] : blueGrey[600],
-        fontFamily: "roboto",
-        margin: "1% 0 0 2%",
-        padding: "0",
+      "& div": {
         height: "100%",
+        margin: "0px",
+        padding: "0px",
+        "& textarea::-webkit-scrollbar ": {
+          WebkitAppearance: "none",
+        },
+        "& textarea::-webkit-scrollbar:vertical": {
+          width: "8px",
+        },
+
+        "& textarea::-webkit-scrollbar-thumb": {
+          backgroundColor: darkTheme ? grey[800] :  grey[300],
+          borderRadius: "2em",
+        },
+      },
+
+      "& textarea": {
+        color: darkTheme ? grey[50] : blueGrey[1000],
+        fontFamily: "roboto",
+        padding: "0px",
+        height: "100%",
+        textAlign: "justify",
+        textJustify: "inter-word",
+        overflowWrap: "break-word",
+        paddingLeft: "2%",
+        paddingRight: "2%",
+        
       },
       "& fieldSet": {
         border: "none",
+        padding: "0px",
+        margin: "0px",
         height: "100%",
       },
     },
@@ -82,7 +104,7 @@ export default function useStylesChat(darkTheme ) {
       overflowY: "auto",
       overflowX: "hidden",
       marginRight: "0.2%",
-      background: darkTheme ? grey[900] : blueGrey[100],
+      background: darkTheme ? grey[900] : amber[100],
       padding: "0.5%",
     },
     containerConvertation: {
@@ -128,7 +150,7 @@ export default function useStylesChat(darkTheme ) {
       },
 
       "& div::-webkit-scrollbar-thumb": {
-        backgroundColor: darkTheme ? grey[900] : blueGrey[400],
+        backgroundColor: darkTheme ? grey[900] : blueGrey[100],
         borderRadius: "2em",
       },
     },
@@ -141,7 +163,7 @@ export default function useStylesChat(darkTheme ) {
       minWidth: "100px",
       marginRight: "0.2%",
       flexDirection: "column",
-      background: darkTheme ? grey[900] : blueGrey[100],
+      background: darkTheme ? grey[900] : amber[100],
       padding: "0.5%",
       maxHeight: "100%",
       "& div::-webkit-scrollbar ": {
