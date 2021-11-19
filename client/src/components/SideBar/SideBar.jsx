@@ -14,10 +14,7 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import SortIcon from "@material-ui/icons/Sort";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 
@@ -90,7 +87,7 @@ export default function SideBar() {
         <Divider />
         <List>
           {["About"].map((text, index) => (
-            <Button onClick={() => history.push("/about")}>
+            <Button key={"about_1"} onClick={() => history.push("/about")}>
               <ListItemText primary={text} />
             </Button>
           ))}
