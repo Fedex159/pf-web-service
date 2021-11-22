@@ -87,3 +87,9 @@ Pantalla principal de la web. Se puede acceder al panel de filtros en el borde s
 <img src="./imgs/filtros.gif" alt="filtros_gif"/>
 
 Barra de filtros. Se puede hacer varios filtros combinados, ya sea elegir mas de una sub-categoria, filtrar por Provincia, Ciudad, por rango de precio u ordenar por Rating/Precio/Fecha, en forma Descendente o Ascendente.
+
+### Darkmode
+
+<img src="./imgs/darkmode.gif" alt="darkmode_gif"/>
+
+Funcionalidad de darkmode. Se puede seleccionar entre activar o desactivar el darkmode. La seleccion se aplica a toda la web y se almacena la seleccion en localStorage.
