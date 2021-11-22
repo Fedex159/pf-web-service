@@ -130,6 +130,12 @@ Funcionalidad de paginado. Carga 20 resultados mas, si hay resultados.
 
 Detalle del servicio. En el se puede ver el titulo completo, imagen, descripcion, precio, comentarios, servicios relacionados, vendedor, localizacion del servicio.
 
+### Calificacion
+
+<img src="./imgs/comentario.gif" alt="comentario_gif"/>
+
+El usuario que adquirio el servicio puede dejar una calificacion y un comentario. La calificacion puede ser de 1 a 5 estrellas.
+
 ### Profile User
 
 <img src="./imgs/profile.gif" alt="profile_gif"/>
