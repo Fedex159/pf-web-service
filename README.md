@@ -105,3 +105,9 @@ Funcionalidad de carrito. Se puede agregar y quitar servicios del carrito. Todos
 <img src="./imgs/search.gif" alt="search_gif"/>
 
 Funcionalidad de busqueda. Se puede hacer busqueda por nombre, ya sea que contenga tales caracteres, o nombre exacto. A la busqueda se le pueden aplicar los filtros de la barra lateral.
+
+### Shared
+
+<img src="./imgs/shared.gif" alt="shared_gif"/>
+
+Funcionalidad de compartir. Se puede compartir por Whatsapp, Facebook o Linkedin.
