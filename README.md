@@ -129,3 +129,9 @@ Detalle del servicio. En el se puede ver el titulo completo, imagen, descripcion
 <img src="./imgs/profile.gif" alt="profile_gif"/>
 
 Perfil del vendedor. Se pueden ver los servicios que ofrece el vendedor, y compartir su perfil.
+
+### Panel de usuario
+
+<img src="./imgs/panel.gif" alt="panel_gif"/>
+
+Panel de usuario. En el se pueden cambiar los datos del usuario, como la foto de perfil, nombre, apellido y contraseña. Tambien se ver las ordenes que haya comprado, como el detalle de la misma, los servicios que cuenta en favoritos, sus servicios que tiene publicados, la opcion de crear nuevos servicios y la seccion para ir al chat.
