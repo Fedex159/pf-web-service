@@ -99,3 +99,9 @@ Funcionalidad de darkmode. Se puede seleccionar entre activar o desactivar el da
 <img src="./imgs/carrito.gif" alt="carrito_gif"/>
 
 Funcionalidad de carrito. Se puede agregar y quitar servicios del carrito. Todos los servicios son de cantidad 1. El carrito se mantiene en localStorage mientras no se esta logueado, una vez logueado, se mantendra en su cuenta hasta que se eliminen los items o se finalice la compra.
+
+### Search
+
+<img src="./imgs/search.gif" alt="search_gif"/>
+
+Funcionalidad de busqueda. Se puede hacer busqueda por nombre, ya sea que contenga tales caracteres, o nombre exacto. A la busqueda se le pueden aplicar los filtros de la barra lateral.
