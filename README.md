@@ -93,3 +93,9 @@ Barra de filtros. Se puede hacer varios filtros combinados, ya sea elegir mas de
 <img src="./imgs/darkmode.gif" alt="darkmode_gif"/>
 
 Funcionalidad de darkmode. Se puede seleccionar entre activar o desactivar el darkmode. La seleccion se aplica a toda la web y se almacena la seleccion en localStorage.
+
+### Carrito
+
+<img src="./imgs/carrito.gif" alt="carrito_gif"/>
+
+Funcionalidad de carrito. Se puede agregar y quitar servicios del carrito. Todos los servicios son de cantidad 1. El carrito se mantiene en localStorage mientras no se esta logueado, una vez logueado, se mantendra en su cuenta hasta que se eliminen los items o se finalice la compra.
