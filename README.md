@@ -81,3 +81,9 @@ Formulario de login. Se puede loguear utilizando las credenciales clasicas, o ut
 <img src="./imgs/home.gif" alt="home_gif"/>
 
 Pantalla principal de la web. Se puede acceder al panel de filtros en el borde superior izquierdo, carrito en el borde superior derecho, tambien se puede registrar y loguear desde el home. Cuenta con una search bar, un carrousel con los servicios destacados y las cards con informacion principal de cada servicio ofrecido.
+
+### Filtros
+
+<img src="./imgs/filtros.gif" alt="filtros_gif"/>
+
+Barra de filtros. Se puede hacer varios filtros combinados, ya sea elegir mas de una sub-categoria, filtrar por Provincia, Ciudad, por rango de precio u ordenar por Rating/Precio/Fecha, en forma Descendente o Ascendente.
