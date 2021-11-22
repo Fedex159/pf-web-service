@@ -100,6 +100,12 @@ Funcionalidad de darkmode. Se puede seleccionar entre activar o desactivar el da
 
 Funcionalidad de carrito. Se puede agregar y quitar servicios del carrito. Todos los servicios son de cantidad 1. El carrito se mantiene en localStorage mientras no se esta logueado, una vez logueado, se mantendra en su cuenta hasta que se eliminen los items o se finalice la compra.
 
+### Checkout
+
+<img src="./imgs/checkout.gif" alt="Checkout_gif"/>
+
+Funcionalidad de checkout. Se pueden remover items del carrito, hacer el pago por la plataforma de Mercadopago o por la plataforma de Paypal.
+
 ### Search
 
 <img src="./imgs/search.gif" alt="search_gif"/>
