@@ -61,3 +61,5 @@ Para poner en linea el servidor del front, utilizar <strong>npm start</strong> (
 ### Landing
 
 <img src="./imgs/landing.gif" alt="landing_gif"/>
+
+Landing page, se muestra el logo de la aplicacion, cuenta con animaciones, 2 cards principales, una lleva al Home de la web, el otro te lleva a un formulario de registro y acceso al Login en la parte superior derecha.
