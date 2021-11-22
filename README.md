@@ -66,7 +66,7 @@ Landing page, se muestra el logo de la aplicacion, cuenta con animaciones, 2 car
 
 ### Register
 
-<img src="./imgs/register.gif" alt="register_gif"/>
+<img src="./imgs/register2.gif" alt="register_gif"/>
 
 Formulario de registro. Se puede registrar de manera clasica, o utilizando los datos de google para rellenar el formulario.
 
