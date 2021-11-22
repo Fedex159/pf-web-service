@@ -45,3 +45,13 @@ ORIGIN = "http://localhost:3000"
 SUCCESS_MERCADOPAGO = "http://localhost:3001"
 SECRET_KEY = "key para encriptar el token, puede ser cualquier string"
 ```
+
+Una vez creado y configurado el <strong>.env</strong>, hacer npm install parado en el directorio <strong>/api</strong>.
+
+Para ejecutar el servidor, utilizar <strong>npm start</strong> (solo node), o <strong>npm run start:dev</strong> (con nodemon).
+
+### Configurando el front
+
+Para el front no se requiere de configuraciones adicionales. Parado en la carpeta <strong>/client</strong>, realizar <strong>npm install</strong>.
+
+Para poner en linea el servidor del front, utilizar <strong>npm start</strong> (la primera vez puede tardar un rato).
