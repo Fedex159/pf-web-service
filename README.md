@@ -69,3 +69,9 @@ Landing page, se muestra el logo de la aplicacion, cuenta con animaciones, 2 car
 <img src="./imgs/register.gif" alt="register_gif"/>
 
 Formulario de registro. Se puede registrar de manera clasica, o utilizando los datos de google para rellenar el formulario.
+
+### Login
+
+<img src="./imgs/login.gif" alt="login_gif"/>
+
+Formulario de login. Se puede loguear utilizando las credenciales clasicas, o utilizando las credenciales de google, si la cuenta registrada fue creada con un mail de google valido.
