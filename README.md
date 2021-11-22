@@ -76,7 +76,7 @@ Formulario de registro. Se puede registrar de manera clasica, o utilizando los d
 
 Formulario de login. Se puede loguear utilizando las credenciales clasicas, o utilizando las credenciales de google, si la cuenta registrada fue creada con un mail de google valido.
 
-### Recuperar contraseña
+### Forgot password
 
 <img src="./imgs/reset.gif" alt="reset_gif"/>
 
@@ -88,7 +88,7 @@ Funcionalidad de recuperar contraseña. Se envia un correo con un link para rest
 
 Pantalla principal de la web. Se puede acceder al panel de filtros en el borde superior izquierdo, carrito en el borde superior derecho, tambien se puede registrar y loguear desde el home. Cuenta con una search bar, un carrousel con los servicios destacados y las cards con informacion principal de cada servicio ofrecido.
 
-### Filtros
+### Filters
 
 <img src="./imgs/filtros.gif" alt="filtros_gif"/>
 
@@ -100,7 +100,7 @@ Barra de filtros. Se puede hacer varios filtros combinados, ya sea elegir mas de
 
 Funcionalidad de darkmode. Se puede seleccionar entre activar o desactivar el darkmode. La seleccion se aplica a toda la web y se almacena la seleccion en localStorage.
 
-### Carrito
+### Shopping cart
 
 <img src="./imgs/carrito.gif" alt="carrito_gif"/>
 
@@ -124,7 +124,7 @@ Funcionalidad de busqueda. Se puede hacer busqueda por nombre, ya sea que conten
 
 Funcionalidad de compartir. Se puede compartir por Whatsapp, Facebook o Linkedin.
 
-### Paginado
+### Paged
 
 <img src="./imgs/paginado.gif" alt="paginado_gif"/>
 
@@ -136,7 +136,7 @@ Funcionalidad de paginado. Carga 20 resultados mas, si hay resultados.
 
 Detalle del servicio. En el se puede ver el titulo completo, imagen, descripcion, precio, comentarios, servicios relacionados, vendedor, localizacion del servicio.
 
-### Calificacion
+### Qualification
 
 <img src="./imgs/comentario.gif" alt="comentario_gif"/>
 
@@ -148,7 +148,7 @@ El usuario que adquirio el servicio puede dejar una calificacion y un comentario
 
 Perfil del vendedor. Se pueden ver los servicios que ofrece el vendedor, y compartir su perfil.
 
-### Panel de usuario
+### User panel
 
 <img src="./imgs/panel.gif" alt="panel_gif"/>
 
