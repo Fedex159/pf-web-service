@@ -135,3 +135,9 @@ Perfil del vendedor. Se pueden ver los servicios que ofrece el vendedor, y compa
 <img src="./imgs/panel.gif" alt="panel_gif"/>
 
 Panel de usuario. En el se pueden cambiar los datos del usuario, como la foto de perfil, nombre, apellido y contraseña. Tambien se ver las ordenes que haya comprado, como el detalle de la misma, los servicios que cuenta en favoritos, sus servicios que tiene publicados, la opcion de crear nuevos servicios y la seccion para ir al chat.
+
+### Chat
+
+<img src="./imgs/chat.gif" alt="chat_gif"/>
+
+Funcionalidad de chat. En el se encuentran los contactos a los que se les realizo alguna compra. El chat muestra el estado de un usuario, si se encuentra en linea o no. Se puede hacer tanto como un live chat, como un chat de mensajes, donde el vendedor/comprador podra ver sus mensajes luego.
