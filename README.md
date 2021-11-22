@@ -76,6 +76,12 @@ Formulario de registro. Se puede registrar de manera clasica, o utilizando los d
 
 Formulario de login. Se puede loguear utilizando las credenciales clasicas, o utilizando las credenciales de google, si la cuenta registrada fue creada con un mail de google valido.
 
+### Recuperar contraseña
+
+<img src="./imgs/reset.gif" alt="reset_gif"/>
+
+Funcionalidad de recuperar contraseña. Se envia un correo con un link para restablecer la contraseña, en caso de que se haya olvidado la misma.
+
 ### Home
 
 <img src="./imgs/home.gif" alt="home_gif"/>
