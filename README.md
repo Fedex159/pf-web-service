@@ -141,3 +141,17 @@ Panel de usuario. En el se pueden cambiar los datos del usuario, como la foto de
 <img src="./imgs/chat.gif" alt="chat_gif"/>
 
 Funcionalidad de chat. En el se encuentran los contactos a los que se les realizo alguna compra. El chat muestra el estado de un usuario, si se encuentra en linea o no. Se puede hacer tanto como un live chat, como un chat de mensajes, donde el vendedor/comprador podra ver sus mensajes luego.
+
+### Admin
+
+<img src="./imgs/admin1.gif" alt="admin_gif"/>
+
+Panel de admin. El administrador cuanto con privilegios mayores a los de un usuario comun. En el dashboard inicial, puede observar las estadisticas generales de la web, puede aplicar un filtrado tambien para ver en mas detalles las estadisticas.
+
+<img src="./imgs/admin2.gif" alt="admin_gif"/>
+
+En la seccion de servicios, puede ver un mapa interactivo, con la informacion de servicios por cada ubicacion, tambien cuenta con el poder de deshabilitar un servicio, descargar el listado de servicios en formato .CSV.
+
+<img src="./imgs/admin3.gif" alt="admin_gif"/>
+
+En la seccion de usuarios, puede buscar un usuario o varios usuarios, cambiarle los datos personales, o aplicarle un veto de la web.
