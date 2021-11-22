@@ -35,13 +35,13 @@ Y muchas más dependencias, consultar los package.json de la ruta <a href="https
 
 Crear un archivo <strong>.env</strong> en la carpeta <strong>/api</strong> con los sigs parámetros:
 
-```js
-DB_NAME = "nombre base de datos";
-DB_USER = "usuario de postgres";
-DB_PASSWORD = "contraseña de postgres";
-DB_HOST = "localhost";
-ENV_VARIABLE = "1(valor del force de sequelize, 1 === true o 0 === false)";
-ORIGIN = "http://localhost:3000";
-SUCCESS_MERCADOPAGO = "http://localhost:3001";
-SECRET_KEY = "key para encriptar el token, puede ser cualquier string";
+```bash
+DB_NAME = "nombre base de datos"
+DB_USER = "usuario de postgres"
+DB_PASSWORD = "contraseña de postgres"
+DB_HOST = "localhost"
+ENV_VARIABLE = "1(valor del force de sequelize, 1 === true o 0 === false)"
+ORIGIN = "http://localhost:3000"
+SUCCESS_MERCADOPAGO = "http://localhost:3001"
+SECRET_KEY = "key para encriptar el token, puede ser cualquier string"
 ```
