@@ -63,3 +63,9 @@ Para poner en linea el servidor del front, utilizar <strong>npm start</strong> (
 <img src="./imgs/landing.gif" alt="landing_gif"/>
 
 Landing page, se muestra el logo de la aplicacion, cuenta con animaciones, 2 cards principales, una lleva al Home de la web, el otro te lleva a un formulario de registro y acceso al Login en la parte superior derecha.
+
+### Register
+
+<img src="./imgs/register.gif" alt="register_gif"/>
+
+Formulario de registro. Se puede registrar de manera clasica, o utilizando los datos de google para rellenar el formulario.
