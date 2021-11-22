@@ -16,3 +16,32 @@ Este es el proyecto final realizado durante la etapa de Labs de <strong>Henry</s
 - <a href="https://github.com/wikonarider"><img width="20px" src="./imgs/github-logo.png"/></a> <a href="https://www.linkedin.com/in/micaela-montero-295141217/"><img width="20px" src="./imgs/linkedin-logo.png"/></a> Micaela Montero
 - <a href="https://github.com/stobar93"><img width="20px" src="./imgs/github-logo.png"/></a> <a href="https://www.linkedin.com/in/sebastiantobar-fullstack-dev/"><img width="20px" src="./imgs/linkedin-logo.png"/></a> Sebastian Tobar
 - <a href="https://github.com/valentinjara27"><img width="20px" src="./imgs/github-logo.png"/></a> <a href="https://www.linkedin.com/in/valentin-jara-fullstackdeveloper/"><img width="20px" src="./imgs/linkedin-logo.png"/></a> Valentin Jara
+
+## Dependencias utilizadas
+
+- Express 4.17.1
+- Node 12.21
+- NPM 7.20.3
+- React 17.0.1
+- Redux 4.1.1
+
+Y muchas más dependencias, consultar los package.json de la ruta <a href="https://github.com/Fedex159/pf-web-service/blob/main/api/package.json">/api</a> y <a href="https://github.com/Fedex159/pf-web-service/blob/main/client/package.json">/client</a>.
+
+## Instrucciones para utilizar el proyecto
+
+- Clonar o forkear el repositorio
+
+### Configurando la DB
+
+Crear un archivo <strong>.env</strong> en la carpeta <strong>/api</strong> con los sigs parámetros:
+
+```js
+DB_NAME = "nombre base de datos";
+DB_USER = "usuario de postgres";
+DB_PASSWORD = "contraseña de postgres";
+DB_HOST = "localhost";
+ENV_VARIABLE = "1(valor del force de sequelize, 1 === true o 0 === false)";
+ORIGIN = "http://localhost:3000";
+SUCCESS_MERCADOPAGO = "http://localhost:3001";
+SECRET_KEY = "key para encriptar el token, puede ser cualquier string";
+```
