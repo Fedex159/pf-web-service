@@ -117,3 +117,9 @@ Funcionalidad de compartir. Se puede compartir por Whatsapp, Facebook o Linkedin
 <img src="./imgs/paginado.gif" alt="paginado_gif"/>
 
 Funcionalidad de paginado. Carga 20 resultados mas, si hay resultados.
+
+### Detail Service
+
+<img src="./imgs/detail_service.gif" alt="detail_gif"/>
+
+Detalle del servicio. En el se puede ver el titulo completo, imagen, descripcion, precio, comentarios, servicios relacionados, vendedor, localizacion del servicio.
