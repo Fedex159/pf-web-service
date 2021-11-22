@@ -123,3 +123,9 @@ Funcionalidad de paginado. Carga 20 resultados mas, si hay resultados.
 <img src="./imgs/detail_service.gif" alt="detail_gif"/>
 
 Detalle del servicio. En el se puede ver el titulo completo, imagen, descripcion, precio, comentarios, servicios relacionados, vendedor, localizacion del servicio.
+
+### Profile User
+
+<img src="./imgs/profile.gif" alt="profile_gif"/>
+
+Perfil del vendedor. Se pueden ver los servicios que ofrece el vendedor, y compartir su perfil.
