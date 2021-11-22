@@ -111,3 +111,9 @@ Funcionalidad de busqueda. Se puede hacer busqueda por nombre, ya sea que conten
 <img src="./imgs/shared.gif" alt="shared_gif"/>
 
 Funcionalidad de compartir. Se puede compartir por Whatsapp, Facebook o Linkedin.
+
+### Paginado
+
+<img src="./imgs/paginado.gif" alt="paginado_gif"/>
+
+Funcionalidad de paginado. Carga 20 resultados mas, si hay resultados.
