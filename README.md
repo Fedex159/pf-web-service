@@ -56,6 +56,14 @@ Para el front no se requiere de configuraciones adicionales. Parado en la carpet
 
 Para poner en linea el servidor del front, utilizar <strong>npm start</strong> (la primera vez puede tardar un rato).
 
+### Mockups
+
+En la carpeta <strong>/api/mock</strong> se encuentran todos los mocks para hacer las pruebas.
+
+- Cuentas de usuarios
+- Cuentas de mercadopago
+- Cuentas de paypal
+
 ## Presentación y funcionalidades
 
 ### Landing
