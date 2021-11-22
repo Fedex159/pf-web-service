@@ -75,3 +75,9 @@ Formulario de registro. Se puede registrar de manera clasica, o utilizando los d
 <img src="./imgs/login.gif" alt="login_gif"/>
 
 Formulario de login. Se puede loguear utilizando las credenciales clasicas, o utilizando las credenciales de google, si la cuenta registrada fue creada con un mail de google valido.
+
+### Home
+
+<img src="./imgs/home.gif" alt="home_gif"/>
+
+Pantalla principal de la web. Se puede acceder al panel de filtros en el borde superior izquierdo, carrito en el borde superior derecho, tambien se puede registrar y loguear desde el home. Cuenta con una search bar, un carrousel con los servicios destacados y las cards con informacion principal de cada servicio ofrecido.
