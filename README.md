@@ -55,3 +55,9 @@ Para ejecutar el servidor, utilizar <strong>npm start</strong> (solo node), o <s
 Para el front no se requiere de configuraciones adicionales. Parado en la carpeta <strong>/client</strong>, realizar <strong>npm install</strong>.
 
 Para poner en linea el servidor del front, utilizar <strong>npm start</strong> (la primera vez puede tardar un rato).
+
+## Presentación y funcionalidades
+
+### Landing
+
+<img src="./imgs/landing.gif" alt="landing_gif"/>
