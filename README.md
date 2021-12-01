@@ -58,11 +58,11 @@ Para poner en linea el servidor del front, utilizar <strong>npm start</strong> (
 
 ### Mockups
 
-En la carpeta <strong>/api/mock</strong> se encuentran todos los mocks para hacer las pruebas.
+En la carpeta <strong><a href="./api/mock">/api/mock</a></strong> se encuentran todos los mocks para hacer las pruebas.
 
-- Cuentas de usuarios
-- Cuentas de mercadopago
-- Cuentas de paypal
+- Cuentas de <a href="./api/mock/userJson.js">usuarios</a>
+- Cuentas de <a href="./api/mock/testUser MercadoPago.js">mercadopago</a>
+- Cuentas de <a href="./api/mock/testUsers paypal">paypal</a>
 
 ## Presentación y funcionalidades
 
