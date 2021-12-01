@@ -181,3 +181,11 @@ En la seccion de servicios, puede ver un mapa interactivo, con la informacion de
 <img src="./imgs/admin3.gif" alt="admin_gif"/>
 
 En la seccion de usuarios, puede buscar un usuario o varios usuarios, cambiarle los datos personales, o aplicarle un veto de la web.
+
+### Responsive
+
+<img src="./imgs/responsive1.gif" alt="responsive1_gif"/>
+
+<img src="./imgs/responsive2.gif" alt="responsive2_gif"/>
+
+Toda la app se encuentra configurada para funcionar de manera responsive.
