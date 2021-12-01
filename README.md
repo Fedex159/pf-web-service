@@ -25,7 +25,7 @@ Este es el proyecto final realizado durante la etapa de Labs de <strong>Henry</s
 - React 17.0.1
 - Redux 4.1.1
 
-Y muchas más dependencias, consultar los package.json de la ruta <a href="https://github.com/Fedex159/pf-web-service/blob/main/api/package.json">/api</a> y <a href="https://github.com/Fedex159/pf-web-service/blob/main/client/package.json">/client</a>.
+Y muchas más dependencias, consultar los package.json de la ruta <a href="./api/package.json">/api</a> y <a href="./client/package.json">/client</a>.
 
 ## Instrucciones para utilizar el proyecto
 
