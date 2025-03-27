@@ -15,7 +15,7 @@ import SearchBar from "./Controllers/SearchBar";
 import IconButton from "@mui/material/IconButton";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DownloadIcon from "@mui/icons-material/Download";
-import { useJsonToCsv } from "react-json-csv";
+import jsonToCsvExport from "json-to-csv-export";
 
 const useStyles = makeStyles((theme) => ({
   showDialog: {
@@ -64,8 +64,6 @@ export default function TableAdmin({
     }
     // eslint-disable-next-line
   }, [info]);
-
-  const { saveAsCsv } = useJsonToCsv();
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -135,8 +133,8 @@ export default function TableAdmin({
             <TableRow>
               <TableCell key="downloadCsvServices" align="right" colSpan={1}>
                 <IconButton
-                  onClick={() =>
-                    saveAsCsv({
+                  onClick={() => {
+                    jsonToCsvExport({
                       data: info.map((i) => ({
                         ...i,
                         rating: Number(i.rating),
@@ -162,8 +160,8 @@ export default function TableAdmin({
                         cty: "city",
                       },
                       filename: "services-csv",
-                    })
-                  }
+                    });
+                  }}
                 >
                   <DownloadIcon />
                 </IconButton>
