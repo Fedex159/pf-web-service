@@ -6,7 +6,6 @@ import SendIcon from "@mui/icons-material/Send";
 import Input from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
 import { connect } from "react-redux";
-import dotenv from "dotenv";
 import Message from "../Message/Message";
 import Contactsbougth from "../ContactsBougth/ContactsBougth.jsx";
 import useStylesChat from "./ChatStyled";
@@ -20,7 +19,6 @@ import {
   sendMessage,
   deleteConvertation,
 } from "./StateLocal.jsx";
-dotenv.config();
 function Chat({ user, darkTheme, cookie }) {
   const [UsersOnlines, setUsersOnlines] = useState([]); //1
   const [text, setText] = useState(""); //2
@@ -133,7 +131,7 @@ function Chat({ user, darkTheme, cookie }) {
   //-------------------------------------------------------------------------------------------------------------new convertations
   async function newConvertationbougth(newContact) {
     var contatsInclude = chat.contactsConv.filter(
-      (cont) => cont.id === newContact.id
+      (cont) => cont.id === newContact.id,
     );
     if (!contatsInclude.length) {
       newConvertation(newContact.id)
@@ -224,7 +222,7 @@ function Chat({ user, darkTheme, cookie }) {
   //--------------------------------------------------------------------------------------------search contact
   function searchContact({ value }) {
     var searchFound = chat.contactsConv.filter((cont) =>
-      cont.name.toLowerCase().includes(value.toLowerCase())
+      cont.name.toLowerCase().includes(value.toLowerCase()),
     );
     setInputs({
       ...inputs,
