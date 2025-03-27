@@ -1,8 +1,9 @@
 import React from "react";
-// import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import useStylesMessage from "./MessageStyled";
-import { format } from "timeago.js";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 export default function Message({ user, message, scrollRef, darkTheme }) {
   var clasess = useStylesMessage(darkTheme, message, user)();
@@ -20,7 +21,7 @@ export default function Message({ user, message, scrollRef, darkTheme }) {
         <Box className={clasess.message}>
           <h5>{message.text}</h5>
         </Box>
-        <h5>{format(message.createdAt)}</h5>
+        <h5>{dayjs(new Date(message.createdAt)).fromNow()}</h5>
       </Box>
     </Box>
   );

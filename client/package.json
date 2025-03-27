@@ -39,7 +39,6 @@
     "socket.io-client": "^4.3.2",
     "start": "^5.1.0",
     "sweetalert2": "^11.1.10",
-    "timeago.js": "^4.0.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
