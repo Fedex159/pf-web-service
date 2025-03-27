@@ -1,7 +1,7 @@
 const users = [
   {
     id: "fdf3709a-ed60-4178-8cb6-6751fc32d078",
-    userImg: "https://avatars.dicebear.com/api/micah/.svg?b=%23e81111",
+    userImg: "https://api.dicebear.com/9.x/micah/svg?backgroundColor=e81111",
     name: "Admin",
     lastname: "User",
     username: "adminuser",
@@ -13,7 +13,7 @@ const users = [
   },
   {
     id: "be19f20c-36aa-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/a.svg",
+    userImg: "https://api.dicebear.com/9.x/micah/svg?seed=a",
     name: "Miguel",
     lastname: "Mecozzi",
     username: "mmecozzi0",
@@ -24,7 +24,8 @@ const users = [
   },
   {
     id: "be19f554-36aa-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/a.svg?b=%2319b5fe",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=a&backgroundColor=19b5fe",
     name: "Martainn",
     lastname: "Sandiford",
     username: "msandiford1",
@@ -35,7 +36,8 @@ const users = [
   },
   {
     id: "be19f6da-36aa-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/c.svg?=%2319b5fe",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=c&backgroundColor=19b5fe",
     name: "Rayner",
     lastname: "Beardall",
     username: "rbeardall2",
@@ -46,7 +48,8 @@ const users = [
   },
   {
     id: "be19f8e2-36aa-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/d.svg?b=%2319b5fe",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=d&backgroundColor=19b5fe",
     name: "Neel",
     lastname: "Gascoyne",
     username: "ngascoyne3",
@@ -57,7 +60,8 @@ const users = [
   },
   {
     id: "4e218642-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/sldkm.svg?b=%23ffd91a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=sldkm&backgroundColor=ffd91a",
     name: "Nobie",
     lastname: "Sherington",
     username: "nsherington4",
@@ -68,7 +72,8 @@ const users = [
   },
   {
     id: "4e21899e-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/f.svg?b=%23ffd91a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=f&backgroundColor=ffd91a",
     name: "Bonny",
     lastname: "Boggart",
     username: "fXYa3MveoT96t",
@@ -79,7 +84,8 @@ const users = [
   },
   {
     id: "4e218b24-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/sldkm.svg?b=%23ffd91a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=sldkm&backgroundColor=ffd91a",
     name: "Lorrin",
     lastname: "Huburn",
     username: "lhuburn6",
@@ -90,7 +96,8 @@ const users = [
   },
   {
     id: "4e218c00-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/sl21.svg?b=%23ffd91a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=sl21&backgroundColor=ffd91a",
     name: "Everett",
     lastname: "Roskilly",
     username: "eroskilly7",
@@ -101,7 +108,8 @@ const users = [
   },
   {
     id: "4e218d5e-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/sl2.svg?b=%23ffd91a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=sl2&backgroundColor=ffd91a",
     name: "Ruddie",
     lastname: "Lamerton",
     username: "rlamerton8",
@@ -112,7 +120,8 @@ const users = [
   },
   {
     id: "4e218e1c-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/sl.svg?b=%23ff471a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=sl&backgroundColor=ff471a",
     name: "Kinny",
     lastname: "McGinn",
     username: "kmcginn9",
@@ -123,7 +132,8 @@ const users = [
   },
   {
     id: "4e218f98-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/s.svg?b=%23ff471a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=s&backgroundColor=ff471a",
     name: "Parnell",
     lastname: "Stronach",
     username: "pstronacha",
@@ -134,7 +144,8 @@ const users = [
   },
   {
     id: "4e219056-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/ssd.svg?b=%23ff471a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=ssd&backgroundColor=ff471a",
     name: "Eli",
     lastname: "Gozney",
     username: "egozneyb",
@@ -145,7 +156,8 @@ const users = [
   },
   {
     id: "4e2191dc-36ad-11ec-8d3d-0242ac230003",
-    userImg: "https://avatars.dicebear.com/api/micah/g4.svg?b=%23ff471a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=g4&backgroundColor=ff471a",
     name: "Samaria",
     lastname: "Sidwell",
     username: "ssidwellc",
@@ -156,7 +168,8 @@ const users = [
   },
   {
     id: "4e21929a-36ad-11ec-8d3d-0242ac170003",
-    userImg: "https://avatars.dicebear.com/api/micah/h6.svg?b=%23ff471a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=h6&backgroundColor=ff471a",
     name: "Leeanne",
     lastname: "Pawle",
     username: "lpawled",
@@ -167,7 +180,8 @@ const users = [
   },
   {
     id: "4e21929a-36ad-11ec-8d3d-0242ad130003",
-    userImg: "https://avatars.dicebear.com/api/micah/j7.svg?b=%23ff471a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=j7&backgroundColor=ff471a",
     name: "Arlie",
     lastname: "Clowser",
     username: "aclowsere",
@@ -178,7 +192,8 @@ const users = [
   },
   {
     id: "4e219448-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/k8.svg?b=%23ff471a",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=k8&backgroundColor=ff471a",
     name: "Auberta",
     lastname: "Canero",
     username: "acanerof",
@@ -189,7 +204,8 @@ const users = [
   },
   {
     id: "4e219510-36ad-11ec-8d3d-0242ac110003",
-    userImg: "https://avatars.dicebear.com/api/micah/z2.svg?b=%23c21aff",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=z2&backgroundColor=c21aff",
     name: "Karry",
     lastname: "Pittaway",
     username: "kpittawayg",
@@ -200,7 +216,8 @@ const users = [
   },
   {
     id: "4e2195c4-36ad-11ec-8d3d-0242ac120003",
-    userImg: "https://avatars.dicebear.com/api/micah/c3.svg?b=%23c21aff",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=c3&backgroundColor=c21aff",
     name: "Kaye",
     lastname: "Danilchenko",
     username: "kdanilchenkoh",
@@ -211,7 +228,8 @@ const users = [
   },
   {
     id: "4e219678-36ad-11ec-8d3d-0242ac130003",
-    userImg: "https://avatars.dicebear.com/api/micah/v4.svg?b=%23c21aff",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=v4&backgroundColor=c21aff",
     name: "Donia",
     lastname: "Mocher",
     username: "dmocheri",
@@ -222,7 +240,8 @@ const users = [
   },
   {
     id: "4e219812-36ad-11ec-8d3d-0242ac139003",
-    userImg: "https://avatars.dicebear.com/api/micah/b3.svg?b=%23c21aff",
+    userImg:
+      "https://api.dicebear.com/9.x/micah/svg?seed=b3&backgroundColor=c21aff",
     name: "Moomery",
     lastname: "Montgomery",
     username: "mdomnickj",
