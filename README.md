@@ -20,8 +20,8 @@ Este es el proyecto final realizado durante la etapa de Labs de <strong>Henry</s
 ## Dependencias utilizadas
 
 - Express 4.17.1
-- Node 12.21
-- NPM 7.20.3
+- Node 18.x
+- NPM 10.x
 - React 17.0.1
 - Redux 4.1.1
 
