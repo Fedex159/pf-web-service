@@ -11,8 +11,8 @@
   "author": "Henry",
   "license": "ISC",
   "engines": {
-    "node": "16.20.2",
-    "npm": "8.19.4"
+    "node": "18.20.8",
+    "npm": "10.8.2"
   },
   "dependencies": {
     "axios": "^0.23.0",
